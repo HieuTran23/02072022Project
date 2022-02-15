@@ -1,0 +1,27 @@
+Get http://localhost:5000/api/account
+###
+Get http://localhost:5000/api/account/detail/620760233673cef815e3b608
+
+###
+POST http://localhost:5000/api/account/create
+Content-Type: application/json
+
+{
+    "username" : "Admin" ,
+    "password" : "Admin",
+    "email"    : "Admin@gmail.com"
+}
+
+###
+PUT http://localhost:5000/api/account/edit/6207e217bc9a6d35803e2f71
+Content-Type: application/json
+
+{
+    "username" : "eidted" ,
+    "password" : "eidted",
+    "email"    : "eidted@gmail.com"
+}
+
+
+###
+DELETE  http://localhost:5000/api/account/delete/62079ed3e48b0a1cb52704e6
