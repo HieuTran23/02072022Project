@@ -4,7 +4,9 @@
  */
  const express = require("express")
  const mongoose = require('mongoose')
- var bodyParser = require('body-parser')
+ const accountRouter = require('./routes/admin/account')
+ var bodyParser = require('body-parser');
+const req = require("express/lib/request");
  
  /**
   * App Variables
@@ -23,7 +25,7 @@
  
  //--Json
  app.use(express.json());
- 
+
  app.use(bodyParser.json())
  app.use(bodyParser.urlencoded({ extended: false }))
  
@@ -37,7 +39,8 @@
  /**
   * Routes Definitions
   */
-
+ //routes for admin
+  app.use('/api/account', accountRouter)
  
  /**
   * Server Activation

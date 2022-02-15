@@ -1,10 +1,6 @@
 Get http://localhost:5000/api/account
 ###
-<<<<<<< Updated upstream
 Get http://localhost:5000/api/account/detail/620760233673cef815e3b608
-=======
-Get http://localhost:5000/api/account/detail/6207e491bc9a6d35803e2f77
->>>>>>> Stashed changes
 
 ###
 POST http://localhost:5000/api/account/create
@@ -28,8 +24,4 @@ Content-Type: application/json
 
 
 ###
-<<<<<<< Updated upstream
 DELETE  http://localhost:5000/api/account/delete/62079ed3e48b0a1cb52704e6
-=======
-DELETE  http://localhost:5000/api/account/delete/620760233673cef815e3b608
->>>>>>> Stashed changes

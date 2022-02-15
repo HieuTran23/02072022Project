@@ -5,15 +5,21 @@ const AccountSchema = new Schema({
     username:{
         type: String ,
         require : true ,
-        unique : true
+        unique : true ,
+        min : 6 ,
+        max : 124
     },
     password:{ 
         type : String ,
         required : true ,
+        min : 6 ,
+        max : 124
     },
     email:{
         type : String ,
-        unique : true
+        unique : true ,
+        min : 6 ,
+        max : 124 
     },
     createAt : {
         type : Date ,
