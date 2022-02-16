@@ -36,31 +36,31 @@ router.get('/detail/:id' , async (req ,res) => {
 router.post('/create' , async (req ,res) => {
     const {username , password , email } = req.body
      //validation
-     if(!username || !password || !email)
-         return res .status(400) .json({success:false , message:'Missing username and/or password and/or email '})
-         try {
-             //Check existing username password or email
-             const account = await Account.findOne({username , password ,email})
-             if(account)
-                return res.status(400) .json({success:false , message:'existing username password or email'})
-         } catch (error) { 
-             console.log(error)
-             res.status(500) .json({success:false , message:'Error'}) 
-                } 
-                const hashPassword = await argon2.hash(password)
-         //create new account        
-         try {
-             const newAccount = new Account ({
-                 username ,
-                 password : hashPassword ,
-                 email
-             })
-             await newAccount.save()
-             res.json({success:true , message:'create success' , account : newAccount})
-         } catch (error) {
-             console.log(error)
-             res.status(500) .json({success:false , message:'Error'}) 
-         }
+    if(!username || !password || !email)
+        return res .status(400) .json({success:false , message:'Missing username and/or password and/or email '})
+    try {
+        //Check existing username password or email
+        const account = await Account.findOne({username , password ,email})
+        if(account)
+        return res.status(400) .json({success:false , message:'existing username password or email'})
+    } catch (error) { 
+        console.log(error)
+        res.status(500) .json({success:false , message:'Error'}) 
+        } 
+        const hashPassword = await argon2.hash(password)
+    //create new account        
+    try {
+        const newAccount = new Account ({
+            username ,
+            password : hashPassword ,
+            email
+        })
+        await newAccount.save()
+        res.json({success:true , message:'create success' , account : newAccount})
+    } catch (error) {
+        console.log(error)
+        res.status(500) .json({success:false , message:'Error'}) 
+    }
 })
 
 

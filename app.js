@@ -7,6 +7,7 @@ const mongoose = require('mongoose')
 var bodyParser = require('body-parser');
 const accountRouter = require('./routes/admin/account')
 const authRouter = require('./routes/auth')
+const postRouter = require('./routes/post')
 
 /**
  * App Variables
@@ -45,6 +46,9 @@ app.use('/api/account', accountRouter)
 
 //Auth
 app.use('/', authRouter)
+
+//Academic Year test verify 
+app.use('/posts', postRouter)
 
 /**
  * Server Activation
