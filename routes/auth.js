@@ -8,6 +8,17 @@ const { loginValidation} = require("../middleware/validation")
 
 
 //-- Login
+//-Method: Get
+router.get('/login', async (req, res) => {
+    try{
+        res.render('auth/login', {
+            title: 'Login'
+        })
+    } catch (err) {
+        res.json(err)
+    }
+})
+
 //-Method: Post
 router.post('/login', async (req, res) => { 
     //Validation
@@ -27,7 +38,7 @@ router.post('/login', async (req, res) => {
     
         //Create a token
         const accessToken = jwt.sign({_id: account._id}, process.env.ACCESS_TOKEN_SECRET); 
-    
+        res.cookie('Auth-Access-Token',accessToken);
         res.header('Auth-Access-Token', accessToken).send(accessToken);
     } catch(error){
         console.log(error)

@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 const accountRouter = require('./routes/admin/account')
 const authRouter = require('./routes/auth')
 const postRouter = require('./routes/post')
+const adminRouter = require('./routes/admin')
 
 /**
  * App Variables
@@ -41,6 +42,9 @@ app.use(express.static('public'))
  * Routes Definitions
  */
 //--Admin
+//Dashboard
+app.use('/admin', adminRouter)
+
 //Account
 app.use('/api/account', accountRouter)
 
