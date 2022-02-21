@@ -9,6 +9,7 @@ const accountRouter = require('./routes/admin/account')
 const authRouter = require('./routes/auth')
 const postRouter = require('./routes/post')
 const adminRouter = require('./routes/admin')
+const cookieParser = require("cookie-parser")
 
 /**
  * App Variables
@@ -30,6 +31,8 @@ app.use(express.json());
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
+
+app.use(cookieParser())
 
 
 //--View engine

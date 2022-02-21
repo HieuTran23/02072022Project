@@ -38,8 +38,9 @@ router.post('/login', async (req, res) => {
     
         //Create a token
         const accessToken = jwt.sign({_id: account._id}, process.env.ACCESS_TOKEN_SECRET); 
-        res.cookie('Auth-Access-Token',accessToken);
-        res.header('Auth-Access-Token', accessToken).send(accessToken);
+        res.cookie("token", accessToken);
+        res.redirect('/admin')
+        //res.header('Auth-Access-Token', accessToken).send(accessToken);
     } catch(error){
         console.log(error)
         res.status(400).json({success:false , message:'Error'}) 

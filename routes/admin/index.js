@@ -5,6 +5,7 @@ const verify = require('../../middleware/verifyAuth')
 //-- Login
 //-Method: Post
 router.get('/', verify , async (req, res) => { 
+
     try{
        res.render('admin', {
            title: 'Admin'
