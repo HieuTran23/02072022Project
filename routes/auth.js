@@ -11,7 +11,7 @@ const { loginValidation} = require("../middleware/validation")
 //-Method: Get
 router.get('/login', async (req, res) => {
     try{
-        res.render('auth/login', {
+        res.render('pages/login', {
             title: 'Login'
         })
     } catch (err) {

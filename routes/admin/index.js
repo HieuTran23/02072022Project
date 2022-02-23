@@ -7,7 +7,7 @@ const verify = require('../../middleware/verifyAuth')
 router.get('/', verify , async (req, res) => { 
 
     try{
-       res.render('admin', {
+       res.render('pages/admin', {
            title: 'Admin'
        })
     } catch(error){

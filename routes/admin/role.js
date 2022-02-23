@@ -6,7 +6,7 @@ const Role = require('../../models/role')
 router.get('/' , async (req ,res) => {
     try {
         const roles = await Role.find({})
-        res.render('admin/role' ,{success :true , roles})
+        res.render('pages/admin/role' ,{success :true , roles})
     } catch (error) {
         console.log(error)
         res.status(500) .json({success:false , message:'Error'}) 
@@ -30,7 +30,7 @@ router.get('/detail/:id' , async (req ,res) => {
 //--Method: Get 
 router.get('/create', async (req, res) => {
     try {
-        res.render('admin/role/create', {
+        res.render('pages/admin/role-create', {
             title: 'Create'
         })
     }catch (err) {
