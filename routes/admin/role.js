@@ -1,30 +1,23 @@
 const express = require("express");
 const router = express.Router();
 const Role = require('../../models/role')
+const ObjectId = require('mongodb').ObjectID
 
 //view all role 
+//--Method: Get 
 router.get('/' , async (req ,res) => {
     try {
         const roles = await Role.find({})
-        res.render('pages/admin/role' ,{success :true , roles})
+        res.render('pages/admin/role' ,{
+            title: 'Role List',
+            page: 'Role',
+            roles})
     } catch (error) {
         console.log(error)
         res.status(500) .json({success:false , message:'Error'}) 
     }
 })
 
-//view role details
-router.get('/detail/:id' , async (req ,res) => {
-    try {
-        const roleDetails = await Role.find({
-            _id :req.params.id
-        })
-        res.json({success :true , roleDetails})
-    } catch (error) {
-        console.log(error)
-        res.status(500) .json({success:false , message:'Error'}) 
-    }
-})
 
 //create new role
 //--Method: Get 
@@ -70,58 +63,69 @@ router.post('/create' , async (req ,res) => {
     }
 })
 
-
+router.get('/edit/:id', async (req, res) => {
+    try {
+		const role = await Role.findOne({
+            _id : req.params.id
+        })
+        res.render('pages/admin/role-details',{
+            title: 'Edit',
+            page: 'Role',
+            role
+        })
+    }catch (error) {
+        console.log(error)
+        res.status(500).json({success:false , message:'Error', error})
+    }
+})
 
 //update or edit role 
-router.put('/edit/:id' , async(req,res)=>{
-    const {username , password , email} = req.body
+router.post('/edit/:id' , async(req,res)=>{
+    const {name , description} = req.body
     //validation
-    if(!username || !password || !email)
-        return res.status(400).json({success:false , message:'kekeke'})
-        const hashPassword = await argon2.hash(password)
-        //edit or upate account
-        try {
-            let editedAccount = {
-                username : username || '' ,
-                password : hashPassword || '' ,
-                email : email || ''
-
-            }
-            const editcondition = {_id : req.params.id}
-            editedAccount = await Account.findOneAndUpdate(
-                editcondition ,
-                editedAccount,
-                {new:true}
-            )
-            if (!editcondition){
-                return res.status(401).json({success:false , message : 'cant not edit account'})
-            }
-            res.json({success : true ,message:'edit successful' , account : editedAccount})
-        
-        } catch (error) {
-            console.log(error)
-                res.status(500) .json({success:false , message:'Error'}) 
+    if(!name)
+        return res.status(400).json({success:false , message:''})
+        //edit or update account
+    try {
+        let editRole = {
+            name : name || '' ,
+            description : description || '' 
         }
+        const editedRole = await Role.findOneAndUpdate(
+            {_id: req.params.id} ,
+            editRole,
+            {new:true}
+        )
+        if (!editedRole){
+            return res.status(401).json({success:false , message : 'cant not edit account'})
+        }
+        res.redirect('/admin/role')
+        //res.json({success : true ,message:'edit successful' , role : editRole})
+    
+    } catch (error) {
+        console.log(error)
+            res.status(500) .json({success:false , message:'Error'}) 
+    }
 })
 
 
 
 //delete account 
-router.delete('/delete/:id', async (req, res) => {
+router.get('/delete/:id', async (req, res) => {
 	try {
-		const accountdeletecondition = { _id: req.params.id }
-		const deletedAccount = await Account.findOneAndDelete(accountdeletecondition)
+		const roleId = { _id: req.params.id }
+		const deletedRole = await Role.findOneAndDelete(roleId._id)
 
-		if (!deletedAccount)
+		if (!deletedRole)
 			return res.status(401).json({
 				success: false,
 				message: 'cant not delete account'
 			})
 
-		res.json({ success: true, account: deletedAccount })
+		res.redirect('/admin/role')
 	} catch (error) {
 		console.log(error)
-		res.status(500).json({ success: false, message: 'Error' })
+		res.status(500).json({ success: false, message: 'Error', error })
 	}
 })
 module.exports = router;

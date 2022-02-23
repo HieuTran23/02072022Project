@@ -35,7 +35,12 @@
           <div class="col-md-12">
             <div class="card card-default">
               <div class="card-header">
-                <h3 class="card-title"><%= title %></h3>
+                <% if(locals.title) {
+                  %>
+                  <h3 class="card-title"><%= title %> Form</h3>
+                  <%
+                }%>
+                
               </div>
               <div class="card-body p-0">
                 <form action="/admin/role/create" method="post">
@@ -52,6 +57,7 @@
                   <!-- /.card-body -->
   
                   <div class="card-footer">
+                    <a class="btn btn-secondary" href="/admin/role"> Back to List</a>
                     <button type="submit" class="btn btn-primary">Create new Role</button>
                   </div>
                 </form>

@@ -2,12 +2,14 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
+          <% if (locals.title) { %>
           <h1> <%= title %> Form</h1>
+          <% } %>
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active"><%= page %> / <%= title %> Form</li>
+            <li class="breadcrumb-item active"><% if (locals.page) { %> <%= page %> / <% } %> <% if (locals.title) { %> <%= title %> <% } %></li>
           </ol>
         </div>
       </div>
