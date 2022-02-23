@@ -5,11 +5,15 @@
 const express = require("express")
 const mongoose = require('mongoose')
 var bodyParser = require('body-parser');
+const cookieParser = require("cookie-parser")
+//--Router
 const accountRouter = require('./routes/admin/account')
 const authRouter = require('./routes/auth')
 const postRouter = require('./routes/post')
 const adminRouter = require('./routes/admin')
-const cookieParser = require("cookie-parser")
+const userRouter = require('./routes/admin/user');
+const roleRouter = require('./routes/admin/role')
+//--
 
 /**
  * App Variables
@@ -44,19 +48,28 @@ app.use(express.static('public'))
 /**
  * Routes Definitions
  */
-//--Admin
+//--Admin start
 //Dashboard
 app.use('/admin', adminRouter)
 
+//Role
+app.use('/admin/role', roleRouter)
+
 //Account
-app.use('/api/account', accountRouter)
+//app.use('/api/account', accountRouter)
 
-//Auth
+//User
+app.use('/admin/user', userRouter)
+//--Admin end
+
+//--Auth start
 app.use('/', authRouter)
+//--Auth end 
 
+//--User start
 //Academic Year test verify 
 app.use('/posts', postRouter)
-
+//--User end
 /**
  * Server Activation
  */

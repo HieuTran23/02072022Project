@@ -1,57 +1,67 @@
 const express = require("express");
 const router = express.Router();
-const argon2 = require("argon2")
-const Account = require('../../models/account')
+const Role = require('../../models/role')
 
-// view all account 
+//view all role 
 router.get('/' , async (req ,res) => {
     try {
-        const accounts = await Account.find({})
-        res.json({success :true , accounts})
+        const roles = await Role.find({})
+        res.render('admin/role' ,{success :true , roles})
     } catch (error) {
         console.log(error)
         res.status(500) .json({success:false , message:'Error'}) 
     }
 })
 
-//view account details
+//view role details
 router.get('/detail/:id' , async (req ,res) => {
     try {
-        const accountDetails = await Account.find({
+        const roleDetails = await Role.find({
             _id :req.params.id
         })
-        res.json({success :true , accountDetails})
+        res.json({success :true , roleDetails})
     } catch (error) {
         console.log(error)
         res.status(500) .json({success:false , message:'Error'}) 
     }
 })
 
-// create new account 
-router.post('/create' , async (req ,res) => {
-    const {username , password , email } = req.body
-     //validation
-    if(!username || !password || !email)
-        return res .status(400) .json({success:false , message:'Missing username and/or password and/or email '})
+//create new role
+//--Method: Get 
+router.get('/create', async (req, res) => {
     try {
-        //Check existing username password or email
-        const account = await Account.findOne({username , password ,email})
-        if(account)
-        return res.status(400) .json({success:false , message:'existing username password or email'})
+        res.render('admin/role/create', {
+            title: 'Create'
+        })
+    }catch (err) {
+        console.log(error)
+        res.status(500).json({success:false , message:'Error'})
+    }
+})
+
+//--Method: Post 
+router.post('/create' , async (req ,res) => {
+    const {name, description} = req.body
+     //validation
+    if(!name)
+        return res.status(400).json({success:false , message:'Missing role name'})
+    try {
+        //Check existing role
+        const role = await Role.findOne({name})
+        if(role)
+        return res.status(400).json({success:false , message:'existing role'})
     } catch (error) { 
         console.log(error)
-        res.status(500) .json({success:false , message:'Error'}) 
-        } 
-        const hashPassword = await argon2.hash(password)
-    //create new account        
+        res.status(500).json({success:false , message:'Error'}) 
+    } 
+    //create new role        
     try {
-        const newAccount = new Account ({
-            username ,
-            password : hashPassword ,
-            email
+        const newRole = new Role ({
+            name,
+            description
         })
-        await newAccount.save()
-        res.json({success:true , message:'create success' , account : newAccount})
+        await newRole.save()
+        res.json({success:true , message:'create success' , role : newRole})
     } catch (error) {
         console.log(error)
         res.status(500) .json({success:false , message:'Error'}) 
@@ -60,7 +70,7 @@ router.post('/create' , async (req ,res) => {
 
 
 
-//upate or edit account 
+//update or edit role 
 router.put('/edit/:id' , async(req,res)=>{
     const {username , password , email} = req.body
     //validation
