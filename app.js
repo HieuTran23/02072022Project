@@ -7,6 +7,8 @@ const mongoose = require('mongoose')
 var bodyParser = require('body-parser');
 const accountRouter = require('./routes/admin/account')
 const authRouter = require('./routes/auth')
+const academicYearRouter = require('./routes/admin/academicYear')
+
 
 /**
  * App Variables
@@ -40,6 +42,8 @@ app.use(express.static('public'))
  * Routes Definitions
  */
 //--Admin
+//academicyear
+app.use('/api/academicyear', academicYearRouter)
 //Account
 app.use('/api/account', accountRouter)
 

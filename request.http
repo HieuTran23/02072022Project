@@ -13,15 +13,45 @@ Content-Type: application/json
 }
 
 ###
-PUT http://localhost:5000/api/account/edit/6207e217bc9a6d35803e2f71
+PUT http://localhost:5000/api/account/edit/6207e491bc9a6d35803e2f77
 Content-Type: application/json
 
 {
-    "username" : "eidted" ,
-    "password" : "eidted",
-    "email"    : "eidted@gmail.com"
+    "username" : "789" ,
+    "password" : "1111",
+    "email"    : "eidte999@gmail.com"
 }
 
 
 ###
 DELETE  http://localhost:5000/api/account/delete/62079ed3e48b0a1cb52704e6
+
+###
+Get http://localhost:5000/api/academicyear/delete/620d1783e5760c16bf408790
+
+###
+GET  http://localhost:5000/api/academicyear/
+
+###
+
+POST  http://localhost:5000/api/academicyear/add
+Content-Type: application/json
+
+{
+    "academicTitle" : "heloo" ,
+    "academicDescription" : "hi" 
+}
+
+###
+###
+
+get http://localhost:5000/api/academicyear/edit/620f874fb98444f349ba0756
+Content-Type: application/json
+
+{
+    "academicTitle" : "thay huy " ,
+    "academicDescription" : "nhung ma bi dep trai" 
+}
+
+
+
