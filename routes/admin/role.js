@@ -112,9 +112,10 @@ router.post('/edit/:id' , async(req,res)=>{
 
 //delete account 
 router.get('/delete/:id', async (req, res) => {
+    // const role = await Role.findOne({_id: req.params.id})
+    // res.json(role)
 	try {
-		const roleId = { _id: req.params.id }
-		const deletedRole = await Role.findOneAndDelete(roleId._id)
+		const deletedRole = await Role.findByIdAndRemove(req.params.id)
 
 		if (!deletedRole)
 			return res.status(401).json({

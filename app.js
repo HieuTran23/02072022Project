@@ -13,6 +13,7 @@ const postRouter = require('./routes/post')
 const adminRouter = require('./routes/admin')
 const userRouter = require('./routes/admin/user');
 const roleRouter = require('./routes/admin/role')
+const path = require('path')
 //--
 
 /**
@@ -34,12 +35,13 @@ mongoose.connect('mongodb+srv://admin:admin@cluster.ur4xo.mongodb.net/Database?r
 app.use(express.json());
 
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use(cookieParser())
 
 
 //--View engine
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs')
 
 //--Static file 
