@@ -66,31 +66,30 @@ router.put('/edit/:id' , async(req,res)=>{
     //validation
     if(!username || !password || !email)
         return res.status(400).json({success:false , message:'kekeke'})
-        const hashPassword = await argon2.hash(password)
-        //edit or upate account
-        try {
-            let editedAccount = {
-                username : username || '' ,
-                password : hashPassword || '' ,
-                email : email || ''
-
-            }
-            const editcondition = {_id : req.params.id}
-            editedAccount = await Account.findOneAndUpdate(
-                editcondition ,
-                editedAccount,
-                {new:true}
-            )
-            if (!editcondition){
-                return res.status(401).json({success:false , message : 'cant not edit account'})
-            }
-            res.json({success : true ,message:'edit successful' , account : editedAccount})
-        
-        } catch (error) {
-            console.log(error)
-                res.status(500) .json({success:false , message:'Error'}) 
+    const hashPassword = await argon2.hash(password)
+    //edit or upate account
+    try {
+        let editedAccount = {
+            username : username || '' ,
+            password : hashPassword || '' ,
+            email : email || ''
         }
-})
+        const editcondition = {_id : req.params.id}
+        editedAccount = await Account.findOneAndUpdate(
+            editcondition ,
+            editedAccount,
+            {new:true}
+        )
+        if (!editcondition){
+            return res.status(401).json({success:false , message : 'cant not edit account'})
+        }
+        res.json({success : true ,message:'edit successful' , account : editedAccount})
+    
+    } catch (error) {
+        console.log(error)
+            res.status(500) .json({success:false , message:'Error'}) 
+    }
+})  
 
 
 
