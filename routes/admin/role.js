@@ -31,7 +31,8 @@ router.get('/detail/:id' , async (req ,res) => {
 router.get('/create', async (req, res) => {
     try {
         res.render('pages/admin/role-create', {
-            title: 'Create'
+            title: 'Create',
+            page: 'Role'
         })
     }catch (err) {
         console.log(error)
@@ -61,7 +62,8 @@ router.post('/create' , async (req ,res) => {
             description
         })
         await newRole.save()
-        res.json({success:true , message:'create success' , role : newRole})
+        res.redirect('/admin/role')
+        //res.json({success:true , message:'create success' , role : newRole})
     } catch (error) {
         console.log(error)
         res.status(500) .json({success:false , message:'Error'}) 
