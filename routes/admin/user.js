@@ -2,8 +2,7 @@ const express = require("express");
 const router = express.Router();
 const argon2 = require("argon2")
 const User = require('../../models/user')
-const Role = require('../../models/role');
-const role = require("../../models/role");
+const Role = require('../../models/role')
 
 
 // view all user 
@@ -82,8 +81,7 @@ router.post('/create' , async (req ,res) => {
         //Handle roles request
         if(roles != undefined){
             roles.forEach(roleId => {
-                const role = Role.findOne({_id: roleId})
-                if(role) roleList.push(role._id)
+                roleList.push({roleId})
             })
         }
         
@@ -116,7 +114,7 @@ router.post('/create' , async (req ,res) => {
             contact: contact
         })
         await newUser.save()
-        res.json({success:true , message:'create success' , user : newUser})
+        res.redirect('admin/user')
     } catch (error) { 
         console.log(error)
         res.status(500).json({success:false , message:'Error'}) 
