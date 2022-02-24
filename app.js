@@ -9,15 +9,13 @@ const cookieParser = require("cookie-parser")
 //--Router
 const accountRouter = require('./routes/admin/account')
 const authRouter = require('./routes/auth')
-<<<<<<< Updated upstream
 const postRouter = require('./routes/post')
 const adminRouter = require('./routes/admin')
 const userRouter = require('./routes/admin/user');
 const roleRouter = require('./routes/admin/role')
 //--
-=======
-const academicYearRouter = require('./routes/admin/academicYear')
->>>>>>> Stashed changes
+
+const submissionRouter = require('./routes/admin/submission')
 
 /**
  * App Variables
@@ -52,7 +50,7 @@ app.use(express.static('public'))
 /**
  * Routes Definitions
  */
-<<<<<<< Updated upstream
+
 //--Admin start
 //Dashboard
 app.use('/admin', adminRouter)
@@ -60,11 +58,11 @@ app.use('/admin', adminRouter)
 //Role
 app.use('/admin/role', roleRouter)
 
-=======
+
 //--Admin
-//academic year
-app.use('/api/academicyear',academicYearRouter)
->>>>>>> Stashed changes
+//submission
+app.use('/admin/submission',submissionRouter)
+
 //Account
 //app.use('/api/account', accountRouter)
 
