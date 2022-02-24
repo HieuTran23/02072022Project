@@ -46,9 +46,6 @@
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                     <i class="fas fa-minus"></i>
                                 </button>
-                                <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                    <i class="fas fa-times"></i>
-                                </button>
                             </div>
                         </div>
                         <div class="card-body">
@@ -79,21 +76,24 @@
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                     <i class="fas fa-minus"></i>
                                 </button>
-                                <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                    <i class="fas fa-times"></i>
-                                </button>
                             </div>
                         </div>
                         <div class="card-body">
                             <div class="form-group">
-                                <% roles.forEach(role => {
-                                %>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="roles[]" value="<%= roles[0]._id %>" checked>
+                                    <label class="form-check-label"><%= roles[0].name %></label>
+                                </div>
+                                <% 
+                                for(let i = 1; roles[i] != undefined; i++){
+                                    %>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="roles[]" value="<%= role._id %>">
-                                        <label class="form-check-label"><%= role.name %></label>
+                                        <input class="form-check-input" type="checkbox" name="roles[]" value="<%= roles[i]._id %>">
+                                        <label class="form-check-label"><%= roles[i].name %></label>
                                     </div>
-                                <%
-                                }); %>
+                                    <%
+                                }
+                                %>
                             </div>  
                         </div>
                     </div>
@@ -108,34 +108,52 @@
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                     <i class="fas fa-minus"></i>
                                 </button>
-                                <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                    <i class="fas fa-times"></i>
-                                </button>
                             </div>           
                         </div>
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="name">Email</label>
-                                <input type="text" class="form-control" id="emails" name="emails[]" placeholder="Enter email">
+                                <div class="card-tools d-flex justify-content-between">
+                                    <label for="name">Email</label>  
+                                    <button type="button" class="btn btn-tool" id="add-email">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>                            
+                                <input type="text" class="form-control" id="input" name="emails[]" placeholder="Enter email">
+                                <div class="input-box"></div>
                             </div>
                             <div class="form-group">
-                                <label for="name">Phone</label>
-                                <input type="text" class="form-control" id="phones" name="phones[]" placeholder="Enter phone">
+                                <div class="card-tools d-flex justify-content-between">
+                                    <label for="name">Phone</label>  
+                                    <button type="button" class="btn btn-tool" id="add-phone">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>      
+                                <input type="text" class="form-control" id="input" name="phones[]" placeholder="Enter phone">
+                                <div class="input-box"></div>
                             </div>
-                            <h3 class="card-title">Address</h3>    
-                            <hr>
-                            <br>    
-                            <div class="form-group">
-                                <label for="name">Street</label>
-                                <textarea class="form-control" rows ="6" id="streets" name="streets[]" placeholder="Enter Street"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="name">City</label>
-                                <input type="text" class="form-control" id="cities" name="cities[]" placeholder="Enter city">
-                            </div>
-                            <div class="form-group">
-                                <label for="name">Country</label>
-                                <input type="text" class="form-control" id="countries" name="countries[]" placeholder="Enter country">
+                            <div class="address-box">
+                                <div class="card-tools d-flex justify-content-between">
+                                    <h3 class="card-title">Address</h3> 
+                                    <button type="button" class="btn btn-tool" id="add-address">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>    
+                                <hr>
+                                <div class="address-group">
+                                    <div class="form-group">
+                                        <label for="name">Street</label>
+                                        <textarea class="form-control" rows ="6" id="streets" name="streets[]" placeholder="Enter Street"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name">City</label>
+                                        <input type="text" class="form-control" id="cities" name="cities[]" placeholder="Enter city">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name">Country</label>
+                                        <input type="text" class="form-control" id="countries" name="countries[]" placeholder="Enter country">
+                                    </div>
+                                </div>
+                                <div class="input-box"></div>
                             </div>
                             
                         </div>
@@ -151,9 +169,6 @@
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                     <i class="fas fa-minus"></i>
-                                </button>
-                                <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                    <i class="fas fa-times"></i>
                                 </button>
                             </div>
                         </div>
@@ -191,5 +206,41 @@
 <script src="../../../admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../../../admin/dist/js/adminlte.min.js"></script>
+<script> 
+    $("#add-address").on('click', function(){
+        var parentDiv = $(this).parent().parent() 
+        var childDiv = $(this).parent().parent().children(".address-group")
+        var inputBox = $(this).parent().parent().children(".input-box")
+        $("<br>").appendTo(inputBox)
+        $("<p>Other address<p>").appendTo(inputBox)
+        $(childDiv).clone().appendTo(inputBox)
+        
+    })
+
+    $("#add-phone").on('click', function(){
+        var parentDiv = $(this).parent().parent() 
+        var childDiv = $(this).parent().parent().children("#input")
+        var inputBox = $(this).parent().parent().children(".input-box")
+        $("<br>").appendTo(inputBox)
+        $(childDiv).clone().appendTo(inputBox)
+        
+    })
+
+    $("#add-email").on('click', function(){
+        var parentDiv = $(this).parent().parent() 
+        var childDiv = $(this).parent().parent().children("#input")
+        var inputBox = $(this).parent().parent().children(".input-box")
+        $("<br>").appendTo(inputBox)
+        $(childDiv).clone().appendTo(inputBox)
+        
+    })
+
+    
+
+    // function myFunction(){
+    //     var div = document.querySelector(".form");
+    //     document.getElementById('cardbody').appendChild(div.cloneNode(true));
+    // }    
+</script>
 </body>
 </html>

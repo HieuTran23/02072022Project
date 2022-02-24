@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> <%= page %> | <%= title %></title>
+  <title>AdminLTE 3 | DataTables</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -55,12 +55,12 @@
               <div class="card-body">
                 <!--Row-->
                 <div class="row">
-                  <p> The role list doesn't have the role you want! Create it </p>
+                  <p> The user list doesn't have a user you want! Create it </p>
                 </div>
                 <!-- /.row -->
                 <!--Row-->
                 <div class="row">
-                  <a href="/admin/role/create" class="btn btn-success"> Create New Role </a>
+                  <a href="/admin/user/create" class="btn btn-success"> Create New User </a>
                 </div>
                 <!-- /.row -->
               </div>
@@ -91,25 +91,41 @@
                   <thead>
                   <tr>
                     <th>No. </th>
+                    <th>Username</th>
+                    <th>Full Name</th>
                     <th>Role</th>
-                    <th>Description</th>
-                    <th>Create At</th>
+                    <th>create At</th>
                     <th></th>
                   </tr>
                   </thead>
                   <tbody>
                     <% 
                     let count = 1;
-                    roles.forEach(role => {
+                    users.forEach(user => {
                     %>
                       <tr>
                         <td><%= count %></td>
-                        <td><%= role.name %>  </td>
-                        <td><%= role.description %>  </td>
-                        <td> <%= role.createAt.toLocaleString('default') %></td>
+                        <td><%= user.username %>  </td>
+                        <td><%= user.fullName %>  </td>
                         <td>
-                          <a href="/admin/role/edit/<%= role._id %>" class="btn btn-tool"><i class="fas fa-pencil-alt"></i></a>
-                          <a data-confirm="Are you sure?" href="/admin/role/delete/<%= role._id %>" class="btn btn-tool"><i class="fas fa-trash-alt"></i></a>
+                            <% user.roles.forEach(userRole => {
+                                    roles.forEach(role => {
+                                        if(userRole.roleId.toString() == role._id.toString()){
+                                            %>
+                                            <div class="row">
+                                                <%= role.name%>
+                                            </div>
+                                            
+                                            <%
+                                        }
+                                    })
+                            }); %>
+                        </td>
+                        <td> <%= user.createAt.toLocaleString('default') %></td>
+                        <td>
+                          <a href="/admin/user/edit/<%= user._id %>" class="btn btn-tool"><i class="fas fa-pencil-alt"></i></a>
+                          <a data-confirm="Are you sure?" href="/admin/user/delete/<%= user._id %>" class="btn btn-tool"><i class="fas fa-trash-alt"></i></a>
+                          <a href="/admin/user/profile/<%= user._id %>" class="btn btn-tool"><i class="fas fa-eye"></i></a>
                         </td>
                       </tr>
                     <% 
@@ -121,9 +137,10 @@
                   <tfoot>
                   <tr>
                     <th>No. </th>
+                    <th>Username</th>
+                    <th>Full Name</th>
                     <th>Role</th>
-                    <th>Description</th>
-                    <th>Create At</th>
+                    <th>create At</th>
                     <th></th>
                   </tr>
                   </tfoot>
@@ -172,21 +189,19 @@
 <script src="../../../admin/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../../../admin/dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../../../admin/dist/js/demo.js"></script>
 <!-- Page specific script -->
 <script>
-  $(function () {
-    $('#table').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-    });
-  });
+    $(function () {
+        $('#table').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+        });
+    });   
 </script>
 </body>
 </html>

@@ -16,8 +16,7 @@ const UserSchema = new Schema({
         max : 1024
     },
     fullName:{
-        type: String,
-        required: true
+        type: String
     },
     roles: [{
         roleId: {
