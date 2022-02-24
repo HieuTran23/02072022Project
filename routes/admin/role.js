@@ -63,12 +63,16 @@ router.post('/create' , async (req ,res) => {
     }
 })
 
+
+
+//update or edit role 
+//--Method: Get 
 router.get('/edit/:id', async (req, res) => {
     try {
 		const role = await Role.findOne({
             _id : req.params.id
         })
-        res.render('pages/admin/role-details',{
+        res.render('pages/admin/role-edit',{
             title: 'Edit',
             page: 'Role',
             role
@@ -79,7 +83,7 @@ router.get('/edit/:id', async (req, res) => {
     }
 })
 
-//update or edit role 
+//--Method: Post 
 router.post('/edit/:id' , async(req,res)=>{
     const {name , description} = req.body
     //validation
@@ -111,10 +115,12 @@ router.post('/edit/:id' , async(req,res)=>{
 
 
 //delete account 
+//--Method: Get
 router.get('/delete/:id', async (req, res) => {
+    // const role = await Role.findOne({_id: req.params.id})
+    // res.json(role)
 	try {
-		const roleId = { _id: req.params.id }
-		const deletedRole = await Role.findOneAndDelete(roleId._id)
+		const deletedRole = await Role.findByIdAndRemove(req.params.id)
 
 		if (!deletedRole)
 			return res.status(401).json({

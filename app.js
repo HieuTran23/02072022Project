@@ -6,6 +6,7 @@ const express = require("express")
 const mongoose = require('mongoose')
 var bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser")
+const path = require('path')
 //--Router
 const accountRouter = require('./routes/admin/account')
 const authRouter = require('./routes/auth')
@@ -14,6 +15,7 @@ const adminRouter = require('./routes/admin')
 const userRouter = require('./routes/admin/user');
 const roleRouter = require('./routes/admin/role')
 const academicYearRouter = require('./routes/admin/academicYear')
+
 //--
 
 
@@ -40,12 +42,13 @@ mongoose.connect('mongodb+srv://admin:admin@cluster.ur4xo.mongodb.net/Database?r
 app.use(express.json());
 
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use(cookieParser())
 
 
 //--View engine
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs')
 
 //--Static file 

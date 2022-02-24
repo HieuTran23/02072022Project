@@ -16,31 +16,30 @@ const UserSchema = new Schema({
         max : 1024
     },
     fullName:{
-        type: String,
-        required: true
+        type: String
     },
-    // role: [{
-    //     roleId: {
-    //         type: mongoose.Types.ObjectId,
-    //         ref: 'role',
-    //         required: true
-    //     }
-    // }],
+    roles: [{
+        roleId: {
+            type: mongoose.Types.ObjectId,
+            ref: 'role',
+            required: true
+        }
+    }],
     contact: {
-        email: [{
-            username: {
+        emails: [{
+            email: {
                 type: String,
                 require: true,
                 max:255
             }
         }],
-        phone: [{
-            mobile: {
+        phones: [{
+            phone: {
                 type: String,
                 max:255
             }
         }],
-        address:[{
+        addresses:[{
             street: {
                 type: String,
                 max:255
