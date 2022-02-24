@@ -9,7 +9,6 @@ const cookieParser = require("cookie-parser")
 const path = require('path')
 //--Router
 const authRouter = require('./routes/auth')
-const postRouter = require('./routes/post')
 const adminRouter = require('./routes/admin')
 const userRouter = require('./routes/admin/user');
 const roleRouter = require('./routes/admin/role')
@@ -64,7 +63,6 @@ app.use('/admin/role', roleRouter)
 app.use('/admin/submission',submissionRouter)
 
 //academic year
-app.use('/api/academicyear',academicYearRouter)
 //Account
 //app.use('/api/account', accountRouter)
 
