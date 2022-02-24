@@ -25,3 +25,7 @@ Content-Type: application/json
 
 ###
 DELETE  http://localhost:5000/api/account/delete/62079ed3e48b0a1cb52704e6
+
+
+### academic
+Get http://localhost:5000/api/academicyear
