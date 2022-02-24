@@ -1,4 +1,4 @@
-const Account = require('../models/account')
+const User = require('../models/user')
 const express = require("express")
 const router = express.Router()
 const argon2 = require("argon2")
@@ -11,7 +11,7 @@ const { loginValidation} = require("../middleware/validation")
 //-Method: Get
 router.get('/login', async (req, res) => {
     try{
-        res.render('pages/login', {
+        res.render('pages/auth/login', {
             title: 'Login'
         })
     } catch (err) {
@@ -26,18 +26,18 @@ router.post('/login', async (req, res) => {
     if(error) return res.status(400).send(error.details[0].message)
 
     try{
-        //Find account
-        const account = await Account.findOne({ username: req.body.username});
+        //Find user
+        const user = await User.findOne({ username: req.body.username});
     
-        //Check exist the account
-        if (!account) return res.status(400).json({ success: false, message: 'Incorrect username or password' })
+        //Check exist the user
+        if (!user) return res.status(400).json({ success: false, message: 'Incorrect username or password' })
     
         //Check password
-        const validPassword = await argon2.verify(account.password, req.body.password)
+        const validPassword = await argon2.verify(user.password, req.body.password)
         if (!validPassword) return res.status(400).json({ success: false, message: 'Incorrect username or password' })
     
         //Create a token
-        const accessToken = jwt.sign({_id: account._id}, process.env.ACCESS_TOKEN_SECRET); 
+        const accessToken = jwt.sign({_id: user._id}, process.env.ACCESS_TOKEN_SECRET); 
         res.cookie("token", accessToken);
         res.redirect('/admin')
         //res.header('Auth-Access-Token', accessToken).send(accessToken);

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= page %> | <%= title %></title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../../../admin/plugins/fontawesome-free/css/all.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../../../admin/dist/css/adminlte.min.css">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <!-- Navbar -->
+  <%- include('../../partials/admin/header'); -%>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <!-- Sidebar -->
+  <%- include('../../partials/admin/sidebar'); -%>
+  <!-- /.sidebar -->
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <%- include('../../partials/admin/content-header-wrapper'); -%>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <form action="/admin/user/create" method="post">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <% if(locals.title) {
+                            %>
+                            <h3 class="card-title"><%= title %> Form</h3>
+                            <%
+                            }%>
+                            
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="name">Username</label>
+                                <input type="text" class="form-control" id="username" name="username" placeholder="Enter username">
+                            </div>
+                            <div class="form-group">
+                                <label for="name">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
+                            </div>
+                            <div class="form-group">
+                                <label for="name">Confirm Password</label>
+                                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Enter confirm password">
+                            </div>
+                            <div class="form-group">
+                                <label for="name">Full Name</label>
+                                <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Enter username">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card -->
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <h3 class="card-title">Role</h3>
+                            
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="roles[]" value="<%= roles[0]._id %>" checked>
+                                    <label class="form-check-label"><%= roles[0].name %></label>
+                                </div>
+                                <% 
+                                for(let i = 1; roles[i] != undefined; i++){
+                                    %>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="roles[]" value="<%= roles[i]._id %>">
+                                        <label class="form-check-label"><%= roles[i].name %></label>
+                                    </div>
+                                    <%
+                                }
+                                %>
+                            </div>  
+                        </div>
+                    </div>
+                    <!-- /.card -->
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <h3 class="card-title">Contact Form</h3>   
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>           
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <div class="card-tools d-flex justify-content-between">
+                                    <label for="name">Email</label>  
+                                    <button type="button" class="btn btn-tool" id="add-email">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>                            
+                                <input type="text" class="form-control" id="input" name="emails[]" placeholder="Enter email">
+                                <div class="input-box"></div>
+                            </div>
+                            <div class="form-group">
+                                <div class="card-tools d-flex justify-content-between">
+                                    <label for="name">Phone</label>  
+                                    <button type="button" class="btn btn-tool" id="add-phone">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>      
+                                <input type="text" class="form-control" id="input" name="phones[]" placeholder="Enter phone">
+                                <div class="input-box"></div>
+                            </div>
+                            <div class="address-box">
+                                <div class="card-tools d-flex justify-content-between">
+                                    <h3 class="card-title">Address</h3> 
+                                    <button type="button" class="btn btn-tool" id="add-address">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>    
+                                <hr>
+                                <div class="address-group">
+                                    <div class="form-group">
+                                        <label for="name">Street</label>
+                                        <textarea class="form-control" rows ="6" id="streets" name="streets[]" placeholder="Enter Street"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name">City</label>
+                                        <input type="text" class="form-control" id="cities" name="cities[]" placeholder="Enter city">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name">Country</label>
+                                        <input type="text" class="form-control" id="countries" name="countries[]" placeholder="Enter country">
+                                    </div>
+                                </div>
+                                <div class="input-box"></div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <h3 class="card-title">Submit box</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-footer">
+                                <a class="btn btn-secondary" href="/admin/user"> Back to List</a>
+                                <button type="submit" class="btn btn-primary">Create new User</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div>
+        </form>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- Main Footer -->
+  <%- include('../../partials/admin/footer'); -%>
+  <!-- End Footer-->
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+<!-- jQuery -->
+<script src="../../../admin/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../../../admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../../../admin/dist/js/adminlte.min.js"></script>
+<script> 
+    $("#add-address").on('click', function(){
+        var parentDiv = $(this).parent().parent() 
+        var childDiv = $(this).parent().parent().children(".address-group")
+        var inputBox = $(this).parent().parent().children(".input-box")
+        $("<br>").appendTo(inputBox)
+        $("<p>Other address<p>").appendTo(inputBox)
+        $(childDiv).clone().appendTo(inputBox)
+        
+    })
+
+    $("#add-phone").on('click', function(){
+        var parentDiv = $(this).parent().parent() 
+        var childDiv = $(this).parent().parent().children("#input")
+        var inputBox = $(this).parent().parent().children(".input-box")
+        $("<br>").appendTo(inputBox)
+        $(childDiv).clone().appendTo(inputBox)
+        
+    })
+
+    $("#add-email").on('click', function(){
+        var parentDiv = $(this).parent().parent() 
+        var childDiv = $(this).parent().parent().children("#input")
+        var inputBox = $(this).parent().parent().children(".input-box")
+        $("<br>").appendTo(inputBox)
+        $(childDiv).clone().appendTo(inputBox)
+        
+    })
+
+    
+
+    // function myFunction(){
+    //     var div = document.querySelector(".form");
+    //     document.getElementById('cardbody').appendChild(div.cloneNode(true));
+    // }    
+</script>
+</body>
+</html>

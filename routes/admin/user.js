@@ -8,6 +8,7 @@ const User = require('../../models/user')
 router.get('/' , async (req ,res) => {
     try {
         const users = await User.find({})
+        res.render('pages/admin/user')
         res.json({success :true , users})
     } catch (error) {
         console.log(error)
@@ -29,6 +30,18 @@ router.get('/' , async (req ,res) => {
 // })
 
 // create new user 
+
+//methos get create page
+router.get('/create', async(req ,res) =>{
+    try {
+        res.render('pages/admin/user-create',{
+            title : 'Create User' ,
+            page :'User'         
+        })
+    } catch (error) {
+        
+    }
+})
 router.post('/create' , async (req ,res) => {
     const {username , password, fullName, email, phone, street, city, country} = req.body
      //validation
