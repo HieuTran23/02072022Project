@@ -37,7 +37,7 @@ router.post('/login', async (req, res) => {
         if (!validPassword) return res.status(400).json({ success: false, message: 'Incorrect username or password' })
     
         //Create a token
-        const accessToken = jwt.sign({_id: user._id}, process.env.ACCESS_TOKEN_SECRET); 
+        const accessToken = jwt.sign({name: user.username}, process.env.ACCESS_TOKEN_SECRET); 
         res.cookie("token", accessToken);
         res.redirect('/admin')
         //res.header('Auth-Access-Token', accessToken).send(accessToken);
