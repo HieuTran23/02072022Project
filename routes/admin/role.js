@@ -101,7 +101,7 @@ router.post('/edit/:id' , async(req,res)=>{
             {new:true}
         )
         if (!editedRole){
-            return res.status(401).json({success:false , message : 'cant not edit account'})
+            return res.status(401).json({success:false , message : 'cant not edit role'})
         }
         res.redirect('/admin/role')
         //res.json({success : true ,message:'edit successful' , role : editRole})

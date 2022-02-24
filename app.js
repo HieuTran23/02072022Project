@@ -12,15 +12,8 @@ const authRouter = require('./routes/auth')
 const adminRouter = require('./routes/admin')
 const userRouter = require('./routes/admin/user');
 const roleRouter = require('./routes/admin/role')
-const academicYearRouter = require('./routes/admin/academicYear')
-
+const submissionRouter = require('./routes/admin/submission')
 //--
-
-
-
-
-
-
 /**
  * App Variables
  */
@@ -66,8 +59,13 @@ app.use('/admin/role', roleRouter)
 
 //--Admin
 
+//submission
+app.use('/admin/submission',submissionRouter)
+
 //academic year
-app.use('/api/academicyear',academicYearRouter)
+//Account
+//app.use('/api/account', accountRouter)
+
 
 //User
 app.use('/admin/user', userRouter)
