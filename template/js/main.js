@@ -12,3 +12,14 @@
     --decoration-bg-color-1: hsl(var(--hue-value-1), 100%, 70%);
     --decoration-bg-color-2: hsl(var(--hue-value-2), 100%, 70%);
 }
+function testimonialSlider(){
+    const carouselOne = document.getElementById('carouselOne');
+    if(carouselOne){
+        carouselOne.addEventListener('slide.bs.carousel', function () {
+            const activeItem =this.querySelector(".active");
+            console.log(activeItem); 
+            document.querySelector(".js-tesimonial-img").src =  activeItem.getAttibute("data-js-testimonial-img");
+        })
+    }
+}
+testimonialSlider();
