@@ -35,12 +35,12 @@ router.get('/create', async (req, res) => {
     }
 })
 router.post('/create', async (req, res) => {
-    const {submissionTitle , submissionDescription} = req.body
+    const {name , description , closureDate , finalClosureDate} = req.body
     //validation
-    if(!submissionTitle)
+    if(!name)
         return res.status(400).json({success:false , message:'Missing submission title'})
     try {
-        const submissionExisting = await Submission.findOne({submissionTitle})
+        const submissionExisting = await Submission.findOne({name})
         if(submissionExisting)
             return res.status(400).json({success:false , message:'Existing submission title'})
     } catch (error) {
@@ -49,8 +49,10 @@ router.post('/create', async (req, res) => {
     }
     try {
         const newSubmission = new Submission({
-            submissionTitle  ,
-            submissionDescription
+            name  ,
+            description ,
+            closureDate ,
+            finalClosureDate
         })
         await newSubmission.save()
         res.redirect('/admin/submission')

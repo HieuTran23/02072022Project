@@ -46,12 +46,20 @@
                 <form action="/admin/submission/create" method="post">
                   <div class="card-body">
                     <div class="form-group">
-                      <label for="name">Submission Title</label>
-                      <input type="text" class="form-control" id="submissionTitle" name="submissionTitle" placeholder="Enter submission title">
+                      <label for="name">Submission Name</label>
+                      <input type="text" class="form-control" id="name" name="name" placeholder="Enter submission name">
                     </div>
                     <div class="form-group">
                       <label for="name">Submission Description</label>
-                      <textarea class="form-control" rows ="6" id="submissionDescription" name="submissionDescription" placeholder="Description..."></textarea>
+                      <textarea class="form-control" rows ="6" id="description" name="description" placeholder="Description..."></textarea>
+                    </div>
+                    <div class="form-group">
+                      <label for="name">Closure Date</label>
+                      <input type="date" class="form-control" id="closureDate" name="closureDate" placeholder="">
+                    </div>
+                    <div class="form-group">
+                      <label for="name">Final Closure Date</label>
+                      <input type="date" class="form-control" id="finalClosureDate" name="finalClosureDate" placeholder="">
                     </div>
                   </div>
                   <!-- /.card-body -->

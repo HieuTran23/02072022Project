@@ -5,6 +5,9 @@ const argon2 = require("argon2")
 const jwt = require("jsonwebtoken")
 require('dotenv').config()
 const { loginValidation} = require("../middleware/validation")
+const Role = require('../models/role')
+const role = require('../models/role')
+
 
 
 //-- Login
@@ -35,9 +38,21 @@ router.post('/login', async (req, res) => {
         //Check password
         const validPassword = await argon2.verify(user.password, req.body.password)
         if (!validPassword) return res.status(400).json({ success: false, message: 'Incorrect username or password' })
-    
+        
+        //Find role
+        const roles = await Role.find()
+
+        //Create role
+        let roleList = []
+
+        user.roles.forEach(role => {
+            
+            for(let i = 0; roles[i] != undefined; i++){
+                if(role.roleId == roles[i].id) return roleList.push(roles[i].name)
+            }
+        });
         //Create a token
-        const accessToken = jwt.sign({name: user.username}, process.env.ACCESS_TOKEN_SECRET); 
+        const accessToken = jwt.sign({name: user.username, roles: roleList}, process.env.ACCESS_TOKEN_SECRET); 
         res.cookie("token", accessToken);
         res.redirect('/admin')
         //res.header('Auth-Access-Token', accessToken).send(accessToken);
