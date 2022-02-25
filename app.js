@@ -7,6 +7,7 @@ const mongoose = require('mongoose')
 var bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser")
 const path = require('path')
+const Role = require('./models/role')
 //--Router
 const authRouter = require('./routes/auth')
 const adminRouter = require('./routes/admin')
@@ -24,8 +25,8 @@ const app = express();
  *  App Configuration
  */
 // Database config
-mongoose.connect('mongodb+srv://admin:admin@cluster.ur4xo.mongodb.net/Database?retryWrites=true&w=majority', (err) => {
-    if (err) console.log(error);
+mongoose.connect('mongodb+srv://admin:admin@cluster.ur4xo.mongodb.net/Database?retryWrites=true&w=majority', (err, db) => {
+    if (err) console.log(err);
     console.log('Connect database success')
 })
 

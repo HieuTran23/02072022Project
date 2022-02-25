@@ -20,43 +20,38 @@
     <div class="container">
       <div class="header-main d-flex justify-content-between align-items-center">
         <div class="header-logo">
-          <a href="index.html"><span></span>Greenwich</a>
+          <a href="index.html"><span>Green</span>wich</a>
         </div>
-
-      <button type="button" class="header-hamburger-btn js-header-menu-toggler">
-        <span></span>
-
-      <button type="button" class="header-hambuger-btn js-header-menu-toggler">
-        <span><i class="bi bi-house"></i></span>
-
-      </button>
-      <div class="header-backdrop js-header-backdrop"></div>
-      <nav class="header-menu js-header-menu">
-      <button type="button" class="header-close-btn js-header-menu-toggler">
-        <i class="fas fa-times"></i>
-      </button>
-      <ul class="menu">
-        <li class="menu-item"><a href="index.html">Home</a></li>
-        <li class="menu-item menu-item-has-children">
-          <a href="" class="js-toggle-sub-menu">Course <i class="fas fa-chevron-down"></i></a>
-          <ul class="sub-menu js-sub-menu">
-            <li class="sub-menu-item"><a href="course.html">course</a></li>
-            <li class="sub-menu-item"><a href="course-details.html">course details</a></li>
-          </ul>
-        </li>
-        <li class="menu-item menu-item-has-children">
-          <a href=""class="js-toggle-sub-menu">pages<i class="fas fa-chevron-down"></i></a>
-          <ul class="sub-menu js-sub-menu">
-            <li class="sub-menu-item"><a href="login.html">log in</a></li>
-            <li class="sub-menu-item"><a href="signup.html">sign up</a></li>
-          </ul>
-        </li>
-        <li class="menu-item"><a href="contact.html">contact</a></li>
-      </ul>
-    </nav>
+        <button type="button" class="header-hamburger-btn js-header-menu-toggler">
+          <span></span>
+        </button>
+        <div class="header-backdrop js-header-backdrop"></div>
+        <nav class="header-menu js-header-menu">
+          <button type="button" class="header-close-btn js-header-menu-toggler">
+            <i class="fas fa-times"></i>
+          </button>
+        <ul class="menu">
+          <li class="menu-item"><a href="index.html">Home</a></li>
+          <li class="menu-item menu-item-has-children">
+            <a href="#" class="js-toggle-sub-menu">courses <i class="fas fa-chevron-down"></i></a>
+            <ul class="sub-menu js-sub-menu">
+              <li class="sub-menu-item"><a href="courses.html">courses</a></li>
+              <li class="sub-menu-item"><a href="course-details.html">course details</a></li>
+            </ul>
+          </li>
+          <li class="menu-item menu-item-has-children">
+            <a href="#"class="js-toggle-sub-menu">pages <i class="fas fa-chevron-down"></i></a>
+            <ul class="sub-menu js-sub-menu">
+              <li class="sub-menu-item"><a href="login.html">log in</a></li>
+              <li class="sub-menu-item"><a href="signup.html">sign up</a></li>
+            </ul>
+          </li>
+          <li class="menu-item"><a href="contact.html">contact</a></li>
+        </ul>
+      </nav>
     </div>
   </div>
-  </header>
+</header>
   <!--header end-->
 
   <!--banner section start-->
@@ -265,6 +260,71 @@
   </section>
   <!--courses section end-->
 
+<!--testimonials section start-->
+<div class="section testimonials-section section-padding position-relative">
+  <div class="decoration-circles">
+    <div class="decoration-circles-item"></div>
+    <div class="decoration-circles-item"></div>
+    <div class="decoration-circles-item"></div>
+    <div class="decoration-circles-item"></div>
+  </div>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="section-title">
+          <h2 class="title text-center">
+              studnets feedback
+          </h2>
+          <p class="sub-title text-center">
+            what our students say
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <div class="img-box rounded-circle position-relative">
+          <img src="img/testimonial/1.png" class="w-100 js-testimonial" alt="testimonial img">
+        </div>
+        <div id="carouselOne" class="carousel slide text-center" data-bs-ride="carousel">
+          <div class="carousel-inner mb-4">
+            <div class="carousel-item active" data-js-testimonial-img="img/testimonial/1.png">
+              <div class="testimonials-item">
+                <p class="text-1">lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                <h3>john doe</h3>
+                <p class="text-2">web developer</p>
+              </div>
+            </div>
+            <div class="carousel-item" data-js-testimonial-img="img/testimonial/2.png">
+              <div class="testimonials-item">
+                <p class="text-1">lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                <h3>john doe</h3>
+                <p class="text-2">web developer</p>
+              </div>
+            </div>
+            <div class="carousel-item" data-js-testimonial-img="img/testimonial/3.png">
+              <div class="testimonials-item">
+                <p class="text-1">lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                <h3>john doe</h3>
+                <p class="text-2">web developer</p>
+              </div>
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselOne" data-bs-slide="prev">
+            <i class="fas fa-arrow-left"></i>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselOne" data-bs-slide="next">
+            <i class="fas fa-arrow-right"></i>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--testimonials section end-->
+
 
   <!--Footer start-->
   <footer class="footer">
@@ -275,11 +335,11 @@
             <div class="footer-item">
               <h3 class="footer-logo"><span>tws</span>tudy</h3>
               <ul>
-                <li><a href="">about</a></li>
-                <li><a href="">what we offer</a></li>
-                <li><a href="">carres</a></li>
-                <li><a href="">certificates</a></li>
-                <li><a href="">blog</a></li>
+                <li><a href="#">about</a></li>
+                <li><a href="#">what we offer</a></li>
+                <li><a href="#">carres</a></li>
+                <li><a href="#">certificates</a></li>
+                <li><a href="#">blog</a></li>
               </ul>
             </div>
           </div>

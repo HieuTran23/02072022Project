@@ -1,10 +1,10 @@
 const express = require("express")
 const router = express.Router()
-const verify = require('../../middleware/verifyAuth')
+const {verifyToken, isAdmin} = require('../../middleware/verifyAuth')
 
 //-- Login
 //-Method: Post
-router.get('/', verify , async (req, res) => { 
+router.get('/', verifyToken, isAdmin , async (req, res) => { 
 
     try{
        res.render('pages/admin', {
