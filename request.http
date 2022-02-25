@@ -58,6 +58,18 @@ Content-Type: application/json
     "academicDescription" : "nhung ma bi dep trai" 
 }
 
+###
 
+POST    http://localhost:5000/user/profile/edit/62166698a7f49721e47b6abe
+Content-Type: application/json
+
+{
+    "fullName" : "tuanhuy " ,
+    "emails": ["hieudeptrai@yahoo,con"],
+    "phones": [ 9846214721],
+    "streets": ["huyyyy"],
+    "cities": ["dsadsa"],
+    "countries": [""]
+}
 
 
