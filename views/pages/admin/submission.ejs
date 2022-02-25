@@ -91,9 +91,11 @@
                   <thead>
                   <tr>
                     <th>No. </th>
-                    <th>Submision Title</th>
+                    <th>Submision Name</th>
                     <th>Submision Description</th>
-                    <th>Create At</th>
+                    <th>Closure Date</th>
+                    <th>Final Closure Date</th>
+                    <th>Submision Create At</th>
                     <th></th>
                   </tr>
                   </thead>
@@ -104,9 +106,11 @@
                     %>
                       <tr>
                         <td><%= count %></td>
-                        <td><%= submission.submissionTitle %>  </td>
-                        <td><%= submission.submissionDescription %>  </td>
-                        <td> <%= submission.submissionCreatedAt.toLocaleString('default') %></td>
+                        <td><%= submission.name %>  </td>
+                        <td><%= submission.description %>  </td>
+                        <td><%= submission.closureDate.toLocaleString('default') %>  </td>
+                        <td><%= submission.finalClosureDate.toLocaleString('default') %>  </td>
+                        <td><%= submission.createdAt.toLocaleString('default') %></td>
                         <td>
                           <a href="/admin/submission/edit/<%= submission._id %>" class="btn btn-tool"><i class="fas fa-pencil-alt"></i></a>
                           <a data-confirm="Are you sure?" href="/admin/submission/delete/<%= submission._id %>" class="btn btn-tool"><i class="fas fa-trash-alt"></i></a>
@@ -121,9 +125,11 @@
                   <tfoot>
                   <tr>
                     <th>No. </th>
-                    <th>Submision Title</th>
+                    <th>Submision Name</th>
                     <th>Submision Description</th>
-                    <th>Create At</th>
+                    <th>Closure Date</th>
+                    <th>Final Closure Date</th>
+                    <th>Submision Create At</th>
                     <th></th>
                   </tr>
                   </tfoot>

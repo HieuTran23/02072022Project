@@ -1,14 +1,20 @@
 const mongoose = require('mongoose');
 const submissionSchema  = mongoose.Schema({
-    submissionTitle: {
+    name: {
         type: String,
         required : true,
         unique : true
     },
-    submissionDescription: {
+    description: {
         type: String
     },
-    submissionCreatedAt: {
+    closureDate: {
+        type: Date
+    },
+    finalClosureDate: {
+        type: Date
+    },
+    createdAt: {
         type: Date,
         default: Date.now()
     }
