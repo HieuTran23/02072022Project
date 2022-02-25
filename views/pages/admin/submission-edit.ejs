@@ -55,13 +55,21 @@
                             <form action="/admin/submission/edit/<%= submission._id %>" method="post">
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="name">Submission Title</label>
-                                        <input type="text" class="form-control" id="submissionTitle" name="submissionTitle" value="<%= submission.submissionTitle %>" placeholder ="<%= submission.submissionTitle %>">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="name">Submission description</label>
-                                        <textarea class="form-control" rows ="6" id="submissionDescription" name="submissionDescription"><%= submission.submissionDescription %></textarea>
-                                    </div>
+                                        <label for="name">Submission Name</label>
+                                        <input type="text" class="form-control" id="name" name="name" value="<%= submission.name %> " placeholder="<%= submission.name %>">
+                                      </div>
+                                      <div class="form-group">
+                                        <label for="name">Submission Description</label>
+                                        <textarea class="form-control" rows ="6" id="description" name="description" value="<%= submission.description  %> " placeholder="<%= submission.description  %>"></textarea>
+                                      </div>
+                                      <div class="form-group">
+                                        <label for="name">Closure Date</label>
+                                        <input type="date" class="form-control" id="closureDate" name="closureDate" value="<%= submission.closureDate %> " placeholder="<%= submission.closureDate %>">
+                                      </div>
+                                      <div class="form-group">
+                                        <label for="name">Final Closure Date</label>
+                                        <input type="date" class="form-control" id="finalClosureDate" name="finalClosureDate" value="<%= submission.finalClosureDate %>" placeholder="<%= submission.finalClosureDate %>">
+                                      </div>
                                 </div>
                             <!-- /.card-body -->
             
