@@ -28,7 +28,7 @@
 
 /* 01 Font */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
-/* 02 */
+/* 02 variable*/
 :root {
   --orange: hsl(36, 80%, 50%);
   --white: hsl(0, 0%, 100%);
