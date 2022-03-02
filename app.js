@@ -14,6 +14,8 @@ const adminRouter = require('./routes/admin')
 const userRouter = require('./routes/admin/user');
 const roleRouter = require('./routes/admin/role')
 const submissionRouter = require('./routes/admin/submission')
+
+const profileUser = require('./routes/user/index')
 //--
 /**
  * App Variables
@@ -57,6 +59,8 @@ app.use('/admin', adminRouter)
 //Role
 app.use('/admin/role', roleRouter)
 
+//-----User
+app.use('/user/profile',profileUser)
 
 //--Admin
 

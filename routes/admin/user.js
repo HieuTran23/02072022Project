@@ -162,6 +162,7 @@ router.get('/edit/:id', async(req, res) => {
 //--Method: Post 
 router.post('/edit/:id' , async(req,res)=>{
     const {fullName, roles, emails, phones, streets, cities, countries} = req.body
+
      //validation
     try {
         //Create contact field (object)
@@ -185,7 +186,6 @@ router.post('/edit/:id' , async(req,res)=>{
                 roleList.push({roleId})
             })
         }
-        
         //Handle contact request
         if(emails != undefined){
             emails.forEach(email => {
@@ -206,6 +206,7 @@ router.post('/edit/:id' , async(req,res)=>{
                                         city: cities[i],
                                         country: countries[i]
                                     }
+                
                 contact.addresses.push(addressHandle)
             }
         }
@@ -216,7 +217,7 @@ router.post('/edit/:id' , async(req,res)=>{
             password: user.password,
             fullName: fullName,
             roles: roleList,
-            contact: contact,
+            contact: contact
         }
 
         //Update user to database
