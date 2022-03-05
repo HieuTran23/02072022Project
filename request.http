@@ -72,4 +72,6 @@ Content-Type: application/json
     "countries": [""]
 }
 
+###
 
+get http://localhost:5000/user
