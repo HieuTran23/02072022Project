@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require('../../models/user')
 const Role = require('../../models/role');
-const Role = require('../../models/profile');
+const Profile = require('../../models/profile');
 
 
 
