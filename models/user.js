@@ -25,6 +25,16 @@ const UserSchema = new Schema({
             required: true
         }
     }],
+    anonymously : {
+        idea: {
+            type: Boolean,
+            default : false
+        },
+        comment: {
+            type: Boolean,
+            default: false
+        }
+    },
     contact: {
         emails: [{
             email: {
