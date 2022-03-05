@@ -8,12 +8,16 @@ var bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser")
 const path = require('path')
 const Role = require('./models/role')
+
+const department = require('./models/department')
 //--Router
 const authRouter = require('./routes/auth')
 const adminRouter = require('./routes/admin')
 const userRouter = require('./routes/admin/user');
 const roleRouter = require('./routes/admin/role')
 const submissionRouter = require('./routes/admin/submission')
+
+const departmentRouter = require('./routes/admin/department')
 
 const profileUser = require('./routes/user/index')
 //--
@@ -64,6 +68,8 @@ app.use('/user/profile',profileUser)
 
 //--Admin
 
+//department
+app.use('/admin/department',departmentRouter)
 //submission
 app.use('/admin/submission',submissionRouter)
 
