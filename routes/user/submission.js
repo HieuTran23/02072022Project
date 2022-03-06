@@ -1,11 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const User = require('../../models/user');
-const Role = require('../../models/role');
-const Department = require('../../models/department')
+const submissionRouter = require('../../models/submission')
 
 //View profile list 
-router.get('/:id' , async (req ,res) => {
+router.get('/' , async (req ,res) => {
     try {
         const user = await User.findOne({
             _id :req.params.id
