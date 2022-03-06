@@ -11,15 +11,15 @@ const Role = require('./models/role')
 
 const department = require('./models/department')
 //--Router
+//--|--Admin
 const authRouter = require('./routes/auth')
 const adminRouter = require('./routes/admin')
-const userRouter = require('./routes/admin/user');
-const roleRouter = require('./routes/admin/role')
-const submissionRouter = require('./routes/admin/submission')
-
-const departmentRouter = require('./routes/admin/department')
-
-const profileUser = require('./routes/user/index')
+const userAdminRouter = require('./routes/admin/user');
+const roleAdminRouter = require('./routes/admin/role')
+const submissionAdminRouter = require('./routes/admin/submission')
+const departmentAdminRouter = require('./routes/admin/department')
+//--|--User
+const profileRouter = require('./routes/user/profile')
 //--
 /**
  * App Variables
@@ -57,29 +57,20 @@ app.use(express.static('public'))
  */
 
 //--Admin start
-//Dashboard
+//--|--Dashboard
 app.use('/admin', adminRouter)
 
-//Role
-app.use('/admin/role', roleRouter)
+//--|--Role
+app.use('/admin/role', roleAdminRouter)
 
-//-----User
-app.use('/user/profile',profileUser)
+//--|--department
+app.use('/admin/department',departmentAdminRouter)
 
-//--Admin
+//--|--submission
+app.use('/admin/submission',submissionAdminRouter)
 
-//department
-app.use('/admin/department',departmentRouter)
-//submission
-app.use('/admin/submission',submissionRouter)
-
-//academic year
-//Account
-//app.use('/api/account', accountRouter)
-
-
-//User
-app.use('/admin/user', userRouter)
+//--|--User
+app.use('/admin/user', userAdminRouter)
 //--Admin end
 
 //--Auth start
@@ -87,6 +78,8 @@ app.use('/', authRouter)
 //--Auth end 
 
 //--User start
+//--|--profile
+app.use('/profile', profileRouter)
 
 //--User end
 /**
