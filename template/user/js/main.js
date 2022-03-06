@@ -273,15 +273,20 @@
     /**
      * CK Editor
      */
-
-      ClassicEditor
-      .create( document.querySelector( '#editor' ), {
-        // toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ]
-      } )
-      .then( editor => {
-        window.editor = editor;
-      } )
-      .catch( err => {
-        console.error( err.stack );
-      } );
+     window.addEventListener('load', () => {
+      let editor = document.querySelector( '#editor' )
+       if(editor){
+        ClassicEditor
+        .create( document.querySelector( '#editor' ), {
+          // toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ]
+        } )
+        .then( editor => {
+          window.editor = editor;
+        } )
+        .catch( err => {
+          console.error( err.stack );
+        } );
+       }
+    });
+      
   })()

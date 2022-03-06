@@ -1750,3 +1750,188 @@ Footer
 .setting .card-header {
   background-color: white;
 }
+
+/*
+Submission
+*/
+
+.submission .submission-pagination {
+  color: #444444;
+}
+.submission .submission-pagination ul {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.submission .submission-pagination li {
+  margin: 0 5px;
+  transition: 0.3s;
+}
+.submission .submission-pagination li a {
+  color: #111111;
+  padding: 7px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.submission .submission-pagination li.active,
+.submission .submission-pagination li:hover {
+  background: #e03a3c;
+}
+.submission .submission-pagination li.active a,
+.submission .submission-pagination li:hover a {
+  color: #fff;
+}
+.submission .sidebar {
+  padding: 30px;
+  margin: 0 0 60px 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+.submission .sidebar .sidebar-title {
+  font-size: 20px;
+  font-weight: 700;
+  padding: 0 0 0 0;
+  margin: 0 0 15px 0;
+  color: #111111;
+  position: relative;
+}
+.submission .sidebar .sidebar-item {
+  margin-bottom: 30px;
+}
+.submission .sidebar .search-form form {
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 3px 10px;
+  position: relative;
+}
+.submission .sidebar .search-form form input[type="text"] {
+  border: 0;
+  padding: 4px;
+  border-radius: 4px;
+  width: calc(100% - 40px);
+}
+.submission .sidebar .search-form form button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  border: 0;
+  background: none;
+  font-size: 16px;
+  padding: 0 15px;
+  margin: -1px;
+  background: #e03a3c;
+  color: #fff;
+  transition: 0.3s;
+  border-radius: 0 4px 4px 0;
+  line-height: 0;
+}
+.submission .sidebar .search-form form button i {
+  line-height: 0;
+}
+.submission .sidebar .search-form form button:hover {
+  background: #e34c4d;
+}
+.submission .sidebar .categories ul {
+  list-style: none;
+  padding: 0;
+}
+.submission .sidebar .categories ul li + li {
+  padding-top: 10px;
+}
+.submission .sidebar .categories ul a {
+  color: #111111;
+  transition: 0.3s;
+}
+.submission .sidebar .categories ul a:hover {
+  color: #e03a3c;
+}
+.submission .sidebar .categories ul a span {
+  padding-left: 5px;
+  color: #aaaaaa;
+  font-size: 14px;
+}
+.submission .sidebar .recent-posts .post-item + .post-item {
+  margin-top: 15px;
+}
+.submission .sidebar .recent-posts img {
+  width: 80px;
+  float: left;
+}
+.submission .sidebar .recent-posts h4 {
+  font-size: 15px;
+  margin-left: 95px;
+  font-weight: bold;
+}
+.submission .sidebar .recent-posts h4 a {
+  color: #111111;
+  transition: 0.3s;
+}
+.submission .sidebar .recent-posts h4 a:hover {
+  color: #e03a3c;
+}
+.submission .sidebar .recent-posts time {
+  display: block;
+  margin-left: 95px;
+  font-style: italic;
+  font-size: 14px;
+  color: #aaaaaa;
+}
+.submission .sidebar .tags {
+  margin-bottom: -10px;
+}
+.submission .sidebar .tags ul {
+  list-style: none;
+  padding: 0;
+}
+.submission .sidebar .tags ul li {
+  display: inline-block;
+}
+.submission .sidebar .tags ul a {
+  color: #515151;
+  font-size: 14px;
+  padding: 6px 14px;
+  margin: 0 6px 8px 0;
+  border: 1px solid #c4c4c4;
+  display: inline-block;
+  transition: 0.3s;
+}
+.submission .sidebar .tags ul a:hover {
+  color: #fff;
+  border: 1px solid #e03a3c;
+  background: #e03a3c;
+}
+.submission .sidebar .tags ul a span {
+  padding-left: 5px;
+  color: #aaaaaa;
+  font-size: 14px;
+}
+
+.submission .submission-cards .card {
+  margin-bottom: 60px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.submission .submission-cards .card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.submission .submission-cards .card .card-title:hover {
+  color: #e03a3c;
+}
+
+.submission .submission-cards .card .card-title {
+  color: #111111;
+}
+
+.submission .submission-cards .card .card-text {
+  color: #444444;
+}
+
+.submission .submission-cards .card .card-date {
+  color: #777777;
+  font-size: 12px;
+  margin: 10px 0 10px 0;
+}
