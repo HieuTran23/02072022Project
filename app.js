@@ -20,6 +20,7 @@ const submissionAdminRouter = require('./routes/admin/submission')
 const departmentAdminRouter = require('./routes/admin/department')
 //--|--User
 const profileRouter = require('./routes/user/profile')
+const submissionRouter = require('./routes/user/submission')
 //--
 /**
  * App Variables
@@ -80,6 +81,9 @@ app.use('/', authRouter)
 //--User start
 //--|--profile
 app.use('/profile', profileRouter)
+
+//--|--Submission
+app.use('submission', submissionRouter)
 
 //--User end
 /**
