@@ -14,6 +14,7 @@ const adminRouter = require('./routes/admin')
 const userRouter = require('./routes/admin/user');
 const roleRouter = require('./routes/admin/role')
 const submissionRouter = require('./routes/admin/submission')
+const categoryRouter = require('./routes/admin/category')
 
 const profileUser = require('./routes/user/index')
 //--
@@ -66,7 +67,8 @@ app.use('/user/profile',profileUser)
 
 //submission
 app.use('/admin/submission',submissionRouter)
-
+ //category
+app.use('/admin/category',categoryRouter)
 //academic year
 //Account
 //app.use('/api/account', accountRouter)

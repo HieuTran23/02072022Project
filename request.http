@@ -72,4 +72,20 @@ Content-Type: application/json
     "countries": [""]
 }
 
+###
+POST http://localhost:5000/admin/category/create
+Content-Type: application/json
 
+{
+    "name" :"Hoang101111" ,
+    "description" : "hoang dep trai"
+}
+
+###
+POST  http://localhost:5000/admin/category/edit/621f16eeb4d4129a8f9fa1b7
+Content-Type: application/json
+
+{
+    "name" :"Hieu" ,
+    "description" : "hieu dep trai"
+}
