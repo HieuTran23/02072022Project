@@ -83,7 +83,7 @@ app.use('/', authRouter)
 app.use('/profile', profileRouter)
 
 //--|--Submission
-app.use('submission', submissionRouter)
+app.use('/submission', submissionRouter)
 
 //--User end
 /**
