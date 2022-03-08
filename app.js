@@ -7,18 +7,20 @@ const mongoose = require('mongoose')
 var bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser")
 const path = require('path')
+<<<<<<< HEAD
 
+=======
+const Role = require('./models/role')
+>>>>>>> parent of 14e5ad2 (Revert "Merge branch 'category'")
 //--Router
-//--|--Admin
 const authRouter = require('./routes/auth')
 const adminRouter = require('./routes/admin')
-const userAdminRouter = require('./routes/admin/user');
-const roleAdminRouter = require('./routes/admin/role')
-const submissionAdminRouter = require('./routes/admin/submission')
-const departmentAdminRouter = require('./routes/admin/department')
-//--|--User
-const profileRouter = require('./routes/user/profile')
-const submissionRouter = require('./routes/user/submission')
+const userRouter = require('./routes/admin/user');
+const roleRouter = require('./routes/admin/role')
+const submissionRouter = require('./routes/admin/submission')
+const categoryRouter = require('./routes/admin/category')
+
+const profileUser = require('./routes/user/index')
 //--
 /**
  * App Variables
@@ -56,20 +58,28 @@ app.use(express.static('public'))
  */
 
 //--Admin start
-//--|--Dashboard
+//Dashboard
 app.use('/admin', adminRouter)
 
-//--|--Role
-app.use('/admin/role', roleAdminRouter)
+//Role
+app.use('/admin/role', roleRouter)
 
-//--|--department
-app.use('/admin/department',departmentAdminRouter)
+//-----User
+app.use('/user/profile',profileUser)
 
-//--|--submission
-app.use('/admin/submission',submissionAdminRouter)
+//--Admin
 
-//--|--User
-app.use('/admin/user', userAdminRouter)
+//submission
+app.use('/admin/submission',submissionRouter)
+ //category
+app.use('/admin/category',categoryRouter)
+//academic year
+//Account
+//app.use('/api/account', accountRouter)
+
+
+//User
+app.use('/admin/user', userRouter)
 //--Admin end
 
 //--Auth start
@@ -77,11 +87,6 @@ app.use('/', authRouter)
 //--Auth end 
 
 //--User start
-//--|--profile
-app.use('/profile', profileRouter)
-
-//--|--Submission
-app.use('/submission', submissionRouter)
 
 //--User end
 /**
