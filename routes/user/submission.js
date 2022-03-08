@@ -6,18 +6,12 @@ const Submission = require('../../models/submission')
 //--Method:Get
 router.get('/' , async (req ,res) => {
     try {
-        const user = await Submission.findOne({
-            _id :req.params.id
-        })
-        const roles = await Role.find()
-        const departments = await Department.find()
+        const submissions = await Submission.find()
 
-        res.render('pages/user/profile',{
-            title: 'Profile',
-            page: 'User',
-            user,
-            roles,
-            departments
+        res.render('pages/user/submission',{
+            title: 'View',
+            page: 'Submission',
+            submissions
         })
     } catch (error) {
         console.log(error)
