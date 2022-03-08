@@ -38,51 +38,51 @@
 
             <div class="row">
 
-                <div class="col-lg-8">
-                    <div class="row submission-cards">
-                        <div class="col-12 col-lg-6 col-xl-4">
-                            <% submissions.forEach(submission => {
-                                %>
-                                <a href="/submission/detail/<%= submission._id%>" class="card">
-                                    <img src="https://source.unsplash.com/user/c_v_r" class="card-img-top">
-                                    <div class="card-body">
-                                        <h5 class="card-title"><%= submission.name%></h5>
-                                        <div class="card-date">
-                                            <i class="bi bi-clock"></i>
-                                            Closure date: 
-                                            <time datetime="<%= submission.closureDate %>"><%= submission.closureDate %></time>
-                                        </div>
-                                        <p class="card-text">
-                                            <%= submission.description %>
-                                        </p>
-                                        <div class="card-more">
-                                            <p class="create-at"></p>
-                                        </div>
+            <div class="col-lg-8">
+                <div class="row submission-cards">
+                    <div class="col-12 col-lg-6 col-xl-4">
+                        <% submissions.forEach(submission => {
+                            %>
+                            <a href="/submission/detail/<%= submission._id%>" class="card">
+                                <img src="https://source.unsplash.com/user/c_v_r" class="card-img-top">
+                                <div class="card-body">
+                                    <h5 class="card-title"><%= submission.name%></h5>
+                                    <div class="card-date">
+                                        <i class="bi bi-clock"></i>
+                                        Closure date: 
+                                        <time datetime="<%= submission.closureDate %>"><%= submission.closureDate %></time>
                                     </div>
-                                </a>
-                                <%
-                            }) %>
-                            
-                        </div>  
-                    </div>
-                    <!-- Submission card -->
-                    <div class="submission-pagination">
-                        <ul class="justify-content-center">
-                            <li><a href="#">1</a></li>
-                            <li class="active"><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                        </ul>
-                    </div>
+                                    <p class="card-text">
+                                        <%= submission.description %>
+                                    </p>
+                                    <div class="card-more">
+                                        <p class="create-at"></p>
+                                    </div>
+                                </div>
+                            </a>
+                            <%
+                        }) %>
+                        
+                    </div>  
+                </div>
+                <!-- Submission card -->
+                <div class="submission-pagination">
+                    <ul class="justify-content-center">
+                        <li><a href="#">1</a></li>
+                        <li class="active"><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                    </ul>
+                </div>
 
-                </div><!-- End blog entries list -->
+            </div><!-- End blog entries list -->
 
-                <div class="col-lg-4">
+            <div class="col-lg-4">
 
-                    <!--Sidebar-->
-                    <%- include("../../partials/user/sidebar")%>
-                    <!-- End sidebar -->
+                <!--Sidebar-->
+                <%- include("../../partials/user/sidebar")%>
+                <!-- End sidebar -->
 
-                </div><!-- End blog sidebar -->
+            </div><!-- End blog sidebar -->
 
             </div>
 
