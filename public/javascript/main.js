@@ -273,15 +273,27 @@
     /**
      * CK Editor
      */
+     window.addEventListener('load', () => {
+      let editor = document.querySelector( '#editor' )
+       if(editor){
+        ClassicEditor
+        .create( document.querySelector( '#editor' ), {
+          // toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ]
+        } )
+        .then( editor => {
+          window.editor = editor;
+        } )
+        .catch( err => {
+          console.error( err.stack );
+        } );
+       }
+    });
 
-      ClassicEditor
-      .create( document.querySelector( '#editor' ), {
-        // toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ]
-      } )
-      .then( editor => {
-        window.editor = editor;
-      } )
-      .catch( err => {
-        console.error( err.stack );
-      } );
-  })()
+    //Data table
+    window.addEventListener('load', () => {
+      $(document).ready(function() {
+        $('#example').DataTable();
+      });
+    });
+})()
+
