@@ -7,9 +7,7 @@ const mongoose = require('mongoose')
 var bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser")
 const path = require('path')
-const Role = require('./models/role')
 
-const department = require('./models/department')
 //--Router
 //--|--Admin
 const authRouter = require('./routes/auth')
