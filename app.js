@@ -9,7 +9,6 @@ const cookieParser = require("cookie-parser")
 const path = require('path')
 const department = require('./models/department')
 //--Router
-//--|--Admin
 const authRouter = require('./routes/auth')
 const adminRouter = require('./routes/admin')
 const userRouter = require('./routes/admin/user');
@@ -58,18 +57,16 @@ app.use(express.static('public'))
  */
 
 //--Admin start
-//--|--Dashboard
+//Dashboard
 app.use('/admin', adminRouter)
 
 //Role
 app.use('/admin/role', roleRouter)
 
-
 //-----User
 app.use('/user/profile',profileUser)
 
-//--|--department
-app.use('/admin/department',departmentAdminRouter)
+//--Admin
 
 //submission
 app.use('/admin/submission',submissionRouter)
@@ -92,11 +89,6 @@ app.use('/', authRouter)
 //--Auth end 
 
 //--User start
-//--|--profile
-app.use('/profile', profileRouter)
-
-//--|--Submission
-app.use('/submission', submissionRouter)
 
 //--User end
 /**
