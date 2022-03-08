@@ -70,8 +70,7 @@ app.use('/user/profile',profileUser)
 
 //submission
 app.use('/admin/submission',submissionRouter)
- //category
-app.use('/admin/category',categoryRouter)
+
 //academic year
 //Account
 //app.use('/api/account', accountRouter)
