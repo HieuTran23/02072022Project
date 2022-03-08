@@ -4,20 +4,9 @@ const router = express.Router();
 const User = require('../../models/user');
 const Role = require('../../models/role');
 
-//View list user
-router.get('/' , async (req ,res) => {
-    try {
-        const list = await User.find({})
-        res.json(list)
-    } catch (error) {
-        console.log(error)
-        res.status(500) .json({success:false , message:'Error'}) 
-    }
-})
-
 //Edit and update user
 //-- get
-router.get('/edit/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
 		const getUser = await User.findOne({
             _id : req.params.id
@@ -30,7 +19,7 @@ router.get('/edit/:id', async (req, res) => {
 })
 
 //-- Post 
-router.post('/edit/:id' , async(req,res)=>{
+router.post('/:id' , async(req,res)=>{
     const {fullName, emails, phones, streets, cities, countries} = req.body
      //validation
     try {
