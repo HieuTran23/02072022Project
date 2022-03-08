@@ -25,20 +25,6 @@ const UserSchema = new Schema({
             required: true
         }
     }],
-    departmentId: {
-        type: mongoose.Types.ObjectId,
-        ref: 'department',
-    },
-    anonymously : {
-        idea: {
-            type: Boolean,
-            default : false
-        },
-        comment: {
-            type: Boolean,
-            default: false
-        }
-    },
     contact: {
         emails: [{
             email: {

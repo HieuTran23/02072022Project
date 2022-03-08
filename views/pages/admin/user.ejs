@@ -94,7 +94,6 @@
                     <th>Username</th>
                     <th>Full Name</th>
                     <th>Role</th>
-                    <th>Department</th>
                     <th>create At</th>
                     <th></th>
                   </tr>
@@ -121,18 +120,6 @@
                                         }
                                     })
                             }); %>
-                        </td>
-                        <td>
-                        <%
-                        for(let i = 0; departments[i] != undefined; i++){
-                          if(user.departmentId == departments[i].id) {
-                            %>
-                            <%= departments[i].name %>
-                            <%
-                            break;
-                          }
-                        }
-                        %>  
                         </td>
                         <td> <%= user.createAt.toLocaleString('default') %></td>
                         <td>

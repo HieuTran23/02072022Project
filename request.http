@@ -72,19 +72,4 @@ Content-Type: application/json
     "countries": [""]
 }
 
-###
-POST    http://localhost:5000/admin/department/create
-Content-Type: application/json
 
-{
-    "name":"the cat",
-    "description":"Hieu's cat"
-}
-###
-POST     http://localhost:5000/admin/department/edit/621eecdc7dcf48b252efb840
-Content-Type: application/json
-
-{
-    "name":"hoang van tuan huy",
-    "description":"code code"
-}

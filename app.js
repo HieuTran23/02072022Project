@@ -8,17 +8,24 @@ var bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser")
 const path = require('path')
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 const Role = require('./models/role')
 >>>>>>> parent of 14e5ad2 (Revert "Merge branch 'category'")
+=======
+const Role = require('./models/role')
+>>>>>>> parent of aef08d0 (Merge branch 'main' of https://github.com/HieuTran23/02072022Project)
 //--Router
 const authRouter = require('./routes/auth')
 const adminRouter = require('./routes/admin')
 const userRouter = require('./routes/admin/user');
 const roleRouter = require('./routes/admin/role')
 const submissionRouter = require('./routes/admin/submission')
+<<<<<<< HEAD
 const categoryRouter = require('./routes/admin/category')
+=======
+>>>>>>> parent of aef08d0 (Merge branch 'main' of https://github.com/HieuTran23/02072022Project)
 
 const profileUser = require('./routes/user/index')
 //--
@@ -63,6 +70,7 @@ app.use('/admin', adminRouter)
 
 //Role
 app.use('/admin/role', roleRouter)
+<<<<<<< HEAD
 
 //-----User
 app.use('/user/profile',profileUser)
@@ -73,6 +81,17 @@ app.use('/user/profile',profileUser)
 app.use('/admin/submission',submissionRouter)
  //category
 app.use('/admin/category',categoryRouter)
+=======
+
+//-----User
+app.use('/user/profile',profileUser)
+
+//--Admin
+
+//submission
+app.use('/admin/submission',submissionRouter)
+
+>>>>>>> parent of aef08d0 (Merge branch 'main' of https://github.com/HieuTran23/02072022Project)
 //academic year
 //Account
 //app.use('/api/account', accountRouter)
