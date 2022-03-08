@@ -1428,12 +1428,14 @@ idea
 .idea .idea-pagination li:hover a {
   color: #fff;
 }
-.idea .sidebar {
+
+/*sidebar*/
+.sidebar {
   padding: 30px;
   margin: 0 0 60px 20px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
-.idea .sidebar .sidebar-title {
+.sidebar .sidebar-title {
   font-size: 20px;
   font-weight: 700;
   padding: 0 0 0 0;
@@ -1441,22 +1443,22 @@ idea
   color: #111111;
   position: relative;
 }
-.idea .sidebar .sidebar-item {
+.sidebar .sidebar-item {
   margin-bottom: 30px;
 }
-.idea .sidebar .search-form form {
+.sidebar .search-form form {
   background: #fff;
   border: 1px solid #ddd;
   padding: 3px 10px;
   position: relative;
 }
-.idea .sidebar .search-form form input[type="text"] {
+.sidebar .search-form form input[type="text"] {
   border: 0;
   padding: 4px;
   border-radius: 4px;
   width: calc(100% - 40px);
 }
-.idea .sidebar .search-form form button {
+.sidebar .search-form form button {
   position: absolute;
   top: 0;
   right: 0;
@@ -1472,68 +1474,68 @@ idea
   border-radius: 0 4px 4px 0;
   line-height: 0;
 }
-.idea .sidebar .search-form form button i {
+.sidebar .search-form form button i {
   line-height: 0;
 }
-.idea .sidebar .search-form form button:hover {
+.sidebar .search-form form button:hover {
   background: #e34c4d;
 }
-.idea .sidebar .categories ul {
+.sidebar .categories ul {
   list-style: none;
   padding: 0;
 }
-.idea .sidebar .categories ul li + li {
+.sidebar .categories ul li + li {
   padding-top: 10px;
 }
-.idea .sidebar .categories ul a {
+.sidebar .categories ul a {
   color: #111111;
   transition: 0.3s;
 }
-.idea .sidebar .categories ul a:hover {
+.sidebar .categories ul a:hover {
   color: #e03a3c;
 }
-.idea .sidebar .categories ul a span {
+.sidebar .categories ul a span {
   padding-left: 5px;
   color: #aaaaaa;
   font-size: 14px;
 }
-.idea .sidebar .recent-posts .post-item + .post-item {
+.sidebar .recent-posts .post-item + .post-item {
   margin-top: 15px;
 }
-.idea .sidebar .recent-posts img {
+.sidebar .recent-posts img {
   width: 80px;
   float: left;
 }
-.idea .sidebar .recent-posts h4 {
+.sidebar .recent-posts h4 {
   font-size: 15px;
   margin-left: 95px;
   font-weight: bold;
 }
-.idea .sidebar .recent-posts h4 a {
+.sidebar .recent-posts h4 a {
   color: #111111;
   transition: 0.3s;
 }
-.idea .sidebar .recent-posts h4 a:hover {
+.sidebar .recent-posts h4 a:hover {
   color: #e03a3c;
 }
-.idea .sidebar .recent-posts time {
+.sidebar .recent-posts time {
   display: block;
   margin-left: 95px;
   font-style: italic;
   font-size: 14px;
   color: #aaaaaa;
 }
-.idea .sidebar .tags {
+.sidebar .tags {
   margin-bottom: -10px;
 }
-.idea .sidebar .tags ul {
+.sidebar .tags ul {
   list-style: none;
   padding: 0;
 }
-.idea .sidebar .tags ul li {
+.sidebar .tags ul li {
   display: inline-block;
 }
-.idea .sidebar .tags ul a {
+.sidebar .tags ul a {
   color: #515151;
   font-size: 14px;
   padding: 6px 14px;
@@ -1542,12 +1544,12 @@ idea
   display: inline-block;
   transition: 0.3s;
 }
-.idea .sidebar .tags ul a:hover {
+.sidebar .tags ul a:hover {
   color: #fff;
   border: 1px solid #e03a3c;
   background: #e03a3c;
 }
-.idea .sidebar .tags ul a span {
+.sidebar .tags ul a span {
   padding-left: 5px;
   color: #aaaaaa;
   font-size: 14px;
@@ -1727,13 +1729,22 @@ Footer
   padding: 40px 0 20px 0;
 }
 
-.idea-create .form {
+.idea-create .card {
+  border: none;
   padding: 30px;
   margin-bottom: 60px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
+.idea-create .card .card-header {
+  background-color: white;
+}
+
 /*profile page*/
+.profile {
+  padding: 40px 0 20px 0;
+}
+
 .profile .card {
   padding: 30px;
   margin-bottom: 60px;
@@ -1741,6 +1752,10 @@ Footer
 }
 
 /*setting page*/
+.setting {
+  padding: 40px 0 20px 0;
+}
+
 .setting .card {
   padding: 30px;
   margin-bottom: 60px;
@@ -1754,6 +1769,9 @@ Footer
 /*
 Submission
 */
+.submission {
+  padding: 40px 0 20px 0;
+}
 
 .submission .submission-pagination {
   color: #444444;
@@ -1783,130 +1801,6 @@ Submission
 .submission .submission-pagination li:hover a {
   color: #fff;
 }
-.submission .sidebar {
-  padding: 30px;
-  margin: 0 0 60px 20px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-}
-.submission .sidebar .sidebar-title {
-  font-size: 20px;
-  font-weight: 700;
-  padding: 0 0 0 0;
-  margin: 0 0 15px 0;
-  color: #111111;
-  position: relative;
-}
-.submission .sidebar .sidebar-item {
-  margin-bottom: 30px;
-}
-.submission .sidebar .search-form form {
-  background: #fff;
-  border: 1px solid #ddd;
-  padding: 3px 10px;
-  position: relative;
-}
-.submission .sidebar .search-form form input[type="text"] {
-  border: 0;
-  padding: 4px;
-  border-radius: 4px;
-  width: calc(100% - 40px);
-}
-.submission .sidebar .search-form form button {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  border: 0;
-  background: none;
-  font-size: 16px;
-  padding: 0 15px;
-  margin: -1px;
-  background: #e03a3c;
-  color: #fff;
-  transition: 0.3s;
-  border-radius: 0 4px 4px 0;
-  line-height: 0;
-}
-.submission .sidebar .search-form form button i {
-  line-height: 0;
-}
-.submission .sidebar .search-form form button:hover {
-  background: #e34c4d;
-}
-.submission .sidebar .categories ul {
-  list-style: none;
-  padding: 0;
-}
-.submission .sidebar .categories ul li + li {
-  padding-top: 10px;
-}
-.submission .sidebar .categories ul a {
-  color: #111111;
-  transition: 0.3s;
-}
-.submission .sidebar .categories ul a:hover {
-  color: #e03a3c;
-}
-.submission .sidebar .categories ul a span {
-  padding-left: 5px;
-  color: #aaaaaa;
-  font-size: 14px;
-}
-.submission .sidebar .recent-posts .post-item + .post-item {
-  margin-top: 15px;
-}
-.submission .sidebar .recent-posts img {
-  width: 80px;
-  float: left;
-}
-.submission .sidebar .recent-posts h4 {
-  font-size: 15px;
-  margin-left: 95px;
-  font-weight: bold;
-}
-.submission .sidebar .recent-posts h4 a {
-  color: #111111;
-  transition: 0.3s;
-}
-.submission .sidebar .recent-posts h4 a:hover {
-  color: #e03a3c;
-}
-.submission .sidebar .recent-posts time {
-  display: block;
-  margin-left: 95px;
-  font-style: italic;
-  font-size: 14px;
-  color: #aaaaaa;
-}
-.submission .sidebar .tags {
-  margin-bottom: -10px;
-}
-.submission .sidebar .tags ul {
-  list-style: none;
-  padding: 0;
-}
-.submission .sidebar .tags ul li {
-  display: inline-block;
-}
-.submission .sidebar .tags ul a {
-  color: #515151;
-  font-size: 14px;
-  padding: 6px 14px;
-  margin: 0 6px 8px 0;
-  border: 1px solid #c4c4c4;
-  display: inline-block;
-  transition: 0.3s;
-}
-.submission .sidebar .tags ul a:hover {
-  color: #fff;
-  border: 1px solid #e03a3c;
-  background: #e03a3c;
-}
-.submission .sidebar .tags ul a span {
-  padding-left: 5px;
-  color: #aaaaaa;
-  font-size: 14px;
-}
 
 .submission .submission-cards .card {
   margin-bottom: 60px;
@@ -1934,4 +1828,59 @@ Submission
   color: #777777;
   font-size: 12px;
   margin: 10px 0 10px 0;
+}
+
+/*pagination*/
+
+.pagination {
+  color: #444444;
+}
+.pagination ul {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.pagination li {
+  margin: 0 5px;
+  transition: 0.3s;
+}
+.pagination li a {
+  color: #111111;
+  padding: 7px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pagination li.active,
+.pagination li:hover {
+  background: #e03a3c;
+}
+.pagination li.active a,
+.pagination li:hover a {
+  color: #fff;
+}
+
+/*submission-detail*/
+.submission-detail {
+  padding: 40px 0 20px 0;
+}
+
+.submission-detail .card {
+  padding: 30px;
+  margin-bottom: 60px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  border: none;
+}
+
+.submission-detail .card .card-header {
+  background-color: white;
+}
+
+.submission-detail ul li {
+  margin: 0;
+}
+
+.submission .card-header {
+  font-weight: 800;
 }
