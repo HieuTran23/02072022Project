@@ -3,17 +3,21 @@ const router = express.Router();
 const argon2 = require("argon2")
 const User = require('../../models/user')
 const Role = require('../../models/role');
+const Department = require('../../models/department')
 
 // view all user 
 router.get('/' , async (req ,res) => {
     try {
         const users = await User.find()
         const roles = await Role.find()
+        const departments = await Department.find()
+
         res.render('pages/admin/user',{
             title: "User List",
             page: "User",
             users,
-            roles
+            roles,
+            departments
         })
     } catch (error) {
         console.log(error)
@@ -46,10 +50,13 @@ router.get('/profile/:id' , async (req ,res) => {
 router.get('/create', async (req, res) => {
     try {
         const roles = await Role.find();
+        const departments = await Department.find();
+
         res.render('pages/admin/user-create', {
             title: 'Create',
             page: 'User',
-            roles
+            roles,
+            departments
         })
     }catch (err) {
         console.log(error)
@@ -59,7 +66,7 @@ router.get('/create', async (req, res) => {
 //--Method: Post 
 router.post('/create' , async (req ,res) => {
     // res.json(req.body)
-    const {username , password, confirmPassword, fullName, roles, emails, phones, streets, cities, countries} = req.body
+    const {username , password, confirmPassword, fullName, departmentId, roles, emails, phones, streets, cities, countries} = req.body
      //validation
     if(!username || !password || !confirmPassword)
         return res .status(400) .json({success:false , message:'Missing text'})
@@ -129,6 +136,7 @@ router.post('/create' , async (req ,res) => {
             password: hashPassword,
             fullName: fullName,
             roles: roleList,
+            departmentId,
             contact: contact
         })
         await newUser.save()
@@ -147,11 +155,14 @@ router.get('/edit/:id', async(req, res) => {
     try{
         const user = await User.findById({ _id: req.params.id})
         const roles = await Role.find()
+        const departments = await Department.find()
+
         res.render('pages/admin/user-edit', {
             title: "Edit",
             page: "User",
             user,
-            roles
+            roles,
+            departments
         })
     } catch(error){
         console.log(error)
@@ -161,7 +172,7 @@ router.get('/edit/:id', async(req, res) => {
 
 //--Method: Post 
 router.post('/edit/:id' , async(req,res)=>{
-    const {fullName, roles, emails, phones, streets, cities, countries} = req.body
+    const {fullName, roles, departmentId, emails, phones, streets, cities, countries} = req.body
 
      //validation
     try {
@@ -217,6 +228,7 @@ router.post('/edit/:id' , async(req,res)=>{
             password: user.password,
             fullName: fullName,
             roles: roleList,
+            departmentId,
             contact: contact
         }
 
