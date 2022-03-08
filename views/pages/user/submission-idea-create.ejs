@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Idea - Greenwich</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <link href="../../../vendor/aos/aos.css" rel="stylesheet">
+  <link href="../../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../../../vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../../vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="../../../vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="../../../vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="../../../vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="../../../css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Start Header -->
+  <%- include('../../partials/user/header')%>
+  <!-- End Header -->
+
+  <main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <%- include('../../partials/user/breadcrumbs')%>
+    <!-- End Breadcrumbs -->
+
+     
+     <section id="idea" class="idea-create">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row">
+
+          <div class="col-lg-12">
+            <div class="card">
+              <h5 class="card-header">New Idea</h5>
+              <div class="card-body">
+                <form class="row g-3 needs-validation" novalidate>
+                  <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="title" placeholder="Title" required>
+                    <div class="invalid-feedback">
+                      Please provide a title.
+                    </div>
+                  </div>
+                 
+                  <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" rows="3"></textarea>
+                  </div>
+                  <div class="mb-3">
+                    <label for="categories" class="form-label">Category</label>
+                    <select class="form-select">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="categories" class="form-label">Content</label>
+                    <div id="editor">
+                      <p>This is some sample content.</p>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <input type="file" class="form-control" aria-label="file" required>
+                    <div class="invalid-feedback">Example invalid form file feedback</div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                      <label class="form-check-label" for="invalidCheck">
+                        Agree to terms and conditions
+                      </label>
+                      <div class="invalid-feedback">
+                        You must agree before submitting.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <button class="btn btn-primary" type="submit">Submit form</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <%- include('../../partials/user/footer')%>
+  <!-- End Footer -->
+
+  <!--Back to top-->
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+
+  <!-- js -->
+  <script src="../../../vendor/purecounter/purecounter.js"></script>
+  <script src="../../../vendor/aos/aos.js"></script>
+  <script src="../../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../../../vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="../../../vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="../../../vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="../../../vendor/ckeditor/ckeditor.js"></script>
+  <script src="../../../javascript/main.js"></script>
+
+</body>
+
+</html>
