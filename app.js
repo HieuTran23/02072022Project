@@ -7,20 +7,20 @@ const mongoose = require('mongoose')
 var bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser")
 const path = require('path')
+const Role = require('./models/role')
 
+const department = require('./models/department')
 //--Router
 //--|--Admin
 const authRouter = require('./routes/auth')
 const adminRouter = require('./routes/admin')
-
 const userAdminRouter = require('./routes/admin/user');
 const roleAdminRouter = require('./routes/admin/role')
 const submissionAdminRouter = require('./routes/admin/submission')
-const categoryAdminRouter = require('./routes/admin/category')
-
+const departmentAdminRouter = require('./routes/admin/department')
 //--|--User
-const submissionRouter = require('./routes/user/submission')
 const profileRouter = require('./routes/user/profile')
+const submissionRouter = require('./routes/user/submission')
 //--
 /**
  * App Variables
@@ -61,20 +61,16 @@ app.use(express.static('public'))
 //--|--Dashboard
 app.use('/admin', adminRouter)
 
-//Role
+//--|--Role
 app.use('/admin/role', roleAdminRouter)
 
-//-----User
-app.use('/user/profile', profileRouter)
+//--|--department
+app.use('/admin/department',departmentAdminRouter)
 
-//--Admin
+//--|--submission
+app.use('/admin/submission',submissionAdminRouter)
 
-//submission
-app.use('/admin/submission',submissionRouter)
-//category
-app.use('/admin/category',categoryAdminRouter)
-
-//User
+//--|--User
 app.use('/admin/user', userAdminRouter)
 //--Admin end
 
@@ -83,6 +79,8 @@ app.use('/', authRouter)
 //--Auth end 
 
 //--User start
+//--|--profile
+app.use('/profile', profileRouter)
 
 //--|--Submission
 app.use('/submission', submissionRouter)

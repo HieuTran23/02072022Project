@@ -6,13 +6,14 @@ const Submission = require('../../models/submission')
 //--Method:Get
 router.get('/' , async (req ,res) => {
     try {
-        const submissions = await Submission.find()
+        const submissions = await Submission.find();
 
-        res.render('pages/user/submission',{
+        res.render('pages/user/submission', {
             title: 'View',
             page: 'Submission',
             submissions
         })
+
     } catch (error) {
         console.log(error)
         res.status(500) .json({success:false , message:'Error'}) 
