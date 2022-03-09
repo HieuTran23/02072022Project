@@ -8,7 +8,7 @@ const ideaSchema = new Schema({
         require: true,
         max: 255
     },
-    category: {
+    categoryId: {
         type: mongoose.Types.ObjectId,
         ref: 'category'
     },

@@ -6,7 +6,6 @@ const jwt = require("jsonwebtoken")
 require('dotenv').config()
 const { loginValidation} = require("../middleware/validation")
 const Role = require('../models/role')
-const role = require('../models/role')
 
 
 

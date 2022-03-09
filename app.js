@@ -8,13 +8,20 @@ var bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser")
 const path = require('path')
 //--Router
+//--|--Auth
 const authRouter = require('./routes/auth')
+
+//--|--Upload
+const uploadRouter = require('./routes/upload')
+
+//--|--Admin
 const adminRouter = require('./routes/admin')
 const userAdminRouter = require('./routes/admin/user');
 const roleAdminRouter = require('./routes/admin/role')
 const submissionAdminRouter = require('./routes/admin/submission')
 const departmentAdminRouter = require('./routes/admin/department')
 const categoryAdminRouter = require('./routes/admin/category')
+
 //--|--User
 const profileRouter = require('./routes/user/profile')
 const submissionRouter = require('./routes/user/submission')
@@ -84,6 +91,10 @@ app.use('/submission' ,submissionRouter)
 //Auth start
 app.use('/', authRouter)
 //Auth end 
+
+//Upload start
+app.use('/', uploadRouter)
+//Upload end 
 
 /**
  * Server Activation

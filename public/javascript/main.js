@@ -274,26 +274,23 @@
      * CK Editor
      */
      window.addEventListener('load', () => {
-      let editor = document.querySelector( '#editor' )
-       if(editor){
-        ClassicEditor
-        .create( document.querySelector( '#editor' ), {
-          // toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ]
-        } )
-        .then( editor => {
-          window.editor = editor;
-        } )
-        .catch( err => {
-          console.error( err.stack );
-        } );
-       }
+      CKEDITOR.replace('editor',{
+        extraPlugins:'filebrowser',
+        filebrowserUploadMethod:'form',
+        filebrowserUploadUrl:'/upload'//route
+      })      
     });
 
     //Data table
     window.addEventListener('load', () => {
-      $(document).ready(function() {
-        $('#example').DataTable();
-      });
+      var table = document.querySelector('#example')
+
+      if(table){
+        $(document).ready(function() {
+          $('#example').DataTable();
+        });
+      }
+
     });
 })()
 

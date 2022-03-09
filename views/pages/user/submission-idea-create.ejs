@@ -44,7 +44,7 @@
                 <form class="row g-3 needs-validation" novalidate>
                   <div class="mb-3">
                     <label for="title" class="form-label">Title</label>
-                    <input type="text" class="form-control" id="title" placeholder="Title" required>
+                    <input type="text" class="form-control" id="title" name="title" placeholder="Title" required>
                     <div class="invalid-feedback">
                       Please provide a title.
                     </div>
@@ -52,21 +52,23 @@
                  
                   <div class="mb-3">
                     <label for="description" class="form-label">Description</label>
-                    <textarea class="form-control" id="description" rows="3"></textarea>
+                    <textarea class="form-control" id="description" name="description" rows="3"  placeholder="Description"></textarea>
                   </div>
                   <div class="mb-3">
                     <label for="categories" class="form-label">Category</label>
-                    <select class="form-select">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
+                    <select class="form-select" name="categoryId">
+                        <% categories.forEach(category => {
+                          %>
+                          <option value="<%= category._id %>"> <%= category.name%> </option>>
+                          <%
+                        }); %>
                     </select>
                   </div>
                   <div class="mb-3">
-                    <label for="categories" class="form-label">Content</label>
-                    <div id="editor">
+                    <label for="content" class="form-label">Content</label>
+                    <textarea id="editor" name="content">
                       <p>This is some sample content.</p>
-                    </div>
+                    </textarea>
                   </div>
                   <div class="mb-3">
                     <input type="file" class="form-control" aria-label="file" required>
@@ -107,6 +109,8 @@
 
 
   <!-- js -->
+  <script src="../../../vendor/jquery/jquery.min.js"></script>
+
   <script src="../../../vendor/purecounter/purecounter.js"></script>
   <script src="../../../vendor/aos/aos.js"></script>
   <script src="../../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
