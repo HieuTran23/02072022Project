@@ -79,15 +79,13 @@ router.get('/edit/:id' , async(req , res) =>{
 })
 router.post('/edit/:id' , async(req, res)=>{
      //validation
-     const {name , description ,closureDate , finalClosureDate} = req.body
-     if(!name)
+     const {submissionTitle , submissionDescription} = req.body
+     if(!submissionTitle)
         return res.status(400).json({success:false , message:'Missing submission title'})
     try {
         let editSubmission ={ 
-            name : name || '' ,
-            description : description || '' ,
-            closureDate : closureDate || '' ,
-            finalClosureDate : finalClosureDate || ''
+            submissionTitle : submissionTitle || '' ,
+            submissionDescription : submissionDescription || ''
         }
         const edittedSubmission = await Submission.findOneAndUpdate(
             {_id : req.params.id} ,

@@ -288,5 +288,12 @@
         } );
        }
     });
-      
-  })()
+
+    //Data table
+    window.addEventListener('load', () => {
+      $(document).ready(function() {
+        $('#example').DataTable();
+      });
+    });
+})()
+

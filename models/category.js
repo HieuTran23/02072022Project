@@ -17,5 +17,4 @@ const CategorySchema = new Schema({
         default : Date.now
     }
 })
-//hahaha
 module.exports = mongoose.model('category' , CategorySchema)

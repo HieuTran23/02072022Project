@@ -7,23 +7,17 @@ const mongoose = require('mongoose')
 var bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser")
 const path = require('path')
-
-const Role = require('./models/role')
-
-
-const Role = require('./models/role')
-
 //--Router
 const authRouter = require('./routes/auth')
 const adminRouter = require('./routes/admin')
-const userRouter = require('./routes/admin/user');
-const roleRouter = require('./routes/admin/role')
-const submissionRouter = require('./routes/admin/submission')
-
-const categoryRouter = require('./routes/admin/category')
-
-
-const profileUser = require('./routes/user/index')
+const userAdminRouter = require('./routes/admin/user');
+const roleAdminRouter = require('./routes/admin/role')
+const submissionAdminRouter = require('./routes/admin/submission')
+const departmentAdminRouter = require('./routes/admin/department')
+const categoryAdminRouter = require('./routes/admin/category')
+//--|--User
+const profileRouter = require('./routes/user/profile')
+const submissionRouter = require('./routes/user/submission')
 //--
 /**
  * App Variables
@@ -64,37 +58,23 @@ app.use(express.static('public'))
 //Dashboard
 app.use('/admin', adminRouter)
 
-//Role
-app.use('/admin/role', roleRouter)
-
-
-//-----User
-app.use('/user/profile',profileUser)
+//--|--Role
+app.use('/admin/role', roleAdminRouter)
 
 //--Admin
-
+//departmentAdminRouter
+app.use('/admin/department', departmentAdminRouter)
 //submission
-app.use('/admin/submission',submissionRouter)
+app.use('/admin/submission',submissionAdminRouter)
  //category
-app.use('/admin/category',categoryRouter)
+app.use('/admin/category',categoryAdminRouter)
 
 
 //-----User
-app.use('/user/profile',profileUser)
-
-//--Admin
-
-//submission
-app.use('/admin/submission',submissionRouter)
-
-
-//academic year
-//Account
-//app.use('/api/account', accountRouter)
-
-
+app.use('/user/profile',profileRouter)
 //User
-app.use('/admin/user', userRouter)
+app.use('/admin/user', userAdminRouter)
+app.use('/submission' ,submissionRouter)
 //--Admin end
 
 //--Auth start
