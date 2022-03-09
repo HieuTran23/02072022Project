@@ -54,36 +54,37 @@ app.use(express.static('public'))
  * Routes Definitions
  */
 
-//--Admin start
+//Admin start
 //Dashboard
 app.use('/admin', adminRouter)
 
+//--Admin
 //--|--Role
 app.use('/admin/role', roleAdminRouter)
 
-//--Admin
-//departmentAdminRouter
+//--|--Department
 app.use('/admin/department', departmentAdminRouter)
-//submission
+
+//--|--Submission
 app.use('/admin/submission',submissionAdminRouter)
- //category
+//--|--Category
 app.use('/admin/category',categoryAdminRouter)
-
-
-//-----User
-app.use('/user/profile',profileRouter)
-//User
+//--|--User
 app.use('/admin/user', userAdminRouter)
+
+//User Start
+//--User
+//--|--Profile
+app.use('/profile',profileRouter)
+
+//--|--Submission
 app.use('/submission' ,submissionRouter)
-//--Admin end
+//User end
 
-//--Auth start
+//Auth start
 app.use('/', authRouter)
-//--Auth end 
+//Auth end 
 
-//--User start
-
-//--User end
 /**
  * Server Activation
  */
