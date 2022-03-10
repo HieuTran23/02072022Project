@@ -10,6 +10,7 @@ const submissionSchema  = mongoose.Schema({
     },
     closureDate: {
         type: Date
+        
     },
     finalClosureDate: {
         type: Date
