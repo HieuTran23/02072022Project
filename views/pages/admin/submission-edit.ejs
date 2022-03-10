@@ -56,11 +56,19 @@
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="name">Submission Title</label>
-                                        <input type="text" class="form-control" id="submissionTitle" name="submissionTitle" value="<%= submission.submissionTitle %>" placeholder ="<%= submission.submissionTitle %>">
+                                        <input type="text" class="form-control" id="submissionTitle" name="submissionTitle" value="<%= submission.name %>" placeholder ="<%= submission.name %>">
                                     </div>
                                     <div class="form-group">
                                         <label for="name">Submission description</label>
-                                        <textarea class="form-control" rows ="6" id="submissionDescription" name="submissionDescription"><%= submission.submissionDescription %></textarea>
+                                        <textarea class="form-control" rows ="6" id="submissionDescription" name="submissionDescription"><%= submission.description %></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name">Submission Closure Date</label>
+                                        <input type="date" fom class="form-control" id="closureDate" name="closureDate" placeholder="Date" value="<%= submission.closureDate %>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name">Submission Final Closure Date</label>
+                                        <input type="date" fom class="form-control" id="finalClosureDate" name="finalClosureDate" placeholder="Date" value="<%= submission.finalClosureDate %>">
                                     </div>
                                 </div>
                             <!-- /.card-body -->
