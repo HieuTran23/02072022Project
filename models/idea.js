@@ -1,3 +1,4 @@
+const boolean = require('@hapi/joi/lib/types/boolean')
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
@@ -18,22 +19,20 @@ const ideaSchema = new Schema({
     content: {
         type: String
     },
-    user: {
+    userId: {
         type: mongoose.Types.ObjectId,
         ref: 'user'
     },
-    submission: {
+    submissionId: {
         type: mongoose.Types.ObjectId,
         ref: 'submission'
     },
-    lastModifiedAt: [{
-        type: Date,
-        default: Date.now
-    }],
-    createAt: {
-        type: Date,
-        default: Date.now
+    isActive: {
+        type: boolean,
+        default: false
     }
-})
+},
+{ timestamps: true }
+)
 
 module.exports = mongoose.model('idea', ideaSchema)

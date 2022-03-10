@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Idea - Greenwich</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <link href="../../../vendor/aos/aos.css" rel="stylesheet">
+  <link href="../../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../../../vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../../vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="../../../vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="../../../vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="../../../vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <link href="../../../css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Start Header -->
+  <%- include('../../partials/user/header')%>
+  <!-- End Header -->
+
+  <main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <%- include('../../partials/user/breadcrumbs')%>
+    <!-- End Breadcrumbs -->
+
+     <!-- ======= Idea Single Section ======= -->
+     <section id="idea" class="idea">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row">
+
+          <div class="col-lg-8 entries">
+
+            <article class="entry entry-single">
+
+              <div class="entry-img">
+                <img src="https://source.unsplash.com/user/c_v_r" alt="" class="img-fluid">
+              </div>
+
+              <h2 class="entry-title">
+                <a href="/submission/<%= submissionId %>/idea/<%= idea._id%>"> <%= idea.title %></a>
+              </h2>
+
+              <div class="entry-meta">
+                <ul>
+                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="#"><%= user.fullName%></a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="#"><%= idea.updatedAt.toLocaleString('default') %></time></a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="#">8 Comments</a></li>
+                </ul>
+              </div>
+
+              <div class="entry-content">
+                <%- idea.content %>
+
+              </div>
+
+              <div class="entry-footer">
+                <i class="bi bi-folder"></i>
+                <ul class="cats">
+                  <li><a href="#"><%= userDepartment.name %></a></li>
+                </ul>
+
+                <i class="bi bi-tags"></i>
+                <ul class="tags">
+                  <li><a href="#"><%= ideaCategory.name %></a></li>
+                </ul>
+              </div>
+
+            </article>
+            <!-- End idea entry -->
+
+            <div class="idea-author d-flex align-items-center">
+              <img src="../../../images/C++.jpg" class="rounded-circle float-left" alt="" style="object-fit: cover;">
+              <div>
+                <h4>Hoa Trinh</h4>
+                <div class="social-links">
+                  <a href="https://twitters.com/#"><i class="bi bi-twitter"></i></a>
+                  <a href="https://facebook.com/hoatrinh0112"><i class="bi bi-facebook"></i></a>
+                  <a href="https://instagram.com/#"><i class="biu bi-instagram"></i></a>
+                </div>
+                <p>
+                  As long as you try, you will succeed.
+                </p>
+              </div>
+            </div>
+            <!-- End idea author bio -->
+
+            <div class="idea-comments">
+
+              <h4 class="comments-count">8 Comments</h4>
+
+              <div id="comment-1" class="comment">
+                <div class="d-flex">
+                  <div class="comment-img"><img src="../images/coment/coment1.jpg" alt=""></div>
+                  <div>
+                    <h5><a href="">Minh Hoang</a> <a href="#" class="reply"><i class="bi bi-reply-fill"></i> Reply</a></h5>
+                    <time datetime="2020-01-01">01 Jan, 2020</time>
+                    <p>
+                      It's so simple.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <!-- End comment #1 -->
+
+              <div id="comment-2" class="comment">
+                <div class="d-flex">
+                  <div class="comment-img"><img src="../images/coment/coment2.png" alt=""></div>
+                  <div>
+                    <h5><a href="">Duc Hieu</a> <a href="#" class="reply"><i class="bi bi-reply-fill"></i> Reply</a></h5>
+                    <time datetime="2020-01-01">01 Jan, 2020</time>
+                    <p>
+                      How do I build/run my project?
+                    </p>
+                    <p></p>
+                  </div>
+                </div>
+
+                <div id="comment-reply-1" class="comment comment-reply">
+                  <div class="d-flex">
+                    <div class="comment-img"><img src="../images/coment/coment3.jpg" alt=""></div>
+                    <div>
+                      <h5><a href="">Tuan Huy</a> <a href="#" class="reply"><i class="bi bi-reply-fill"></i> Reply</a></h5>
+                      <time datetime="2020-01-01">01 Jan, 2020</time>
+                      <p>
+                        VS Code supports tasks for build and natively understand the output of MSBuild, CSC, XBuild. Find out more in the Tasks documentation.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div id="comment-reply-2" class="comment comment-reply">
+                    <div class="d-flex">
+                      <div class="comment-img"><img src="../images/coment/coment4.jpg" alt=""></div>
+                      <div>
+                        <h5><a href="">Quang Hoang</a> <a href="#" class="reply"><i class="bi bi-reply-fill"></i> Reply</a></h5>
+                        <time datetime="2020-01-01">01 Jan, 2020</time>
+                        <p>
+                          VS Code only supports a limited set of project types (primarily .NET Core). For full .NET project support, we suggest you use Visual Studio Community.
+                        </p>
+                      </div>
+                    </div>
+
+                  </div><!-- End comment reply #2-->
+
+                </div><!-- End comment reply #1-->
+
+              </div><!-- End comment #2-->
+
+              <div id="comment-3" class="comment">
+                <div class="d-flex">
+                  <div class="comment-img"><img src="../images/coment/coment5.png" alt=""></div>
+                  <div>
+                    <h5><a href="">Cong Huynh</a> <a href="#" class="reply"><i class="bi bi-reply-fill"></i> Reply</a></h5>
+                    <time datetime="2020-01-01">01 Jan, 2020</time>
+                    <p>
+                      The Visual Studio Code C# extension can generate the assets you need to build and debug. If you missed the prompt when you first opened a new C# project, you can still perform this operation through the Command Palette (View > Command Palette Ctrl+Shift+P) by typing '.NET', and running .NET: Generate Assets for Build and Debug. This command will generate the necessary launch.json and tasks.json configuration files (under the .vscode folder).
+                    </p>
+                  </div>
+                </div>
+
+              </div><!-- End comment #3 -->
+
+              <div id="comment-4" class="comment">
+                <div class="d-flex">
+                  <div class="comment-img"><img src="../images/coment/coment6.png" alt=""></div>
+                  <div>
+                    <h5><a href="">Quang Huy</a> <a href="#" class="reply"><i class="bi bi-reply-fill"></i> Reply</a></h5>
+                    <time datetime="2020-01-01">01 Jan, 2020</time>
+                    <p>
+                      This is typically as a result of the current project type not being supported. You can see an indication in the OmniSharp flame in the bottom left hand side of the status bar.
+                    </p>
+                  </div>
+                </div>
+
+              </div><!-- End comment #4 -->
+
+              <div class="reply-form">
+                <h4>Leave a Reply</h4>
+                <p>Your email address will not be published. Required fields are marked * </p>
+                <form action="">
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      <input name="name" type="text" class="form-control" placeholder="Your Name*">
+                    </div>
+                    <div class="col-md-6 form-group">
+                      <input name="email" type="text" class="form-control" placeholder="Your Email*">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col form-group">
+                      <input name="website" type="text" class="form-control" placeholder="Your Website">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col form-group">
+                      <textarea name="comment" class="form-control" placeholder="Your Comment*"></textarea>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Post Comment</button>
+
+                </form>
+
+              </div>
+
+            </div><!-- End idea comments -->
+
+          </div><!-- End idea entries list -->
+
+          <div class="col-lg-4">
+
+            <!--Start sidebar-->
+            <%- include('../../partials/user/sidebar') %>
+            <!-- End sidebar -->
+
+          </div><!-- End idea sidebar -->
+
+        </div>
+
+      </div>
+    </section><!-- End idea Single Section -->
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <%- include('../../partials/user/footer')%>
+  <!-- End Footer -->
+
+  <!--Back to top-->
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+
+  <!-- js -->
+  <script src="../../../vendor/purecounter/purecounter.js"></script>
+  <script src="../../../vendor/aos/aos.js"></script>
+  <script src="../../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../../../vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="../../../vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="../../../vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="../../../javascript/main.js"></script>
+
+</body>
+
+</html>

@@ -1240,6 +1240,12 @@ idea
   margin-top: 20px;
   margin-bottom: 20px;
 }
+
+.idea .entry .entry-content img {
+  max-width: 100%;
+  height: auto !important;
+}
+
 .idea .entry .entry-footer {
   padding-top: 10px;
   border-top: 1px solid #e6e6e6;
@@ -1294,6 +1300,7 @@ idea
 }
 .idea .idea-author img {
   width: 120px;
+  height: 120px;
   margin-right: 20px;
 }
 .idea .idea-author h4 {
@@ -1830,6 +1837,10 @@ Submission
   margin: 10px 0 10px 0;
 }
 
+.submission .card-header {
+  font-weight: 800;
+}
+
 /*pagination*/
 
 .pagination {
@@ -1881,6 +1892,11 @@ Submission
   margin: 0;
 }
 
-.submission .card-header {
-  font-weight: 800;
+.submission-detail .icon {
+  font-size: 1.3rem;
+  color: #343a40;
+}
+
+.submission-detail .icon:hover {
+  color: #5e5e5e;
 }
