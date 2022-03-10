@@ -13,7 +13,6 @@ router.get('/' , async (req ,res) => {
     try {
         const submissions = await Submission.find();
 
-
         res.render('pages/user/submission', {
             title: 'View',
             page: 'Submission',
