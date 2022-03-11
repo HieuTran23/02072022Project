@@ -40,9 +40,10 @@
 
                 <div class="col-lg-8">
                     <div class="row submission-cards">
-                        <div class="col-12 col-lg-6 col-xl-4">
-                            <% submissions.forEach(submission => {
-                                %>
+                        
+                        <% submissions.forEach(submission => {
+                            %>
+                            <div class="col-12 col-lg-6 col-xl-4">
                                 <a href="/submission/<%= submission._id%>" class="card">
                                     <img src="https://source.unsplash.com/user/c_v_r" class="card-img-top">
                                     <div class="card-body">
@@ -60,10 +61,11 @@
                                         </div>
                                     </div>
                                 </a>
-                                <%
-                            }) %>
-                            
-                        </div>  
+                            </div>
+                            <%
+                        }) %>
+                        
+                         
                     </div>
                     <!-- Submission card -->
                     <div class="submission-pagination">
