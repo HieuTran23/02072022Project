@@ -25,6 +25,7 @@ const categoryAdminRouter = require('./routes/admin/category')
 //--|--User
 const profileRouter = require('./routes/user/profile')
 const submissionRouter = require('./routes/user/submission')
+const settingRouter = require('./routes/user/setting')
 //--
 /**
  * App Variables
@@ -83,6 +84,9 @@ app.use('/admin/user', userAdminRouter)
 //--User
 //--|--Profile
 app.use('/profile',profileRouter)
+
+//--|--Setting
+app.use('/setting',settingRouter)
 
 //--|--Submission
 app.use('/submission' ,submissionRouter)
