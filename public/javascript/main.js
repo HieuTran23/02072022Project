@@ -274,11 +274,14 @@
      * CK Editor
      */
      window.addEventListener('load', () => {
-      CKEDITOR.replace('editor',{
-        extraPlugins:'filebrowser',
-        filebrowserUploadMethod:'form',
-        filebrowserUploadUrl:'/upload'//route
-      })      
+       const editor = document.querySelector('#editor')
+       if(editor){
+        CKEDITOR.replace('editor',{
+          extraPlugins:'filebrowser',
+          filebrowserUploadMethod:'form',
+          filebrowserUploadUrl:'/upload'//route
+        }) 
+       }
     });
 
     //Data table

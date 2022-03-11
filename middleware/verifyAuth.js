@@ -1,7 +1,4 @@
 const jwt = require('jsonwebtoken')
-const User = require('../models/user')
-const Role = require('../models/role')
-const role = require('../models/role')
 
 const verifyToken = (req, res, next) => {
     //const  accessToken = req.header('Auth-Access-Token')
