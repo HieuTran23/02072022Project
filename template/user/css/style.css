@@ -1869,7 +1869,7 @@ Submission
 }
 
 .submission-detail .card .card-header {
-  background-color: white;
+  background-color: rgb(255, 255, 255);
 }
 
 .submission-detail ul li {

@@ -84,10 +84,11 @@ router.post('/:id' , async(req,res)=>{
 //-- Get
 router.get('/setting-password/:id', async (req, res) => {
     try {
-		const getUser = await User.findOne({
-            _id : req.params.id
-        })
-        res.json(getUser)
+		const getUser = await User.findOne({_id : req.params.id})
+        const roles = await Role.find()
+        res.render('pages/user/setting/setting-password', {
+            title: "Edit-Password"
+        })   
     }catch (error) {
         console.log(error)
         res.status(500).json({success:false , message:'Error', error})
@@ -101,7 +102,7 @@ router.post('/setting-password/:id' , async(req,res)=>{
         const user = await User.findById({_id: req.params.id})
         
         let changePassword = {
-            password: password,
+            password: password ,
         }
         if(password != undefined){
             password.forEach(password => {
@@ -114,6 +115,8 @@ router.post('/setting-password/:id' , async(req,res)=>{
 
         //Update user to database
         const updatedUser = await User.findOneAndUpdate({_id: req.params.id}, changePassword, {new: true})
+        var id= req.params.id;
+        res.redirect('/setting/setting-password'+ id)
 
     } catch (error) { 
         console.log(error)
