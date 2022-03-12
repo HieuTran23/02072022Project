@@ -9,14 +9,19 @@ const Department = require('../../models/department')
 
 //View profile list 
 //--Method:Get
-router.get('/' , async (req ,res) => {
+router.get('/' , verifyToken, async (req ,res) => {
     try {
+        const { name, roles } = req.user
+
+        const user = await User.findOne({ username: name })
+
         const submissions = await Submission.find();
 
         res.render('pages/user/submission', {
             title: 'View',
             page: 'Submission',
-            submissions
+            submissions,
+            user
         })
 
     } catch (error) {
