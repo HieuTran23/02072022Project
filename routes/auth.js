@@ -45,7 +45,6 @@ router.post('/login', async (req, res) => {
         let roleList = []
 
         user.roles.forEach(role => {
-            
             for(let i = 0; roles[i] != undefined; i++){
                 if(role.roleId == roles[i].id) return roleList.push(roles[i].name)
             }

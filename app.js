@@ -26,6 +26,7 @@ const categoryAdminRouter = require('./routes/admin/category')
 const profileRouter = require('./routes/user/profile')
 const submissionRouter = require('./routes/user/submission')
 const settingRouter = require('./routes/user/setting')
+const clientRouter = require('./routes/user')
 //--
 /**
  * App Variables
@@ -63,10 +64,10 @@ app.use(express.static('public'))
  */
 
 //Admin start
-//Dashboard
+//--Admin
+//--|--Dashboard
 app.use('/admin', adminRouter)
 
-//--Admin
 //--|--Role
 app.use('/admin/role', roleAdminRouter)
 
@@ -82,6 +83,9 @@ app.use('/admin/user', userAdminRouter)
 
 //User Start
 //--User
+//--|--Client
+app.use('/', clientRouter)
+
 //--|--Profile
 app.use('/profile',profileRouter)
 
