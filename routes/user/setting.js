@@ -81,5 +81,44 @@ router.post('/:id' , async(req,res)=>{
     } 
 })
 
+//-- Get
+router.get('/setting-password/:id', async (req, res) => {
+    try {
+		const getUser = await User.findOne({
+            _id : req.params.id
+        })
+        res.json(getUser)
+    }catch (error) {
+        console.log(error)
+        res.status(500).json({success:false , message:'Error', error})
+    }
+})
+
+//-- Post 
+router.post('/setting-password/:id' , async(req,res)=>{
+    const { password} = req.body
+    try {
+        const user = await User.findById({_id: req.params.id})
+        
+        let changePassword = {
+            password: password,
+        }
+        if(password != undefined){
+            password.forEach(password => {
+                if(password == "") return
+                changePassword.password.push({password})
+            });
+        }
+        res.json({success : true ,message:'change password successful' , change : changePassword})
+
+
+        //Update user to database
+        const updatedUser = await User.findOneAndUpdate({_id: req.params.id}, changePassword, {new: true})
+
+    } catch (error) { 
+        console.log(error)
+        res.status(500).json({success:false , message:'Error'}) 
+    } 
+})
 
 module.exports = router;
