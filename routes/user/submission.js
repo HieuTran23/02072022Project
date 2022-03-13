@@ -10,14 +10,19 @@ const Department = require('../../models/department')
 
 //View profile list 
 //--Method:Get
-router.get('/' , async (req ,res) => {
+router.get('/' , verifyToken, async (req ,res) => {
     try {
+        const { name, roles } = req.user
+
+        const user = await User.findOne({ username: name })
+
         const submissions = await Submission.find();
 
         res.render('pages/user/submission', {
             title: 'View',
             page: 'Submission',
-            submissions
+            submissions,
+            user
         })
 
     } catch (error) {
@@ -28,8 +33,12 @@ router.get('/' , async (req ,res) => {
 
 //View idea list (Submission details)
 //--Method:Get 
-router.get('/:id', async (req, res) => {
+router.get('/:id', verifyToken, async (req, res) => {
     try {
+        const { name, roles } = req.user
+
+        const user = await User.findOne({ username: name })
+
         const submissionId = req.params.id
         const categories = await Category.find()
         const ideas = await Idea.find()
@@ -39,7 +48,8 @@ router.get('/:id', async (req, res) => {
             page: 'Submission',
             submissionId,
             categories,
-            ideas
+            ideas,
+            user
         })
     } catch (error) {
         console.log(error)
@@ -51,6 +61,9 @@ router.get('/:id', async (req, res) => {
 //--Method:Get 
 router.get('/:id/idea-create', verifyToken, async(req, res) => {
     try {
+        const { name, roles } = req.user
+
+        const user = await User.findOne({ username: name })
         const categories = await Category.find();
         const submissionId = req.params.id
 
@@ -58,7 +71,8 @@ router.get('/:id/idea-create', verifyToken, async(req, res) => {
             title: 'Create',
             page: 'Idea',
             categories,
-            submissionId
+            submissionId,
+            user
         })
     } catch (error) {
         console.log(error)

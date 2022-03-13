@@ -1,17 +1,26 @@
 const express = require("express");
-const role = require("../../models/role");
+
 const router = express.Router();
-const User = require('../../models/user');
+
+const User = require('../../models/user')
 const Role = require('../../models/role');
+const Department = require('../../models/department')
+const { verifyToken } = require('../../middleware/verifyAuth')
 
 //Edit and update user
 //-- get
 router.get('/:id', async (req, res) => {
     try {
-		const getUser = await User.findOne({
-            _id : req.params.id
+		const user = await User.findById({ _id: req.params.id})
+        const roles = await Role.find()
+        const departments = await Department.find()
+        res.render('pages/user/setting', {
+            title: "Edit",
+            page: "User",
+            user,
+            roles,
+            departments
         })
-        res.json(getUser)
     }catch (error) {
         console.log(error)
         res.status(500).json({success:false , message:'Error', error})
@@ -20,7 +29,7 @@ router.get('/:id', async (req, res) => {
 
 //-- Post 
 router.post('/:id' , async(req,res)=>{
-    const {fullName, emails, phones, streets, cities, countries} = req.body
+    const {fullName, departmentId,emails, phones, streets, cities, countries} = req.body
      //validation
     try {
         //Create contact field (object)
@@ -58,12 +67,13 @@ router.post('/:id' , async(req,res)=>{
         let editUser = {
             fullName: fullName,
             contact: contact,
+            departmentId
         }
-        res.json({success : true ,message:'edit successful' , edit : editUser})
+        
         //Update user to database
         const updatedUser = await User.findOneAndUpdate({_id: req.params.id}, editUser, {new: true})
-
-        
+        var id= req.params.id;
+        res.redirect('/setting/'+ id)
 
         
     } catch (error) { 
@@ -72,5 +82,53 @@ router.post('/:id' , async(req,res)=>{
     } 
 })
 
+//-- Get
+router.get('/setting-password/:id', verifyToken, async (req, res) => {
+    try {
+        const { name } = req.user
+
+        const user = await User.findOne({ username: name})
+
+		const getUser = await User.findOne({_id : req.params.id})
+        const roles = await Role.find()
+        res.render('pages/user/setting-password', {
+            title: "Password",
+            page: 'Setting',
+            user
+        })   
+    }catch (error) {
+        console.log(error)
+        res.status(500).json({success:false , message:'Error', error})
+    }
+})
+
+//-- Post 
+router.post('/setting-password/:id' , async(req,res)=>{
+    const { password} = req.body
+    try {
+        const user = await User.findById({_id: req.params.id})
+        
+        let changePassword = {
+            password: password ,
+        }
+        if(password != undefined){
+            password.forEach(password => {
+                if(password == "") return
+                changePassword.password.push({password})
+            });
+        }
+        res.json({success : true ,message:'change password successful' , change : changePassword})
+
+
+        //Update user to database
+        const updatedUser = await User.findOneAndUpdate({_id: req.params.id}, changePassword, {new: true})
+        var id= req.params.id;
+        res.redirect('/setting/setting-password'+ id)
+
+    } catch (error) { 
+        console.log(error)
+        res.status(500).json({success:false , message:'Error'}) 
+    } 
+})
 
 module.exports = router;

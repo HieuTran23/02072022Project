@@ -45,7 +45,6 @@ router.post('/login', async (req, res) => {
         let roleList = []
 
         user.roles.forEach(role => {
-            
             for(let i = 0; roles[i] != undefined; i++){
                 if(role.roleId == roles[i].id) return roleList.push(roles[i].name)
             }
@@ -60,5 +59,17 @@ router.post('/login', async (req, res) => {
         res.status(400).json({success:false , message:'Error'}) 
     }
 });
+
+//Logout
+//--Method:Get 
+router.get('/logout', (req, res) => {
+    try{
+        res.clearCookie('token')
+        res.redirect('/login')
+    } catch(err){
+        console.log(err)
+        res.status(400).json({success: false, message: 'Error'})
+    }
+})
 
 module.exports = router;

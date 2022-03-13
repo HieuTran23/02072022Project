@@ -88,3 +88,10 @@ Content-Type: application/json
     "name":"hoang van tuan huy",
     "description":"code code"
 }
+
+###
+GET http://localhost:5000/setting/setting-password/6224747213141e5782c5452c
+
+Content-Type: application/json
+
+

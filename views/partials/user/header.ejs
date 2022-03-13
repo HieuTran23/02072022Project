@@ -6,6 +6,7 @@
         <ul>
           <li><a class="nav-link scrollto " href="/">Home</a></li>
           <li><a class="active" href="/submission">Submission</a></li>
+          <li><a class="active" href="/idea">Idea</a></li>
           <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="#">Drop Down 1</a></li>
@@ -35,13 +36,13 @@
           </a>
           <ul>
             <li>
-              <a href="#">My profile</a>
+              <a href="/profile/<%= user._id %>">My profile</a>
             </li>
             <li>
-              <a href="#">Settings</a>
+              <a href="/setting/<%= user._id %>">Settings</a>
             </li>
             <li>
-              <a href="#">Logout</a>
+              <a href="/logout">Logout</a>
             </li>
           </ul>
           </li>
