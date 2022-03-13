@@ -1,5 +1,3 @@
-const { equal } = require("@hapi/joi/lib/base");
-
 (function() {
     "use strict";
   

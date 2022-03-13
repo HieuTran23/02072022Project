@@ -27,6 +27,7 @@ const profileRouter = require('./routes/user/profile')
 const submissionRouter = require('./routes/user/submission')
 const settingRouter = require('./routes/user/setting')
 const clientRouter = require('./routes/user')
+const ideaRouter = require('./routes/user/idea')
 //--
 /**
  * App Variables
@@ -94,6 +95,9 @@ app.use('/setting',settingRouter)
 
 //--|--Submission
 app.use('/submission' ,submissionRouter)
+
+//--|--Idea
+app.use('/idea', ideaRouter)
 
 //User end
 
