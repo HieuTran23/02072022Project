@@ -5,6 +5,7 @@ const router = express.Router();
 const User = require('../../models/user')
 const Role = require('../../models/role');
 const Department = require('../../models/department')
+const { verifyToken } = require('../../middleware/verifyAuth')
 
 //Edit and update user
 //-- get
@@ -82,12 +83,18 @@ router.post('/:id' , async(req,res)=>{
 })
 
 //-- Get
-router.get('/setting-password/:id', async (req, res) => {
+router.get('/setting-password/:id', verifyToken, async (req, res) => {
     try {
+        const { name } = req.user
+
+        const user = await User.findOne({ username: name})
+
 		const getUser = await User.findOne({_id : req.params.id})
         const roles = await Role.find()
-        res.render('pages/user/setting/setting-password', {
-            title: "Edit-Password"
+        res.render('pages/user/setting-password', {
+            title: "Password",
+            page: 'Setting',
+            user
         })   
     }catch (error) {
         console.log(error)
