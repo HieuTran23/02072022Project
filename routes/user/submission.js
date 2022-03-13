@@ -7,6 +7,7 @@ const { verifyToken } = require('../../middleware/verifyAuth')
 const User = require('../../models/user')
 const Department = require('../../models/department')
 
+
 //View profile list 
 //--Method:Get
 router.get('/' , async (req ,res) => {
