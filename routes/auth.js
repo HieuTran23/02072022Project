@@ -60,4 +60,16 @@ router.post('/login', async (req, res) => {
     }
 });
 
+//Logout
+//--Method:Get 
+router.get('/logout', (req, res) => {
+    try{
+        res.clearCookie('token')
+        res.redirect('/login')
+    } catch(err){
+        console.log(err)
+        res.status(400).json({success: false, message: 'Error'})
+    }
+})
+
 module.exports = router;
