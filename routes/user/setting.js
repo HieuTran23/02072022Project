@@ -108,27 +108,28 @@ router.post('/setting-password/:id' , async(req,res)=>{
     try {
         const user = await User.findById({_id: req.params.id})
         
-        let changePassword = {
+        let rePassword = {
             password: password ,
         }
         if(password != undefined){
             password.forEach(password => {
                 if(password == "") return
-                changePassword.password.push({password})
+                rePassword.password.push({password})
             });
         }
-        res.json({success : true ,message:'change password successful' , change : changePassword})
+        res.json({success : true ,message:'change password successful' , change : rePassword})
 
 
         //Update user to database
-        const updatedUser = await User.findOneAndUpdate({_id: req.params.id}, changePassword, {new: true})
+        const updatedUser = await User.findOneAndUpdate({_id: req.params.id}, rePassword, {new: true})
         var id= req.params.id;
         res.redirect('/setting/setting-password'+ id)
 
     } catch (error) { 
         console.log(error)
-        res.status(500).json({success:false , message:'Error'}) 
+        res.status(500).json({success:false , message:'Error'})     
     } 
 })
+
 
 module.exports = router;

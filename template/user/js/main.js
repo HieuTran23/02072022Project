@@ -454,6 +454,74 @@
             if(e.type == "blur"){
                     $passwordAlert.hide();
             }
+
+            app.get('/setting/setting-password', function(req, res) {
+              User.findOne({ rePasswordToken: req.params.token, rePasswordExpires: { $gt: Date.now() } }, function(err, user) {
+                  console.log(user);
+                if (!user) {
+                  req.flash('error', 'Password reset token is invalid or has expired.');
+                  return res.redirect('/forgot');
+                }
+                res.render('reset', {
+                 User: req.user
+                });
+              });
+            });
+             
+            app.post('/setting/setting-password', function(req, res) {
+              async.waterfall([
+                function(done) {
+                  User.findOne({ rePasswordToken: req.params.token, rePasswordExpires: { $gt: Date.now() } }, function(err, user, next) {
+                    if (!user) {
+                      req.flash('error', 'Password reset token is invalid or has expired.');
+                      return res.redirect('back');
+                    }
+
+                    user.password = req.body.password;
+                    user.rePasswordToken = undefined;
+                    user.rePasswordExpires = undefined;
+                    console.log('password' + user.password  + 'and the user is' + user)
+             
+            user.save(function(err) {
+              if (err) {
+                  console.log('here')
+                   return res.redirect('back');
+              } else { 
+                  console.log('here2')
+                req.logIn(user, function(err) {
+                  done(err, user);
+                });
+             
+              }
+                    });
+                  });
+                },
+
+                function(user, done) {
+                    // console.log('got this far 4')
+                  var smtpTrans = nodemailer.createTransport({
+                    service: 'Gmail',
+                    auth: {
+                      user: 'myemail',
+                      pass: 'mypass'
+                    }
+                  });
+                  var mailOptions = {
+                    to: user.email,
+                    from: 'myemail',
+                    subject: 'Your password has been changed',
+                    text: 'Hello,\n\n' +
+                      ' - This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
+                  };
+                  smtpTrans.sendMail(mailOptions, function(err) {
+                    // req.flash('success', 'Success! Your password has been changed.');
+                    done(err);
+                  });
+                }
+              ], function(err) {
+                res.redirect('/');
+              });
+            });
         });
       });
       }

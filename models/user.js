@@ -1,5 +1,7 @@
 const mongoose = require('mongoose') ;
 const Schema = mongoose.Schema
+var crypto = require('crypto');
+const string = require('@hapi/joi/lib/types/string');
 
 const UserSchema = new Schema({
     username:{
@@ -15,6 +17,15 @@ const UserSchema = new Schema({
         min : 6 ,
         max : 1024
     },
+    
+    rePasswordToken: {
+        type : String ,
+        required : true ,
+        min : 6 ,
+        max : 1024
+    },
+    rePasswordExpires: Date,
+
     fullName:{
         type: String
     },
