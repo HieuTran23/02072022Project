@@ -90,8 +90,14 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:5000/setting/setting-password/6224747213141e5782c5452c
+GET http://localhost:5000/idea/622d94c5601def1a16a3c0d5
 
 Content-Type: application/json
+###
+GET http://localhost:5000/idea/622d94c5601def1a16a3c0d5
+Ath
 
+###
+POST  http://localhost:5000/login
+Content-Type: application/json
 
