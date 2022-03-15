@@ -6,6 +6,8 @@ const Idea = require('../../models/idea');
 const { verifyToken } = require('../../middleware/verifyAuth')
 const User = require('../../models/user')
 const Department = require('../../models/department')
+const Upload = require('../../middleware/multerUpload')
+
 
 
 //View profile list 
@@ -41,7 +43,7 @@ router.get('/:id', verifyToken, async (req, res) => {
 
         const submissionId = req.params.id
         const categories = await Category.find()
-        const ideas = await Idea.find()
+        const ideas = await Idea.find({ userId: user._id, submissionId })
 
         res.render('pages/user/submission-idea-list', {
             title: 'View',
@@ -80,27 +82,28 @@ router.get('/:id/idea-create', verifyToken, async(req, res) => {
     }
 })
 //--Method:Post
-router.post('/:id/idea-create', verifyToken, async(req, res) => {
+router.post('/:id/idea-create', verifyToken, Upload.array('files'), async(req, res) => {
     try{
-        const user = await User.findOne({
-            username : req.user.name
-        })
+        return res.json(req.files);
+        // const user = await User.findOne({
+        //     username : req.user.name
+        // })
 
-        const {title, description, categoryId, content} = req.body
-        const submissionId = req.params.id
+        // const {title, description, categoryId, content} = req.body
+        // const submissionId = req.params.id
         
         
-        const newIdea = new Idea({
-            title,
-            categoryId,
-            description,
-            content,
-            userId: user._id,
-            submissionId
-        })
+        // const newIdea = new Idea({
+        //     title,
+        //     categoryId,
+        //     description,
+        //     content,
+        //     userId: user._id,
+        //     submissionId
+        // })
 
-        await newIdea.save()
-        res.redirect(`/submission/${submissionId}`)
+        // await newIdea.save()
+        // res.redirect(`/submission/${submissionId}`)
     } catch (err) {
         console.log(err)
         res.status(500).json({success:false , message:'Error'})

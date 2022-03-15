@@ -1,4 +1,3 @@
-const boolean = require('@hapi/joi/lib/types/boolean')
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
@@ -27,8 +26,17 @@ const ideaSchema = new Schema({
         type: mongoose.Types.ObjectId,
         ref: 'submission'
     },
+    files: [{
+        filePath: {
+            type: String
+        },
+        createdAt:{
+            type: Date,
+            default: Date.now
+        }
+    }],
     isActive: {
-        type: boolean,
+        type: Boolean,
         default: false
     }
 },

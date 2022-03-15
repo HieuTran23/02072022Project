@@ -41,7 +41,7 @@
             <div class="card">
               <h5 class="card-header">New Idea</h5>
               <div class="card-body">
-                <form class="row g-3 needs-validation" action="/submission/<%= submissionId%>/idea-create" method="post" novalidate>
+                <form class="row g-3 needs-validation" action="/submission/<%= submissionId%>/idea-create" method="post" enctype="multipart/form-data" novalidate >
                   <div class="mb-3">
                     <label for="title" class="form-label">Title</label>
                     <input type="text" class="form-control" id="title" name="title" placeholder="Title" required>
@@ -71,7 +71,7 @@
                     </textarea>
                   </div>
                   <div class="mb-3">
-                    <input type="file" class="form-control" aria-label="file">
+                    <input type="file" class="form-control" name="files" aria-label="file" multiple accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,text/plain, application/pdf, image/*" >
                     <div class="invalid-feedback">Example invalid form file feedback</div>
                   </div>
                   <div class="col-12">
@@ -90,6 +90,7 @@
                   </div>
                 </form>
               </div>
+              <img src="uploads\cf5126c9-3a9d-4c51-a07d-30fd295476f2-272548872_267782368829958_8100616270844438746_n (1).png" alt="" srcset="">
             </div>
             
           </div>
