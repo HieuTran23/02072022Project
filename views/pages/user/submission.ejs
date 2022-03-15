@@ -51,7 +51,7 @@
                                         <div class="card-date">
                                             <i class="bi bi-clock"></i>
                                             Closure date: 
-                                            <time datetime="<%= submission.closureDate %>"><%= submission.closureDate %></time>
+                                            <time datetime="<%= submission.closureDate %>"><%= submission.closureDate.toLocaleString('default') %></time>
                                         </div>
                                         <p class="card-text">
                                             <%= submission.description %>

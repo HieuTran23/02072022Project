@@ -54,8 +54,12 @@
                   <div class="entry-meta">
                     <ul>
                       <li class="d-flex align-items-center"><i class="bi bi-person"></i><a href="profile/<%= idea.userId._id %>"> <%= idea.userId.fullName %> </a></li>
-                      <li class="d-flex align-items-center"><i class="bi bi-clock"></i><%= idea.updatedAt.toLocaleString('default') %></time></li>
+                      <li class="d-flex align-items-center"><i class="bi bi-clock"></i><a href="#"><%= idea.updatedAt.toLocaleString('default') %></a> </time></li>
                       <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="idea/<%= idea._id %>">8 Comments</a></li>
+                    </ul>
+                    <ul>
+                      <li class="d-flex align-items-center"><i class="bi bi-phone-landscape-fill"></i> <a href="#">Submission: <span><%= idea.submissionId.name %> </span></a> </li>
+                      <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="#">Final closure date: <span><%= idea.submissionId.finalClosureDate.toLocaleString('default') %> </span></a> </li>
                     </ul>
                   </div>
     

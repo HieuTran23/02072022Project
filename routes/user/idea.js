@@ -3,18 +3,18 @@ const router = express.Router()
 const Idea = require('../../models/idea')
 const User = require('../../models/user')
 const { verifyToken } = require('../../middleware/verifyAuth')
-const category = require('../../models/category')
 const Comment = require('../../models/comment')
-const { id } = require('@hapi/joi/lib/base')
+
+
 //List idea
 //--Method:Get 
 router.get('/', verifyToken ,async (req, res) => {
     try{
-        const ideas = await Idea.find().populate('userId', 'fullName')
+        const ideas = await Idea.find().populate('userId', 'fullName').populate('submissionId')
 
         const { name } = req.user
         const user = await User.findOne({ username: name})
-
+        
         res.render('pages/user/idea', {
             title: 'List',
             page: 'Idea',

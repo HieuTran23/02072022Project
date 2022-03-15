@@ -17,15 +17,6 @@ const UserSchema = new Schema({
         min : 6 ,
         max : 1024
     },
-    
-    rePasswordToken: {
-        type : String ,
-        required : true ,
-        min : 6 ,
-        max : 1024
-    },
-    rePasswordExpires: Date,
-
     fullName:{
         type: String
     },

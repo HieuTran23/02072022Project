@@ -84,26 +84,34 @@ router.get('/:id/idea-create', verifyToken, async(req, res) => {
 //--Method:Post
 router.post('/:id/idea-create', verifyToken, Upload.array('files'), async(req, res) => {
     try{
-        return res.json(req.files);
-        // const user = await User.findOne({
-        //     username : req.user.name
-        // })
+        const user = await User.findOne({
+            username : req.user.name
+        })
 
-        // const {title, description, categoryId, content} = req.body
-        // const submissionId = req.params.id
+        const {title, description, categoryId, content} = req.body
+        const submissionId = req.params.id
         
-        
-        // const newIdea = new Idea({
-        //     title,
-        //     categoryId,
-        //     description,
-        //     content,
-        //     userId: user._id,
-        //     submissionId
-        // })
+        var files = []
 
-        // await newIdea.save()
-        // res.redirect(`/submission/${submissionId}`)
+        if(req.files != undefined){
+            req.files.forEach(file => {
+                const filePath = `/uploads/${file.filename}`
+                files.push({filePath})
+            });
+        }
+
+        const newIdea = new Idea({
+            title,
+            categoryId,
+            description,
+            content,
+            userId: user._id,
+            submissionId,
+            files
+        })
+
+        await newIdea.save()
+        res.redirect(`/submission/${submissionId}`)
     } catch (err) {
         console.log(err)
         res.status(500).json({success:false , message:'Error'})
@@ -114,6 +122,11 @@ router.post('/:id/idea-create', verifyToken, Upload.array('files'), async(req, r
 //--Method:Get 
 router.get('/:submissionId/idea-edit/:ideaId', verifyToken, async(req, res) => {
     try {
+        const user = await User.findOne({
+            username : req.user.name
+        })
+
+
         const { submissionId, ideaId }= req.params
         const categories = await Category.find();
         const idea = await Idea.findById({ _id: ideaId})
@@ -125,7 +138,8 @@ router.get('/:submissionId/idea-edit/:ideaId', verifyToken, async(req, res) => {
             page: 'Idea',
             categories,
             submissionId,
-            idea
+            idea,
+            user
         })
     } catch (error) {
         console.log(error)
