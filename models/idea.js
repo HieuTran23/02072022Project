@@ -27,6 +27,12 @@ const ideaSchema = new Schema({
         type: mongoose.Types.ObjectId,
         ref: 'submission'
     },
+    comments : [{
+        commentId : {
+            type: mongoose.Types.ObjectId,
+            ref: 'comment'
+        }
+    }],
     isActive: {
         type: boolean,
         default: false

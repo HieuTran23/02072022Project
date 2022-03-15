@@ -7,17 +7,14 @@ const { verifyToken } = require('../../middleware/verifyAuth')
 const User = require('../../models/user')
 const Department = require('../../models/department')
 
-
 //View profile list 
 //--Method:Get
 router.get('/' , verifyToken, async (req ,res) => {
     try {
-        const { name, roles } = req.user
-
-        const user = await User.findOne({ username: name })
-
         const submissions = await Submission.find();
-
+        const user = await User.findOne({
+            username : req.user.name
+        })
         res.render('pages/user/submission', {
             title: 'View',
             page: 'Submission',
@@ -33,12 +30,8 @@ router.get('/' , verifyToken, async (req ,res) => {
 
 //View idea list (Submission details)
 //--Method:Get 
-router.get('/:id', verifyToken, async (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
-        const { name, roles } = req.user
-
-        const user = await User.findOne({ username: name })
-
         const submissionId = req.params.id
         const categories = await Category.find()
         const ideas = await Idea.find()
@@ -48,8 +41,7 @@ router.get('/:id', verifyToken, async (req, res) => {
             page: 'Submission',
             submissionId,
             categories,
-            ideas,
-            user
+            ideas
         })
     } catch (error) {
         console.log(error)
@@ -61,9 +53,6 @@ router.get('/:id', verifyToken, async (req, res) => {
 //--Method:Get 
 router.get('/:id/idea-create', verifyToken, async(req, res) => {
     try {
-        const { name, roles } = req.user
-
-        const user = await User.findOne({ username: name })
         const categories = await Category.find();
         const submissionId = req.params.id
 
@@ -71,8 +60,7 @@ router.get('/:id/idea-create', verifyToken, async(req, res) => {
             title: 'Create',
             page: 'Idea',
             categories,
-            submissionId,
-            user
+            submissionId
         })
     } catch (error) {
         console.log(error)
