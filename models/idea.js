@@ -35,6 +35,12 @@ const ideaSchema = new Schema({
             default: Date.now
         }
     }],
+    comments : [{
+        commentId : {
+            type: mongoose.Types.ObjectId,
+            ref: 'comment'
+        }
+    }],
     isActive: {
         type: Boolean,
         default: false
