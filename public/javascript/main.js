@@ -293,7 +293,22 @@
           $('#example').DataTable();
         });
       }
-
     });
+
+    //Is active like
+    window.addEventListener('load', () => {
+      const like = document.querySelector('#like')
+
+      if(like){
+        $('#like').on('click', function() {
+          event.preventDefault();
+          if($(this).hasClass('active')){
+            $(this).removeClass('active');
+          } else {
+            $(this).addClass('active');
+          }
+        });
+      }
+    })
 })()
 

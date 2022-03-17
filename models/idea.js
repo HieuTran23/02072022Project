@@ -41,6 +41,12 @@ const ideaSchema = new Schema({
             ref: 'comment'
         }
     }],
+    reactions : [{
+        reactionId : {
+            type: mongoose.Types.ObjectId,
+            ref: 'reaction'
+        }
+    }],
     isActive: {
         type: Boolean,
         default: false

@@ -18,6 +18,7 @@
   <link href="../../../vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
   <link href="../../../css/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -54,7 +55,7 @@
                 <ul>
                   <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="profile/<%= idea.userId._id %>"><%= idea.userId.fullName %></a></li>
                   <li class="d-flex align-items-center"><i class="bi bi-clock"></i><time datetime="2020-01-01"><%= idea.updatedAt.toLocaleString('default') %></time></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="#">8 Comments</a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="#"><%= idea.comments.length %> Comments</a></li>
                 </ul>
               </div>
 
@@ -73,24 +74,49 @@
                   <li><a href="#"><%= idea.categoryId.name %></a></li>
                 </ul>
               </div>
-
+              <div class="entry-rating d-flex align-items-center">
+                <!-- Thumbs up -->
+                <div class="like grow-rating ">
+                  <i class="fa fa-thumbs-up fa-3x like 
+                  <% for(let i = 0; idea.reactions[i] != undefined; i++ ){
+                    if(idea.reactions[i].reactionId.userId.toString() == user._id.toString()){
+                      %>
+                      <%= 'active' %>
+                      <%
+                    }
+                  } %>
+                  " 
+                  id="like" aria-hidden="true"></i>
+                </div>
+                <span style="margin: 4px 0 0 0 " id="rating">
+                  <%= idea.reactions.length %> Like
+                </span>
+                <!-- Thumbs down
+                <div class="dislike grow-rating">
+                  <i class="fa fa-thumbs-down fa-3x like" aria-hidden="true"></i>
+                </div> -->
+              </div>
             </article>
             <!-- End idea entry -->
 
             <div class="idea-comments">
-              <h4 class="comments-count">8 Comments</h4>
-              <div id="comment-1" class="comment">
-                <div class="d-flex">
-                  <div class="comment-img"><img src="../images/coment/coment1.jpg" alt=""></div>
-                  <div>
-                    <h5><a href="">Minh Hoang</a> <a href="#" class="reply"><i class="bi bi-reply-fill"></i> Reply</a></h5>
-                    <time datetime="2020-01-01">01 Jan, 2020</time>
-                    <p>
-                      It's so simple.
-                    </p>
+              <h4 class="comments-count"><%= idea.comments.length %> Comments</h4>
+              <% idea.comments.forEach(comment => {
+                %>
+                <div id="comment-1" class="comment">
+                  <div class="d-flex">
+                    <div class="comment-img"><img src="../images/coment/coment1.jpg" alt=""></div>
+                    <div>
+                      <h5><a href="#"><%= comment.commentId.userId.fullName %></a> <a href="#" class="reply"><i class="bi bi-reply-fill"></i> Reply</a></h5>
+                      <time datetime="2020-01-01"><%= comment.commentId.updatedAt.toLocaleString('default') %></time>
+                      <p>
+                        <%= comment.commentId.content %>
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
+                <%
+              }); %>
               <!-- End comment #1 -->
 
               <div class="reply-form">
@@ -104,7 +130,6 @@
                   </div>
                   <button type="submit" class="btn btn-primary">Post Comment</button>
                 </form>
-
               </div>
 
             </div><!-- End idea comments -->
@@ -130,9 +155,10 @@
 
   <!--Back to top-->
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-
+  <!--Jquery-->
+  <script src="../../../vendor/jquery/jquery-3.5.1.js"></script>
   <!-- js -->
+
   <script src="../../../vendor/purecounter/purecounter.js"></script>
   <script src="../../../vendor/aos/aos.js"></script>
   <script src="../../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -140,6 +166,23 @@
   <script src="../../../vendor/isotope-layout/isotope.pkgd.min.js"></script>
   <script src="../../../vendor/swiper/swiper-bundle.min.js"></script>
   <script src="../../../javascript/main.js"></script>
+  <script type="text/javascript">
+    var data = "<%= idea._id %>";
+
+    $('#like').on('click', function() {
+      $.ajax({
+        url: `/idea/${data}/reaction`,
+        method: 'POST',
+        contentType: 'application/Json',
+        data: JSON.stringify({reaction: true}),
+        success: (res) => {
+          $('#rating').text(`${res.idea.reactions.length} Like`)
+          console.log(res.idea)
+        }
+      })
+    })
+    
+  </script>
 
 </body>
 

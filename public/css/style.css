@@ -1248,6 +1248,7 @@ idea
 
 .idea .entry .entry-footer {
   padding-top: 10px;
+  padding-bottom: 10px;
   border-top: 1px solid #e6e6e6;
 }
 .idea .entry .entry-footer i {
@@ -1290,6 +1291,41 @@ idea
 .idea .entry .entry-footer .share i {
   padding-left: 5px;
 }
+
+/*rating*/
+.idea .entry .entry-rating {
+  border-top: 1px solid #e6e6e6;
+}
+.idea .entry .entry-rating i {
+  color: #5e5e5e;
+  display: inline;
+}
+.idea .entry .entry-rating a {
+  color: #1e1e1e;
+  transition: 0.3s;
+}
+.idea .entry .entry-rating a:hover {
+  color: #e03a3c;
+}
+
+.idea .entry .entry-rating .like,
+.idea .entry .entry-rating .dislike {
+  display: inline-block;
+  cursor: pointer;
+  margin: 0 10px 0 0;
+  font-size: 28px;
+}
+
+.idea .entry .entry-rating .dislike:hover,
+.idea .entry .entry-rating .like:hover {
+  transition: all 0.2s ease-in-out;
+  transform: scale(1.1);
+}
+
+.idea .entry .entry-rating .active {
+  color: #2ebdd1;
+}
+
 .idea .entry-single {
   margin-bottom: 30px;
 }
