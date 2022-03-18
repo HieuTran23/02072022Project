@@ -50,6 +50,10 @@ const ideaSchema = new Schema({
     isActive: {
         type: Boolean,
         default: false
+    },
+    isAnonymously: {
+        type: Boolean,
+        default: false
     }
 },
 { timestamps: true }

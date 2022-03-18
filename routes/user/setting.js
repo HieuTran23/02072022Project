@@ -28,17 +28,25 @@ router.get('/', verifyToken, async (req, res) => {
 })
 
 //-- Post 
-router.post('/:id' , verifyToken, async(req,res)=>{
-    const {fullName, departmentId,emails, phones, streets, cities, countries} = req.body
-     //validation
+router.post('/' , verifyToken, async(req,res)=>{
+    const {fullName, departmentId,emails, phones, streets, cities, countries, ideaMode, commentMode} = req.body
+
+    if(!emails[0]) return res.status(400).json({success: false, message: 'Missing text'})
+
     try {
+        
+
         //Create contact field (object)
         let contact = {
             emails: [],
             phones: [],
             addresses:[]
         }
-        
+        //Anonymously filed
+        let anonymously = {
+            idea: ideaMode ? true : false,
+            comment: commentMode ? true : false
+        }
         //Handle contact request
         if(emails != undefined){
             emails.forEach(email => {
@@ -67,10 +75,11 @@ router.post('/:id' , verifyToken, async(req,res)=>{
         let editUser = {
             fullName: fullName,
             contact: contact,
-            departmentId
+            departmentId,
+            anonymously
         }
         
-        //Update user to database
+        // Update user to database
         const updatedUser = await User.findOneAndUpdate({_id: user._id}, editUser, {new: true})
         var id= req.params.id;
         res.redirect('/setting')

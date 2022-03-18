@@ -43,9 +43,9 @@
                   <div class="d-flex flex-column align-items-center text-center">
                     <img src="../images/coment/coment1.jpg" alt="Admin" class="rounded-circle" width="150">
                     <div class="mt-3">
-                      <h4><%= user.fullName %></h4>
+                      <h4><%= userProfile.fullName %></h4>
                       <p class="text-secondary mb-1"></p>
-                      <% user.contact.addresses.forEach(address => {
+                      <% userProfile.contact.addresses.forEach(address => {
                         %>
                         <p class="text-muted font-size-sm"><%= address.street%>, <%= address.city%>, <%= address.country%> </p>
                         <%
@@ -66,7 +66,7 @@
                       <h6 class="mb-0">Full Name</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      <%= user.fullName%>
+                      <%= userProfile.fullName%>
                     </div>
                   </div>
                   <hr>
@@ -75,7 +75,7 @@
                       <h6 class="mb-0">Username</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      <%= user.username %>
+                      <%= userProfile.username %>
                     </div>
                   </div>
                   <hr>
@@ -83,7 +83,7 @@
                     <div class="col-sm-3">
                       <h6 class="mb-0">Email</h6>
                     </div>
-                    <% user.contact.emails.forEach(email => {
+                    <% userProfile.contact.emails.forEach(email => {
                       %>
                       <div class="col-sm-9 text-secondary">
                       <%= email.email %>
@@ -99,7 +99,7 @@
                       <h6 class="mb-0">Role</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      <% user.roles.forEach(role => {
+                      <% userProfile.roles.forEach(role => {
                         for(let i = 0; roles[i] != undefined; i++){
                           if (role.roleId.toString() == roles[i]._id.toString()){
                             %>
@@ -120,7 +120,7 @@
                     <div class="col-sm-9 text-secondary">
                       <%
                       for(let i = 0; departments[i] != undefined; i++){
-                        if(user.departmentId.toString() == departments[i]._id.toString()){
+                        if(userProfile.departmentId.toString() == departments[i]._id.toString()){
                           %>
                           <%= departments[i].name%>
                           <%
@@ -136,7 +136,7 @@
                     </div>
                     <div class="col-sm-9 text-secondary">
                       <%
-                      user.contact.phones.forEach(phone => {
+                      userProfile.contact.phones.forEach(phone => {
                         %>
                         <p><%= phone.phone %></p>
                         <%
@@ -150,7 +150,7 @@
                       <h6 class="mb-0">Address</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      <% user.contact.addresses.forEach(address => {
+                      <% userProfile.contact.addresses.forEach(address => {
                         %>
                         <p class="text-muted font-size-sm"><%= address.street%>, <%= address.city%>, <%= address.country%> </p>
                         <%

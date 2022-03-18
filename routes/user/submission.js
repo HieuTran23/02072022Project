@@ -39,7 +39,7 @@ router.get('/:id', verifyToken, async (req, res) => {
     try {
         const { name, roles } = req.user
 
-        const user = await User.findOne({ username: name })
+        const user = await User.findOne({ username: name }, '-password')
 
         const submissionId = req.params.id
         const categories = await Category.find()
@@ -65,7 +65,7 @@ router.get('/:id/idea-create', verifyToken, async(req, res) => {
     try {
         const { name, roles } = req.user
 
-        const user = await User.findOne({ username: name })
+        const user = await User.findOne({ username: name }, '-password')
         const categories = await Category.find();
         const submissionId = req.params.id
 
@@ -83,13 +83,17 @@ router.get('/:id/idea-create', verifyToken, async(req, res) => {
 })
 //--Method:Post
 router.post('/:id/idea-create', verifyToken, Upload.array('files'), async(req, res) => {
+    const {title, description, categoryId, content, ideaMode} = req.body
+    const submissionId = req.params.id
+
+    if(!title) return res.status(400).json({success: false, message: 'Missing text'})
+
     try{
         const user = await User.findOne({
             username : req.user.name
         })
 
-        const {title, description, categoryId, content} = req.body
-        const submissionId = req.params.id
+        
         
         var files = []
 
@@ -107,7 +111,8 @@ router.post('/:id/idea-create', verifyToken, Upload.array('files'), async(req, r
             content,
             userId: user._id,
             submissionId,
-            files
+            files,
+            isAnonymously: ideaMode
         })
 
         await newIdea.save()
@@ -124,7 +129,7 @@ router.get('/:submissionId/idea-edit/:ideaId', verifyToken, async(req, res) => {
     try {
         const user = await User.findOne({
             username : req.user.name
-        })
+        }, '-password')
 
 
         const { submissionId, ideaId }= req.params
@@ -148,14 +153,13 @@ router.get('/:submissionId/idea-edit/:ideaId', verifyToken, async(req, res) => {
 })
 //--Method:Post
 router.post('/:submissionId/idea-edit/:ideaId', verifyToken, async(req, res) => {
+    const {title, description, categoryId, content, ideaMode} = req.body
+    const {submissionId, ideaId} = req.params
+
     try{
         const user = await User.findOne({
             username : req.user.name
         })
-
-        const {title, description, categoryId, content} = req.body
-        const {submissionId, ideaId} = req.params
-        
         
         const editIdea = {
             title,
@@ -163,9 +167,10 @@ router.post('/:submissionId/idea-edit/:ideaId', verifyToken, async(req, res) => 
             description,
             content,
             userId: user._id,
-            submissionId
+            submissionId,
+            isAnonymously: ideaMode != null ? true: false
         }
-
+        
         await Idea.findOneAndUpdate({ _id: ideaId}, editIdea)
         res.redirect(`/submission/${submissionId}`)
     } catch (err) {

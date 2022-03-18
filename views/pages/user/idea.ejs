@@ -53,7 +53,7 @@
     
                   <div class="entry-meta">
                     <ul>
-                      <li class="d-flex align-items-center"><i class="bi bi-person"></i><a href="profile/<%= idea.userId._id %>"> <%= idea.userId.fullName %> </a></li>
+                      <li class="d-flex align-items-center"><i class="bi bi-person"></i><a href="<% if(idea.isAnonymously) { %><%= '#' %><%} else {%>profile/<%= idea.userId._id %><%} %>"> <%= idea.userId.fullName %> </a></li>
                       <li class="d-flex align-items-center"><i class="bi bi-clock"></i><a href="#"><%= idea.updatedAt.toLocaleString('default') %></a> </time></li>
                       <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="idea/<%= idea._id %>"><%= idea.comments.length %> Comments</a></li>
                     </ul>

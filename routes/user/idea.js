@@ -5,20 +5,23 @@ const User = require('../../models/user')
 const { verifyToken } = require('../../middleware/verifyAuth')
 const Comment = require('../../models/comment')
 const Reaction = require('../../models/reaction')
+const ideaAnonymous = require('../../models/ideaAnonymous')
 
 //List idea
 //--Method:Get 
 router.get('/', verifyToken ,async (req, res) => {
     try{
-        const ideas = await Idea.find().populate('userId', 'fullName').populate('submissionId')
+        const ideas = await Idea.find().populate('userId', ['fullName', '_id']).populate('submissionId')
 
         const { name } = req.user
         const user = await User.findOne({ username: name})
         
+        const ideaList = ideaAnonymous.arrayFilter(ideas)
+
         res.render('pages/user/idea', {
             title: 'List',
             page: 'Idea',
-            ideas,
+            ideas: ideaList,
             user
         })
     } catch(err) {
@@ -50,12 +53,14 @@ router.get('/:id', verifyToken, async (req, res) => {
         })
         // res.json(idea)
 
+        const ideaFilter = ideaAnonymous.singleFilter(idea)
 
+        // res.json(ideaFilter)
         res.render('pages/user/idea-detail', {
             title: 'View',
             page: 'Idea',
             user,
-            idea
+            idea: ideaFilter
         })
     } catch (err) {
         console.log(err)

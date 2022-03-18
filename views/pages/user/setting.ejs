@@ -126,7 +126,7 @@
                   </div>
                   
                   <hr>
-                  <form action="/setting/<%= user._id %>" method="post">
+                  <form action="/setting" method="post">
                     <div class="card-tools d-flex justify-content-between">
                       <h2>Account information</h2> 
                     </div>   
@@ -275,17 +275,17 @@
                       <h2>Account mode</h2> 
                     </div> 
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="ideaMode">
+                      <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault" name="ideaMode" <%  if(user.anonymously.idea) {%> <%= 'checked' %> <%} %>>
                       <label class="form-check-label" for="flexCheckDefault">
                         Anonymously idea mode
                       </label>
                     </div>
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" name="commentMode">
+                      <input class="form-check-input" type="checkbox" value="true" id="flexCheckChecked" name="commentMode" <%  if(user.anonymously.comment) {%> <%= 'checked' %> <%} %>>
                       <label class="form-check-label" for="flexCheckChecked">
                         Anonymously comment mode
                       </label>
-                    </div>
+                    </div>  
                     <div class="col-12">
                       <button class="btn btn-primary" type="submit">Submit form</button>
                     </div>

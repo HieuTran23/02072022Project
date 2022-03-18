@@ -48,12 +48,12 @@
               </div>
 
               <h2 class="entry-title">
-                <a href="idea/<%= idea._id %>"><%= idea.title %></a>
+                <a href="/idea/<%= idea._id %>"><%= idea.title %></a>
               </h2>
 
               <div class="entry-meta">
                 <ul>
-                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="profile/<%= idea.userId._id %>"><%= idea.userId.fullName %></a></li>
+                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="<% if(idea.isAnonymously) { %><%= '#' %><%} else {%>/profile/<%= idea.userId._id %><%} %>"><%= idea.userId.fullName %></a></li>
                   <li class="d-flex align-items-center"><i class="bi bi-clock"></i><time datetime="2020-01-01"><%= idea.updatedAt.toLocaleString('default') %></time></li>
                   <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="#"><%= idea.comments.length %> Comments</a></li>
                 </ul>
