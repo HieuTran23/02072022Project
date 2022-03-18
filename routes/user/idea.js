@@ -5,8 +5,6 @@ const User = require('../../models/user')
 const { verifyToken } = require('../../middleware/verifyAuth')
 const Comment = require('../../models/comment')
 const Reaction = require('../../models/reaction')
-const { findOne } = require('../../models/idea')
-
 
 //List idea
 //--Method:Get 

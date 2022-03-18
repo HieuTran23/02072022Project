@@ -1809,6 +1809,41 @@ Footer
   background-color: white;
 }
 
+/*settingPassword page*/
+.setting-password {
+  padding: 40px 0 20px 0;
+}
+
+.setting-password .card {
+  padding: 30px;
+  margin-bottom: 60px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.setting-password .card-header {
+  background-color: white;
+}
+
+.setting-password label {
+  width: 100px;
+}
+
+.setting-password .alert {
+  display: none;
+}
+
+.setting-password .requirements {
+  list-style-type: none;
+}
+
+.setting-password .wrong .fa-check {
+  display: none;
+}
+
+.setting-password .good .fa-times {
+  display: none;
+}
+
 /*
 Submission
 */
