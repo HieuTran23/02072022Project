@@ -4,20 +4,20 @@ const argon2 = require("argon2")
 const User = require('../../models/user')
 const Role = require('../../models/role');
 const Department = require('../../models/department')
+const { createValidation } = require('../../middleware/validation');
+const role = require("../../models/role");
 
 // view all user 
 router.get('/' , async (req ,res) => {
     try {
-        const users = await User.find()
-        const roles = await Role.find()
-        const departments = await Department.find()
+        const users = await User.find().populate('roles.roleId').populate('department.departmentId')
+
+        // res.json(users)
 
         res.render('pages/admin/user',{
             title: "User List",
             page: "User",
-            users,
-            roles,
-            departments
+            users
         })
     } catch (error) {
         console.log(error)
@@ -32,6 +32,7 @@ router.get('/profile/:id' , async (req ,res) => {
         const user = await User.findOne({
             _id :req.params.id
         })
+
         const roles = await Role.find()
         res.render('pages/admin/user-profile',{
             title: 'Profile',
@@ -68,8 +69,8 @@ router.post('/create' , async (req ,res) => {
     // res.json(req.body)
     const {username , password, confirmPassword, fullName, departmentId, roles, emails, phones, streets, cities, countries} = req.body
      //validation
-    if(!username || !password || !confirmPassword)
-        return res .status(400) .json({success:false , message:'Missing text'})
+    const { error } = createValidation({username, password, email: emails[0]})
+        if (error) return res.status(400).send(error.details[0].message)
     try {
         //Check password with confirm password
         if(password != confirmPassword) 
@@ -129,14 +130,27 @@ router.post('/create' , async (req ,res) => {
             }
         }
         
+        //Department
+        let department = {
+            departmentId,
+            isQACoordinator: false
+        }
 
+        for(let i = 0; roles[i] != undefined; i++){
+            const findRole = await Role.findOne({ _id: roles[i]})
+
+            if(findRole.name == 'QA coordinator') {
+                department.isQACoordinator = true
+            }
+
+        }
         //Save user to database
         const newUser = new User ({
             username: username,
             password: hashPassword,
             fullName: fullName,
             roles: roleList,
-            departmentId,
+            department,
             contact: contact
         })
         await newUser.save()
@@ -153,7 +167,7 @@ router.post('/create' , async (req ,res) => {
 //--Method: Get 
 router.get('/edit/:id', async(req, res) => {
     try{
-        const user = await User.findById({ _id: req.params.id})
+        const user = await User.findById({ _id: req.params.id}, '-password').populate('roles.roleId').populate('department.departmentId')
         const roles = await Role.find()
         const departments = await Department.find()
 
@@ -223,12 +237,26 @@ router.post('/edit/:id' , async(req,res)=>{
         }
         const user = await User.findById({_id: req.params.id})
 
+        let department = {
+            departmentId,
+            isQACoordinator: false
+        }
+
+        for(let i = 0; roles[i] != undefined; i++){
+            const findRole = await Role.findOne({ _id: roles[i]})
+
+            if(findRole.name == 'QA coordinator') {
+                department.isQACoordinator = true
+            }
+
+        }
+
         let editUser = {
             username: user.username,
             password: user.password,
             fullName: fullName,
             roles: roleList,
-            departmentId,
+            department,
             contact: contact
         }
 

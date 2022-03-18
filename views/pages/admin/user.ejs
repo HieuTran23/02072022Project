@@ -109,30 +109,14 @@
                         <td><%= user.username %>  </td>
                         <td><%= user.fullName %>  </td>
                         <td>
-                            <% user.roles.forEach(userRole => {
-                                    roles.forEach(role => {
-                                        if(userRole.roleId.toString() == role._id.toString()){
-                                            %>
-                                            <div class="row">
-                                                <%= role.name%>
-                                            </div>
-                                            
-                                            <%
-                                        }
-                                    })
-                            }); %>
+                            <% user.roles.forEach(role => {
+                              %>
+                              <%= role.roleId.name %>
+                              <%
+                            });%>
                         </td>
                         <td>
-                        <%
-                        for(let i = 0; departments[i] != undefined; i++){
-                          if(user.departmentId == departments[i].id) {
-                            %>
-                            <%= departments[i].name %>
-                            <%
-                            break;
-                          }
-                        }
-                        %>  
+                          <%= user.department.departmentId.name %> <% if(user.department.isQACoordinator){%><%= `(QA Coordinator)`%><%} %>
                         </td>
                         <td> <%= user.createAt.toLocaleString('default') %></td>
                         <td>

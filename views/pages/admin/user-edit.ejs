@@ -78,7 +78,7 @@
                                     roles.forEach(role => {
                                         let boolean = false
                                         for(let i = 0; user.roles[i] != undefined; i++){
-                                            if(role._id.toString() == user.roles[i].roleId.toString()){
+                                            if(role._id.toString() == user.roles[i].roleId._id.toString()){
                                                 %>
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="checkbox" name="roles[]" value="<%= role._id %>" checked>
@@ -107,7 +107,7 @@
                                     %>
                                     <option value="<%= department._id%>" 
                                         <%
-                                        if(user.departmentId.toString() == department._id.toString()){
+                                        if(user.department.departmentId._id.toString() == department._id.toString()){
                                             %>
                                             selected
                                             <%

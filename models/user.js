@@ -1,7 +1,5 @@
 const mongoose = require('mongoose') ;
 const Schema = mongoose.Schema
-var crypto = require('crypto');
-const string = require('@hapi/joi/lib/types/string');
 
 const UserSchema = new Schema({
     username:{
@@ -27,9 +25,15 @@ const UserSchema = new Schema({
             required: true
         }
     }],
-    departmentId: {
-        type: mongoose.Types.ObjectId,
-        ref: 'department',
+    department: {
+        departmentId: {
+            type: mongoose.Types.ObjectId,
+            ref: 'department',
+        },
+        isQACoordinator: {
+            type: Boolean,
+            default: false
+        }
     },
     anonymously : {
         idea: {
