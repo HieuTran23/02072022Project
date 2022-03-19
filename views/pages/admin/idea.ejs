@@ -36,97 +36,56 @@
     <section class="content">
       <div class="container-fluid">
         <div class="row">
-          <!-- Create new category card-->
-          <div class="col-12">
-            <div class="card card-default">
-              <div class="card-header">
-                <h3 class="card-title">Create new Category</h3>
-  
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove">
-                    <i class="fas fa-times"></i>
-                  </button>
-                </div>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <!--Row-->
-                <div class="row">
-                  <p> The category list doesn't have the category you want! Create it </p>
-                </div>
-                <!-- /.row -->
-                <!--Row-->
-                <div class="row">
-                  <a href="/admin/category/create" class="btn btn-success"> Create New Category </a>
-                </div>
-                <!-- /.row -->
-              </div>
-              <!-- /.card-body -->
-            </div>
-          </div>
-          
-          <!-- /.card -->
-
           <!--Card-->
           <div class="col-12">
             <div class="card">
-
-              <!--Card header-->
-              <div class="card-header"> 
-                <h3 class="card-title">
-                  <% if(locals.title) { %> 
-                    <%= title %> 
-                  <% }%> 
-                Table</h3>
+              <div class="card-header">
+                <h3 class="card-title">Idea</h3>
               </div>
-
-              
-
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="table" class="table table-bordered table-hover">
+                <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>No. </th>
+                    <th>Title</th>
                     <th>Category</th>
                     <th>Description</th>
-                    <th>Create At</th>
+                    <th>Department</th>
+                    <th>Username</th>
+                    <th>Submission</th>
+                    <th>Anonymous</th>
+                    <th>Reactions</th>
+                    <th>Comments</th>
+                    <th>Views</th>
+                    <th>Created At</th>
+                    <th>Updated At</th>
                     <th></th>
                   </tr>
                   </thead>
                   <tbody>
-                    <% 
-                    let count = 1;
-                    categorys.forEach(category => {
-                    %>
+                    <% ideas.forEach(idea => {
+                      %>
                       <tr>
-                        <td><%= count %></td>
-                        <td><%= category.name %>  </td>
-                        <td><%= category.description %>  </td>
-                        <td><%= category.createAt.toLocaleString('default') %></td>
+                        <td><%= idea.title %></td>
+                        <td><%= idea.categoryId.name %></td>
+                        <td><%= idea.description %></td>
+                        <td><%= idea.userId.department.departmentId.name %></td>
+                        <td><%= idea.userId.username %></td>
+                        <td><%= idea.submissionId.name %></td>
+                        <td><%= idea.isAnonymously %></td>            
+                        <td><%= idea.reactions.length %></td>            
+                        <td><%= idea.comments.length %></td>            
+                        <td> 2 </td>            
+                        <td><%= idea.createdAt.toLocaleString('default') %></td>
+                        <td><%= idea.updatedAt.toLocaleString('default') %></td>
                         <td>
-                          <a href="/admin/category/edit/<%= category._id %>" class="btn btn-tool"><i class="fas fa-pencil-alt"></i></a>
-                          <a data-confirm="Are you sure?" href="/admin/category/delete/<%= category._id %>" class="btn btn-tool"><i class="fas fa-trash-alt"></i></a>
+                          <a data-confirm="Are you sure?" href="/admin/idea/delete/<%= idea._id %>" class="btn btn-tool"><i class="fas fa-trash-alt"></i></a>
+                          <a href="/admin/idea/detail/<%= idea._id %>" class="btn btn-tool"><i class="fas fa-eye"></i></a>
                         </td>
                       </tr>
-                    <% 
-                      count++;
-                      }) 
-                    %>
-                  
+                      <%
+                    }); %>
                   </tbody>
-                  <tfoot>
-                  <tr>
-                    <th>No. </th>
-                    <th>Category</th>
-                    <th>Description</th>
-                    <th>Create At</th>
-                    <th></th>
-                  </tr>
-                  </tfoot>
                 </table>
               </div>
               <!-- /.card-body -->
@@ -175,15 +134,10 @@
 <!-- Page specific script -->
 <script>
   $(function () {
-    $('#table').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-    });
+    $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
   });
 </script>
 </body>

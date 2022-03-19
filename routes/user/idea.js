@@ -73,22 +73,27 @@ router.get('/:id', verifyToken, async (req, res) => {
 //--Idea comment
 //--Method:post 
 router.post('/:ideaId/comment',verifyToken, async (req, res) =>{
+    const {ideaId} = req.params
+    const {content} = req.body
+
+    if(!content) res.status(400).json({success: false, message: 'Missing test'})
+
     try {
-        const {ideaId} = req.params
+        
 
         const user = await User.findOne({
             username: req.user.name
         })
 
-        const {content} = req.body
+        const idea = await Idea.findById(ideaId).populate('userId', '-password').populate('submissionId')
+        if(Number(idea.submissionId.finalClosureDate) < Date.now()) return res.status(400).json({success: false, message: 'Submission Comment Close'})
+        
         const comment = new Comment({
             content,
             userId :user._id
         })
 
         await comment.save() 
-        
-        const idea = await Idea.findById(ideaId).populate('userId', '-password').populate('submissionId')
 
         await idea.update({
             $push: {comments : {commentId: comment._id}}

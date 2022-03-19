@@ -90,6 +90,9 @@ router.post('/:id/idea-create', verifyToken, Upload.array('files'), async(req, r
     if(!title) return res.status(400).json({success: false, message: 'Missing text'})
 
     try{
+        const submission = await Submission.findById(submissionId)
+        if(Number(submission.createdAt) < Date.now()) return res.status(400).json({success: false, message: 'Submission Close'})
+
         const user = await User.findOne({
             username : req.user.name
         }, '-password')
@@ -101,7 +104,10 @@ router.post('/:id/idea-create', verifyToken, Upload.array('files'), async(req, r
         if(req.files != undefined){
             req.files.forEach(file => {
                 const filePath = `/uploads/${file.filename}`
-                files.push({filePath})
+                files.push({
+                    fileName: file.originalname,
+                    filePath
+                })
             });
         }
 
@@ -175,6 +181,10 @@ router.post('/:submissionId/idea-edit/:ideaId', verifyToken, async(req, res) => 
     const {submissionId, ideaId} = req.params
 
     try{
+        const submission = await Submission.findById(submissionId)
+        if(Number(submission.createdAt) < Date.now()) return res.status(400).json({success: false, message: 'Submission Close'})
+
+
         const user = await User.findOne({
             username : req.user.name
         }, '-password')

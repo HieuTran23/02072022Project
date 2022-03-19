@@ -26,6 +26,9 @@ const ideaSchema = new Schema({
         ref: 'submission'
     },
     files: [{
+        fileName: {
+            type: String
+        },
         filePath: {
             type: String
         },

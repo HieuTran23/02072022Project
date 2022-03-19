@@ -21,6 +21,7 @@ const roleAdminRouter = require('./routes/admin/role')
 const submissionAdminRouter = require('./routes/admin/submission')
 const departmentAdminRouter = require('./routes/admin/department')
 const categoryAdminRouter = require('./routes/admin/category')
+const ideaAdminRouter = require('./routes/admin/idea')
 
 //--|--User
 const profileRouter = require('./routes/user/profile')
@@ -81,6 +82,8 @@ app.use('/admin/submission',submissionAdminRouter)
 app.use('/admin/category',categoryAdminRouter)
 //--|--User
 app.use('/admin/user', userAdminRouter)
+//--|--Idea
+app.use('/admin/idea', ideaAdminRouter)
 
 //User Start
 //--User

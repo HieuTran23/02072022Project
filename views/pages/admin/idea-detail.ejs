@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AdminLTE 3 | Project Detail</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+</head>
+<body class="hold-transition sidebar-mini">
+<!-- Site wrapper -->
+<div class="wrapper">
+    <!-- Navbar -->
+    <%- include('../../partials/admin/header'); -%>
+    <!-- /.navbar -->
+  
+    <!-- Main Sidebar Container -->
+    <!-- Sidebar -->
+    <%- include('../../partials/admin/sidebar'); -%>
+    <!-- /.sidebar -->
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <%- include('../../partials/admin/content-header-wrapper'); -%>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- Create new role card-->
+          <div class="col-12">
+            <!-- Default box -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">User Profile</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
+                    <div class="row">
+                      <div class="col-12 col-sm-4">
+                        <div class="info-box bg-light">
+                          <div class="info-box-content">
+                            <span class="info-box-text text-center text-muted">Total reactions</span>
+                            <span class="info-box-number text-center text-muted mb-0"><%= idea.reactions.length %></span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12 col-sm-4">
+                        <div class="info-box bg-light">
+                          <div class="info-box-content">
+                            <span class="info-box-text text-center text-muted">Total comments</span>
+                            <span class="info-box-number text-center text-muted mb-0"><%= idea.comments.length%></span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12 col-sm-4">
+                        <div class="info-box bg-light">
+                          <div class="info-box-content">
+                            <span class="info-box-text text-center text-muted">Total views</span>
+                            <span class="info-box-number text-center text-muted mb-0">2</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="row">
+                          <div class="col-12">
+                            <h3 >Title: <%= idea.title %></h3>
+                          </div>
+                          <div class="col-12">
+                            <%= idea.description %>
+                          </div>
+                          <div class="col-12">
+                            <h5>Content: </h5>
+                            <%- idea.content %>
+                          </div>
+                        </div>
+                        <hr><h4 >All comments</h4>
+                        <% idea.comments.forEach(comment => { %>
+                          <div class="row">
+                          
+                            <div class="user-block col-3 col-lg-4">
+                              <img class="img-circle img-bordered-sm" src="../../dist/img/user1-128x128.jpg" alt="user image">
+                              <span class="username">
+                                <a href="/admin/user/profile/<%= comment.commentId.userId._id  %>"><%= comment.commentId.userId.fullName%></a>
+                              </span>
+                              <span class="description">Shared publicly - <%= comment.commentId.createdAt.toLocaleString('default') %></span>
+                            </div>
+                            <!-- /.user-block -->
+                            <p class="col-9 col-lg-8">
+                              <%= comment.commentId.content %>
+                            </p>
+                          </div>
+                        <% }); %>
+                        
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
+                    <h3 class="text-primary"><i class="fas fa-paint-brush"></i>User Information</h3>
+                    <br>
+                    <div class="text-muted">
+                      <p class="text-sm">Full Name
+                        <b ><%= idea.userId.fullName%></b>
+                      </p>
+                      <p class="text-sm">Role
+                        <% idea.userId.roles.forEach(role => {
+                          %>
+                          <b><%= role.roleId.name%></b>
+                          <%
+                        }); %>
+                        
+                      </p>
+                      <p class="text-sm">Email
+                        <% idea.userId.contact.emails.forEach(email => {
+                          %>
+                          <b><%= email.email %></b>
+                          <%
+                        }); %>
+                      </p>
+                      <p class="text-sm">Phone
+                        <% idea.userId.contact.phones.forEach(phone => {
+                          %>
+                          <b><%= phone.phone   %></b>
+                          <%
+                        }); %>
+                      </p>
+                    </div>
+
+                    <h5 class="mt-5 text-muted">Project files</h5>
+                    <ul class="list-unstyled">
+                      <% idea.files.forEach(file => { %>
+                        <li>
+                          <a href="<%= file.filePath %>" class="btn-link text-secondary" download><i class="far fa-fw fa-file"></i><%= file.fileName%></a>
+                        </li>
+                      <% }); %>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+      </div>
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Main Footer -->
+  <%- include('../../partials/admin/footer'); -%>
+  <!-- End Footer-->
+
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="../../plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../../dist/js/adminlte.min.js"></script>
+</body>
+</html>
