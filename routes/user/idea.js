@@ -6,6 +6,7 @@ const { verifyToken } = require('../../middleware/verifyAuth')
 const Comment = require('../../models/comment')
 const Reaction = require('../../models/reaction')
 const ideaAnonymous = require('../../models/ideaAnonymous')
+const { sendMail } = require('../../utils/mailer')
 
 //List idea
 //--Method:Get 
@@ -40,7 +41,7 @@ router.get('/:id', verifyToken, async (req, res) => {
             path: 'userId',
             select: ['username', 'fullName'],
             populate: {
-                path: 'departmentId'
+                path: 'department.departmentId'
             }
         }).populate('categoryId').populate({
             path: 'comments.commentId',
@@ -87,9 +88,23 @@ router.post('/:ideaId/comment',verifyToken, async (req, res) =>{
 
         await comment.save() 
         
-        await Idea.findByIdAndUpdate(ideaId , {
+        const idea = await Idea.findById(ideaId).populate('userId', '-password').populate('submissionId')
+
+        await idea.update({
             $push: {comments : {commentId: comment._id}}
         })
+
+        //Send email
+
+        if(idea.userId.contact.emails[0].email){
+            const mail = {
+                to: idea.userId.contact.emails[0].email,
+                subject: `New comment in your idea(${idea.title}) in submission(${idea.submissionId.name})`,
+                text: `${user.username} + ${user.contact.emails[0].email} send comment is ${comment.content}`
+            }
+            await sendMail(mail)
+        }
+
         res.redirect(`/idea/${ideaId}`)
     } catch (error) {
         console.log(error)

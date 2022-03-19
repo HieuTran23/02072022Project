@@ -7,7 +7,7 @@ const { verifyToken } = require('../../middleware/verifyAuth')
 const User = require('../../models/user')
 const Department = require('../../models/department')
 const Upload = require('../../middleware/multerUpload')
-
+const { sendMail } = require('../../utils/mailer')
 
 
 //View profile list 
@@ -62,6 +62,7 @@ router.get('/:id', verifyToken, async (req, res) => {
 //--Create new idea
 //--Method:Get 
 router.get('/:id/idea-create', verifyToken, async(req, res) => {
+    
     try {
         const { name, roles } = req.user
 
@@ -91,10 +92,10 @@ router.post('/:id/idea-create', verifyToken, Upload.array('files'), async(req, r
     try{
         const user = await User.findOne({
             username : req.user.name
-        })
+        }, '-password')
 
-        
-        
+        const QACoordinator = await User.findOne({ 'department.departmentId' : user.department.departmentId, 'department.isQACoordinator': true }, '-password')
+
         var files = []
 
         if(req.files != undefined){
@@ -116,6 +117,23 @@ router.post('/:id/idea-create', verifyToken, Upload.array('files'), async(req, r
         })
 
         await newIdea.save()
+
+        // //send mail 
+        const emailQACoordinatorList = [...QACoordinator.contact.emails]
+        const emailUserList = [...user.contact.emails]
+        if(emailUserList[0].email){
+            const mail = {
+                to: emailQACoordinatorList[0].email,
+                subject: 'New idea in your department',
+                text: `${user.username} + ${emailUserList.email} send new idea is ${newIdea.title}`
+            }
+            await sendMail(mail)
+        }
+        
+
+        
+        
+       
         res.redirect(`/submission/${submissionId}`)
     } catch (err) {
         console.log(err)
@@ -159,8 +177,11 @@ router.post('/:submissionId/idea-edit/:ideaId', verifyToken, async(req, res) => 
     try{
         const user = await User.findOne({
             username : req.user.name
-        })
+        }, '-password')
         
+        const QACoordinator = await User.findOne({ 'department.departmentId' : user.department.departmentId, 'department.isQACoordinator': true }, '-password')
+
+
         const editIdea = {
             title,
             categoryId,
@@ -172,6 +193,20 @@ router.post('/:submissionId/idea-edit/:ideaId', verifyToken, async(req, res) => 
         }
         
         await Idea.findOneAndUpdate({ _id: ideaId}, editIdea)
+
+        // //send mail 
+        const emailQACoordinatorList = [...QACoordinator.contact.emails]
+        const emailUserList = [...user.contact.emails]
+        if(emailUserList[0].email){
+            const mail = {
+                to: emailQACoordinatorList[0].email,
+                subject: 'New idea in your department',
+                text: `${user.username} + ${emailUserList.email} had edited idea is ${editIdea.title}`
+            }
+            await sendMail(mail)
+        }
+        
+
         res.redirect(`/submission/${submissionId}`)
     } catch (err) {
         console.log(err)

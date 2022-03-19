@@ -120,7 +120,7 @@
                     <div class="col-sm-9 text-secondary">
                       <%
                       for(let i = 0; departments[i] != undefined; i++){
-                        if(userProfile.departmentId.toString() == departments[i]._id.toString()){
+                        if(userProfile.department.departmentId.toString() == departments[i]._id.toString()){
                           %>
                           <%= departments[i].name%>
                           <%

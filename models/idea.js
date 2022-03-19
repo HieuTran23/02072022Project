@@ -4,7 +4,6 @@ const Schema = mongoose.Schema
 const ideaSchema = new Schema({
     title: {
         type: String,
-        unique: true,
         require: true,
         max: 255
     },
