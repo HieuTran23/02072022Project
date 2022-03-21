@@ -91,7 +91,7 @@ router.post('/:id/idea-create', verifyToken, Upload.array('files'), async(req, r
 
     try{
         const submission = await Submission.findById(submissionId)
-        if(Number(submission.createdAt) < Date.now()) return res.status(400).json({success: false, message: 'Submission Close'})
+        if(Number(submission.closureDate) < Date.now()) return res.status(400).json({success: false, message: 'Submission Close'})
 
         const user = await User.findOne({
             username : req.user.name
@@ -182,7 +182,7 @@ router.post('/:submissionId/idea-edit/:ideaId', verifyToken, async(req, res) => 
 
     try{
         const submission = await Submission.findById(submissionId)
-        if(Number(submission.createdAt) < Date.now()) return res.status(400).json({success: false, message: 'Submission Close'})
+        if(Number(submission.closureDate) < Date.now()) return res.status(400).json({success: false, message: 'Submission Close'})
 
 
         const user = await User.findOne({
@@ -246,7 +246,7 @@ router.get('/:submissionId/idea/:ideaId', verifyToken, async(req, res) => {
 
         const idea = await Idea.findById({ _id: ideaId})
         const user = await User.findById({ _id: idea.userId})
-        const userDepartment = await Department.findById({ _id: user.departmentId }) 
+        const userDepartment = await Department.findById({ _id: user.department.departmentId }) 
         const ideaCategory = await Category.findById({_id: idea.categoryId})
 
 

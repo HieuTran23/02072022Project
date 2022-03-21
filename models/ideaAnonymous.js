@@ -44,9 +44,11 @@ module.exports = class User {
                     },
                     _id: "#",
                     roles: [],
-                    departmentId: {
-                        _id: '#',
-                        name: "Anonymous"
+                    department: {
+                        departmentId: {
+                            _id: '#',
+                            name: "Anonymous"
+                        }
                     }
                 },
                 submissionId: idea.submissionId,
