@@ -9,11 +9,36 @@ const Department = require('../../models/department')
 const Upload = require('../../middleware/multerUpload')
 const { sendMail } = require('../../utils/mailer')
 
-
 //View profile list 
 //--Method:Get
 router.get('/' , verifyToken, async (req ,res) => {
     try {
+        const categoryList = await Idea.aggregate([
+            { 
+                $lookup: {
+                    from: "categories",
+                    localField: "categoryId",
+                    foreignField: "_id",
+                    as: "categories"
+            }},
+            { $unwind: "$categories" },
+            {
+                $group: {
+                    _id: "$categories._id",
+                    name: { "$first": "$categories.name" },
+                    idea: { 
+                        "$push": { 
+                            "ideaId": "$_id", 
+                            "ideaTitle": "$title" 
+                        } 
+                    },
+                    count: { $sum: 1}
+                }
+            }
+        ])
+
+        const recentIdeas = await Idea.find().sort({createdAt: -1}).limit(5)
+
         const { name, roles } = req.user
 
         const user = await User.findOne({ username: name })
@@ -24,7 +49,9 @@ router.get('/' , verifyToken, async (req ,res) => {
             title: 'View',
             page: 'Submission',
             submissions,
-            user
+            user,
+            categoryList,
+            recentIdeas
         })
 
     } catch (error) {
@@ -37,6 +64,32 @@ router.get('/' , verifyToken, async (req ,res) => {
 //--Method:Get 
 router.get('/:id', verifyToken, async (req, res) => {
     try {
+        const categoryList = await Idea.aggregate([
+            { 
+                $lookup: {
+                    from: "categories",
+                    localField: "categoryId",
+                    foreignField: "_id",
+                    as: "categories"
+            }},
+            { $unwind: "$categories" },
+            {
+                $group: {
+                    _id: "$categories._id",
+                    name: { "$first": "$categories.name" },
+                    idea: { 
+                        "$push": { 
+                            "ideaId": "$_id", 
+                            "ideaTitle": "$title" 
+                        } 
+                    },
+                    count: { $sum: 1}
+                }
+            }
+        ])
+
+        const recentIdeas = await Idea.find().sort({createdAt: -1}).limit(5)
+
         const { name, roles } = req.user
 
         const user = await User.findOne({ username: name }, '-password')
@@ -51,7 +104,9 @@ router.get('/:id', verifyToken, async (req, res) => {
             submissionId,
             categories,
             ideas,
-            user
+            user,
+            categoryList,
+            recentIdeas
         })
     } catch (error) {
         console.log(error)
