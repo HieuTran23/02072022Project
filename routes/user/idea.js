@@ -6,6 +6,7 @@ const { verifyToken } = require('../../middleware/verifyAuth')
 const Comment = require('../../models/comment')
 const Reaction = require('../../models/reaction')
 const ideaAnonymous = require('../../models/ideaAnonymous')
+const View = require('../../models/view')
 const { sendMail } = require('../../utils/mailer')
 
 //List idea
@@ -51,11 +52,41 @@ router.get('/:id', verifyToken, async (req, res) => {
             }
         }).populate({
             path: 'reactions.reactionId'
+        }).populate({
+            path: 'views.viewId',
+            populate: {
+                path: 'userId',
+                select: ['username', 'fullName']
+            }
         })
-        // res.json(idea)
+
+        const viewIdea = await Idea.findById(req.params.id, 'views').populate({
+            path: 'views.viewId',
+            populate: {
+                path: 'userId',
+                select: ['username', 'fullName'],
+                match: { _id: user._id }
+            }
+        })
 
         const ideaFilter = ideaAnonymous.singleFilter(idea)
 
+        if(viewIdea.views.length == 0) {
+           
+            const newView = new View({
+                isVisited: true,
+                userId: user._id
+            })
+
+            await newView.save()
+
+            await Idea.findByIdAndUpdate(idea._id, {
+                $push: {views : {viewId: newView._id}}
+            })
+        } else {
+            await View.findByIdAndUpdate(viewIdea.views[0].viewId._id, {isVisited: true})
+        }
+        
         // res.json(ideaFilter)
         res.render('pages/user/idea-detail', {
             title: 'View',

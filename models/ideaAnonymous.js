@@ -56,6 +56,7 @@ module.exports = class User {
                 isActive: idea.isActive,
                 isAnonymously: idea.isAnonymously,
                 comments: idea.comments,
+                views: idea.views,
                 reactions: idea.reactions,
                 createdAt: idea.createdAt,
                 updatedAt: idea.updatedAt

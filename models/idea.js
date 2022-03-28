@@ -49,6 +49,13 @@ const ideaSchema = new Schema({
             ref: 'reaction'
         }
     }],
+    views: [{
+        viewId: {
+            type: mongoose.Types.ObjectId,
+            ref: 'view'
+        }
+    }]
+    ,
     isActive: {
         type: Boolean,
         default: false
