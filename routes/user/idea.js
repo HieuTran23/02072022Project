@@ -13,6 +13,7 @@ const { sendMail } = require('../../utils/mailer')
 //--Method:Get 
 router.get('/', verifyToken ,async (req, res) => {
     try{
+        //Side bar
         const categoryList = await Idea.aggregate([
             { 
                 $lookup: {
@@ -39,7 +40,14 @@ router.get('/', verifyToken ,async (req, res) => {
 
         const recentIdeas = await Idea.find().sort({createdAt: -1}).limit(5)
 
-        const ideas = await Idea.find().populate('userId', ['fullName', '_id']).populate('submissionId')
+        //Idea list 
+        let perPage = 5;
+        let page = req.params.page || 1; 
+
+        const ideas = await Idea.find().populate('userId', ['fullName', '_id']).populate('submissionId').skip((perPage * page) - perPage).limit(perPage)
+
+        //count page
+        const count = await Idea.countDocuments()
 
         const { name } = req.user
         const user = await User.findOne({ username: name})
@@ -52,7 +60,71 @@ router.get('/', verifyToken ,async (req, res) => {
             ideas: ideaList,
             user,
             categoryList,
-            recentIdeas
+            recentIdeas,
+            current: page,
+            pages: Math.ceil(count / perPage)
+        })
+    } catch(err) {
+        console.log(err)
+        res.status(400).json({success: false, message: 'Error'})
+    }
+})
+
+
+//--Method:Get 
+//--||--Pagination
+router.get('/:page', verifyToken ,async (req, res) => {
+    try{
+        //Side bar
+        const categoryList = await Idea.aggregate([
+            { 
+                $lookup: {
+                    from: "categories",
+                    localField: "categoryId",
+                    foreignField: "_id",
+                    as: "categories"
+            }},
+            { $unwind: "$categories" },
+            {
+                $group: {
+                    _id: "$categories._id",
+                    name: { "$first": "$categories.name" },
+                    idea: { 
+                        "$push": { 
+                            "ideaId": "$_id", 
+                            "ideaTitle": "$title" 
+                        } 
+                    },
+                    count: { $sum: 1}
+                }
+            }
+        ])
+
+        const recentIdeas = await Idea.find().sort({createdAt: -1}).limit(5)
+
+        //Idea list 
+        let perPage = 5;
+        let page = req.params.page || 1; 
+
+        const ideas = await Idea.find().populate('userId', ['fullName', '_id']).populate('submissionId').skip((perPage * page) - perPage).limit(perPage)
+
+        //count page
+        const count = await Idea.countDocuments()
+
+        const { name } = req.user
+        const user = await User.findOne({ username: name})
+        
+        const ideaList = ideaAnonymous.arrayFilter(ideas)
+
+        res.render('pages/user/idea', {
+            title: 'List',
+            page: 'Idea',
+            ideas: ideaList,
+            user,
+            categoryList,
+            recentIdeas,
+            current: page,
+            pages: Math.ceil(count / perPage)
         })
     } catch(err) {
         console.log(err)

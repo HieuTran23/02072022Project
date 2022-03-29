@@ -68,12 +68,36 @@
                          
                     </div>
                     <!-- Submission card -->
+                    <!-- Pagination -->
                     <div class="submission-pagination">
+                        <% if (pages > 0) { %>
                         <ul class="justify-content-center">
-                            <li><a href="#">1</a></li>
-                            <li class="active"><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
+                            <% if (current == 1) { %>
+                                <li ><a disabled>First</a></li>
+                            <% } else { %>
+                                <li><a href="/submission/1">First</a></li>
+                            <% } %>
+                            <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+                            <% if (i !== 1) { %>
+                                <li ><a disabled>...</a></li>
+                            <% } %>
+                            <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+                                <% if (i == current) { %>
+                                    <li class="active"><a><%= i %></a></li>
+                                <% } else { %>
+                                    <li><a href="/submission/<%= i %>"><%= i %></a></li>
+                                <% } %>
+                                <% if (i == Number(current) + 4 && i < pages) { %>
+                                    <li><a disabled>...</a></li>
+                                <% } %>
+                            <% } %>
+                            <% if (current == pages) { %>
+                                <li><a disabled>Last</a></li>
+                            <% } else { %>
+                                <li><a href="/submission/<%= pages %>">Last</a></li>
+                            <% } %>
                         </ul>
+                        <% } %>
                     </div>
 
                 </div><!-- End blog entries list -->

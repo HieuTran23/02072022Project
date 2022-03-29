@@ -37,13 +37,19 @@ router.get('/' , verifyToken, async (req ,res) => {
             }
         ])
 
-        const recentIdeas = await Idea.find().sort({createdAt: -1}).limit(5)
+        
+
+        const recentIdeas = await Idea.find().sort({createdAt: -1})
 
         const { name, roles } = req.user
 
         const user = await User.findOne({ username: name })
-
-        const submissions = await Submission.find();
+        // Submission
+        let perPage = 12;
+        let page = req.params.page || 1; 
+        const submissions = await Submission.find().limit(5).skip((perPage * page) - perPage).limit(perPage);
+        //count 
+        const count = await Submission.countDocuments() 
 
         res.render('pages/user/submission', {
             title: 'View',
@@ -51,7 +57,66 @@ router.get('/' , verifyToken, async (req ,res) => {
             submissions,
             user,
             categoryList,
-            recentIdeas
+            recentIdeas,
+            current: page,
+            pages: Math.ceil(count / perPage)
+        })
+
+    } catch (error) {
+        console.log(error)
+        res.status(500) .json({success:false , message:'Error'}) 
+    }
+})
+
+router.get('/:page' , verifyToken, async (req ,res) => {
+    try {
+        const categoryList = await Idea.aggregate([
+            { 
+                $lookup: {
+                    from: "categories",
+                    localField: "categoryId",
+                    foreignField: "_id",
+                    as: "categories"
+            }},
+            { $unwind: "$categories" },
+            {
+                $group: {
+                    _id: "$categories._id",
+                    name: { "$first": "$categories.name" },
+                    idea: { 
+                        "$push": { 
+                            "ideaId": "$_id", 
+                            "ideaTitle": "$title" 
+                        } 
+                    },
+                    count: { $sum: 1}
+                }
+            }
+        ])
+
+        
+
+        const recentIdeas = await Idea.find().sort({createdAt: -1})
+
+        const { name, roles } = req.user
+
+        const user = await User.findOne({ username: name })
+        // Submission
+        let perPage = 12;
+        let page = req.params.page || 1; 
+        const submissions = await Submission.find().limit(5).skip((perPage * page) - perPage).limit(perPage);
+        //count 
+        const count = await Submission.countDocuments()
+
+        res.render('pages/user/submission', {
+            title: 'View',
+            page: 'Submission',
+            submissions,
+            user,
+            categoryList,
+            recentIdeas,
+            current: page,
+            pages: Math.ceil(count / perPage)
         })
 
     } catch (error) {
