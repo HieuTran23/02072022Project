@@ -43,11 +43,11 @@
                 
               </div>
               <div class="card-body p-0">
-                <form action="/admin/submission/create" method="post">
+                <form action="/admin/submission/create" method="post" class="needs-validation" novalidate>
                   <div class="card-body">
                     <div class="form-group">
                       <label for="name">Submission Name</label>
-                      <input type="text" class="form-control" id="name" name="name" placeholder="Enter submission name">
+                      <input type="text" class="form-control" id="name" name="name" placeholder="Enter submission name" required>
                     </div>
                     <div class="form-group">
                       <label for="name">Submission Description</label>
@@ -55,11 +55,11 @@
                     </div>
                     <div class="form-group">
                       <label for="name">Closure Date</label>
-                      <input type="date" class="form-control" id="closureDate" name="closureDate" placeholder="">
+                      <input type="date" class="form-control" id="closureDate" name="closureDate" placeholder="" required>
                     </div>
                     <div class="form-group">
                       <label for="name">Final Closure Date</label>
-                      <input type="date" class="form-control" id="finalClosureDate" name="finalClosureDate" placeholder="">
+                      <input type="date" class="form-control" id="finalClosureDate" name="finalClosureDate" placeholder="" required>
                     </div>
                   </div>
                   <!-- /.card-body -->
@@ -98,5 +98,6 @@
 <script src="../../../admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../../../admin/dist/js/adminlte.min.js"></script>
+<script src="../../../admin/dist/js/main.js"></script>
 </body>
 </html>

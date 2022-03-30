@@ -37,8 +37,8 @@ router.get('/create', async (req, res) => {
 router.post('/create', async (req, res) => {
     const {name , description , closureDate , finalClosureDate} = req.body
     //validation
-    if(!name)
-        return res.status(400).json({success:false , message:'Missing submission title'})
+    if(!name || !closureDate || finalClosureDate)
+        return res.status(400).json({success:false , message:'Missing submission text'})
     try {
         const submissionExisting = await Submission.findOne({name})
         if(submissionExisting)

@@ -52,11 +52,11 @@
                             </div>
                         </div>
                         <div class="card-body p-0">
-                            <form action="/admin/submission/edit/<%= submission._id %>" method="post">
+                            <form action="/admin/submission/edit/<%= submission._id %>" method="post" class="needs-validation" novalidate>
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="name">Submission Title</label>
-                                        <input type="text" class="form-control" id="submissionTitle" name="submissionTitle" value="<%= submission.name %>" placeholder ="<%= submission.name %>">
+                                        <input type="text" class="form-control" id="submissionTitle" name="submissionTitle" value="<%= submission.name %>" placeholder ="<%= submission.name %>" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="name">Submission description</label>
@@ -64,11 +64,11 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="name">Submission Closure Date</label>
-                                        <input type="date" fom class="form-control" id="closureDate" name="closureDate" placeholder="Date" value="<%= submission.closureDate %>">
+                                        <input type="date" fom class="form-control" id="closureDate" name="closureDate" placeholder="Date" value="<%= submission.closureDate %>" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="name">Submission Final Closure Date</label>
-                                        <input type="date" fom class="form-control" id="finalClosureDate" name="finalClosureDate" placeholder="Date" value="<%= submission.finalClosureDate %>">
+                                        <input type="date" fom class="form-control" id="finalClosureDate" name="finalClosureDate" placeholder="Date" value="<%= submission.finalClosureDate %>" required>
                                     </div>
                                 </div>
                             <!-- /.card-body -->
@@ -110,5 +110,6 @@
 <script src="../../../admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../../../admin/dist/js/adminlte.min.js"></script>
+<script src="../../../admin/dist/js/main.js"></script>
 </body>
 </html>
