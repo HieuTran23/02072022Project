@@ -13,7 +13,17 @@ const { sendMail } = require('../../utils/mailer')
 //--Method:Get 
 router.get('/', verifyToken ,async (req, res) => {
     try{
-        //Side bar
+        //Variable
+        //--User 
+        const { name } = req.user
+        const user = await User.findOne({ username: name})
+        //--End User
+        //--Pagination
+        let perPage = 5;
+        let page = req.query.page || 1; 
+        const count = await Idea.countDocuments()
+        //--End Pagination
+        //--Side bar
         const categoryList = await Idea.aggregate([
             { 
                 $lookup: {
@@ -37,82 +47,175 @@ router.get('/', verifyToken ,async (req, res) => {
                 }
             }
         ])
-
         const recentIdeas = await Idea.find().sort({createdAt: -1}).limit(5)
-
-        //Idea list 
-        let perPage = 5;
-        let page = req.params.page || 1; 
-
-        const ideas = await Idea.find().populate('userId', ['fullName', '_id']).populate('submissionId').skip((perPage * page) - perPage).limit(perPage)
-
-        //count page
-        const count = await Idea.countDocuments()
-
-        const { name } = req.user
-        const user = await User.findOne({ username: name})
-        
-        const ideaList = ideaAnonymous.arrayFilter(ideas)
-
-        res.render('pages/user/idea', {
-            title: 'List',
-            page: 'Idea',
-            ideas: ideaList,
-            user,
-            categoryList,
-            recentIdeas,
-            current: page,
-            pages: Math.ceil(count / perPage)
-        })
-    } catch(err) {
-        console.log(err)
-        res.status(400).json({success: false, message: 'Error'})
-    }
-})
-
-
-//--Method:Get 
-//--||--Pagination
-router.get('/:page', verifyToken ,async (req, res) => {
-    try{
-        //Side bar
-        const categoryList = await Idea.aggregate([
-            { 
-                $lookup: {
-                    from: "categories",
-                    localField: "categoryId",
-                    foreignField: "_id",
-                    as: "categories"
-            }},
-            { $unwind: "$categories" },
-            {
-                $group: {
-                    _id: "$categories._id",
-                    name: { "$first": "$categories.name" },
-                    idea: { 
-                        "$push": { 
-                            "ideaId": "$_id", 
-                            "ideaTitle": "$title" 
+        //--End sidebar
+        //View Idea list 
+        const filter = req.query.filter || "newest"
+        let ideas = await Idea.find().populate('userId', ['fullName', '_id']).populate('submissionId').skip((perPage * page) - perPage).limit(perPage)
+        if(filter == "reaction"){
+            ideas = await Idea.aggregate(
+                [
+                    {
+                        $lookup: {
+                            from: "users",
+                            let: { "userId": "$userId" },
+                            pipeline: [
+                                { $match: { $expr: { $eq: ["$_id", "$$userId"] }}},
+                                { $project: { "username": 1, "fullName": 1, "roles":1, "department":1, "anonymously": 1, contact: 1}}
+                            ],
+                            as: "userId"
                         } 
                     },
-                    count: { $sum: 1}
-                }
-            }
-        ])
-
-        const recentIdeas = await Idea.find().sort({createdAt: -1}).limit(5)
-
-        //Idea list 
-        let perPage = 5;
-        let page = req.params.page || 1; 
-
-        const ideas = await Idea.find().populate('userId', ['fullName', '_id']).populate('submissionId').skip((perPage * page) - perPage).limit(perPage)
-
-        //count page
-        const count = await Idea.countDocuments()
-
-        const { name } = req.user
-        const user = await User.findOne({ username: name})
+                    {
+                        $unwind: "$userId"
+                    },
+                    {
+                        $lookup: {
+                            from: "submissions",
+                            let: { "submissionId": "$submissionId" },
+                            pipeline: [
+                                { $match: { $expr: { $eq: ["$_id", "$$submissionId"] }}},
+                                { $project: { "name": 1, "description": 1, "closureDate":1, "finalClosureDate":1, "createdAt": 1}}
+                            ],
+                            as: "submissionId"
+                        } 
+                    },
+                    {
+                        $unwind: "$submissionId"
+                    }
+                    ,
+                    { "$project": {
+                        "title": 1,
+                        "categoryId": 1,
+                        "description": 1,
+                        "userId": 1,
+                        "submissionId": 1,
+                        "comments": 1,
+                        "reactions": 1,
+                        "views": 1,
+                        "isActive": 1,
+                        "isAnonymously": 1,
+                        "createdAt": 1,
+                        "updatedAt": 1,
+                        "length": { "$size": "$reactions" }
+                    }},
+                    { $sort: { "length": -1 } },
+                    { $skip: (perPage * page) - perPage},
+                    { $limit: perPage },
+                    
+                ]
+            )
+        }
+        if(filter == "view"){
+            ideas = await Idea.aggregate(
+                [
+                    {
+                        $lookup: {
+                            from: "users",
+                            let: { "userId": "$userId" },
+                            pipeline: [
+                                { $match: { $expr: { $eq: ["$_id", "$$userId"] }}},
+                                { $project: { "username": 1, "fullName": 1, "roles":1, "department":1, "anonymously": 1, contact: 1}}
+                            ],
+                            as: "userId"
+                        } 
+                    },
+                    {
+                        $unwind: "$userId"
+                    },
+                    {
+                        $lookup: {
+                            from: "submissions",
+                            let: { "submissionId": "$submissionId" },
+                            pipeline: [
+                                { $match: { $expr: { $eq: ["$_id", "$$submissionId"] }}},
+                                { $project: { "name": 1, "description": 1, "closureDate":1, "finalClosureDate":1, "createdAt": 1}}
+                            ],
+                            as: "submissionId"
+                        } 
+                    },
+                    {
+                        $unwind: "$submissionId"
+                    }
+                    ,
+                    { "$project": {
+                        "title": 1,
+                        "categoryId": 1,
+                        "description": 1,
+                        "userId": 1,
+                        "submissionId": 1,
+                        "comments": 1,
+                        "reactions": 1,
+                        "views": 1,
+                        "isActive": 1,
+                        "isAnonymously": 1,
+                        "createdAt": 1,
+                        "updatedAt": 1,
+                        "length": { "$size": "$views" }
+                    }},
+                    { $sort: { "length": -1 } },
+                    { $skip: (perPage * page) - perPage},
+                    { $limit: perPage },
+                    
+                ]
+            )
+        }
+        if(filter == "comment"){
+            ideas = await Idea.aggregate(
+                [
+                    {
+                        $lookup: {
+                            from: "users",
+                            let: { "userId": "$userId" },
+                            pipeline: [
+                                { $match: { $expr: { $eq: ["$_id", "$$userId"] }}},
+                                { $project: { "username": 1, "fullName": 1, "roles":1, "department":1, "anonymously": 1, contact: 1}}
+                            ],
+                            as: "userId"
+                        } 
+                    },
+                    {
+                        $unwind: "$userId"
+                    },
+                    {
+                        $lookup: {
+                            from: "submissions",
+                            let: { "submissionId": "$submissionId" },
+                            pipeline: [
+                                { $match: { $expr: { $eq: ["$_id", "$$submissionId"] }}},
+                                { $project: { "name": 1, "description": 1, "closureDate":1, "finalClosureDate":1, "createdAt": 1}}
+                            ],
+                            as: "submissionId"
+                        } 
+                    },
+                    {
+                        $unwind: "$submissionId"
+                    }
+                    ,
+                    { "$project": {
+                        "title": 1,
+                        "categoryId": 1,
+                        "description": 1,
+                        "userId": 1,
+                        "submissionId": 1,
+                        "comments": 1,
+                        "reactions": 1,
+                        "views": 1,
+                        "isActive": 1,
+                        "isAnonymously": 1,
+                        "createdAt": 1,
+                        "updatedAt": 1,
+                        "length": { "$size": "$comments" }
+                    }},
+                    { $sort: { "length": -1 } },
+                    { $skip: (perPage * page) - perPage},
+                    { $limit: perPage },
+                    
+                ]
+            )
+        }
+        
+        //count page     
         
         const ideaList = ideaAnonymous.arrayFilter(ideas)
 
@@ -124,7 +227,8 @@ router.get('/:page', verifyToken ,async (req, res) => {
             categoryList,
             recentIdeas,
             current: page,
-            pages: Math.ceil(count / perPage)
+            pages: Math.ceil(count / perPage),
+            filter
         })
     } catch(err) {
         console.log(err)
@@ -134,7 +238,7 @@ router.get('/:page', verifyToken ,async (req, res) => {
 
 //Idea detail
 //--Method:get 
-router.get('/:id', verifyToken, async (req, res) => {
+router.get('/:id/read', verifyToken, async (req, res) => {
     try{ 
         const categoryList = await Idea.aggregate([
             { 
@@ -197,7 +301,7 @@ router.get('/:id', verifyToken, async (req, res) => {
 
         const ideaFilter = ideaAnonymous.singleFilter(idea)
 
-        if(viewIdea.views.length == 0) {
+        if(viewIdea.views.length == 0 || viewIdea.views[0].userId == null) {
            
             const newView = new View({
                 isVisited: true,

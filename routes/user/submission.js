@@ -127,7 +127,7 @@ router.get('/:page' , verifyToken, async (req ,res) => {
 
 //View idea list (Submission details)
 //--Method:Get 
-router.get('/:id', verifyToken, async (req, res) => {
+router.get('/:id/view', verifyToken, async (req, res) => {
     try {
         const categoryList = await Idea.aggregate([
             { 

@@ -39,6 +39,15 @@
           <div class="row">
   
             <div class="col-lg-8 entries">
+              <div class="filters">
+                <ul>
+                  <li <% if(filter == "newest") {%> class="is-checked" <%}%> ><a href="/idea?page=<%= i %>&filter=newest">Newest</a></li>
+                  <li  <% if(filter == "view") {%> class="is-checked" <%}%> ><a href="/idea?page=<%= i %>&filter=view">Most View</a></li>
+                  <li <% if(filter == "reaction") {%> class="is-checked" <%}%>><a href="/idea?page=<%= i %>&filter=reaction">Most Reaction</a></li>
+                  <li <% if(filter == "comment") {%> class="is-checked" <%}%>><a href="/idea?page=<%= i %>&filter=comment">Most Comment</a></li>
+                </ul>
+              </div>
+              
               <% ideas.forEach(idea => {
                 %>
                 <article class="entry">
@@ -48,14 +57,15 @@
                 </div>
   
                 <h2 class="entry-title">
-                    <a href="/idea/<%= idea._id %>"><%= idea.title %></a>
+                    <a href="/idea/<%= idea._id %>/read"><%= idea.title %></a>
                   </h2>
-    
                   <div class="entry-meta">
                     <ul>
                       <li class="d-flex align-items-center"><i class="bi bi-person"></i><a href="<% if(idea.isAnonymously) { %><%= '#' %><%} else {%>profile/<%= idea.userId._id %><%} %>"> <%= idea.userId.fullName %> </a></li>
                       <li class="d-flex align-items-center"><i class="bi bi-clock"></i><a href="#"><%= idea.updatedAt.toLocaleString('default') %></a> </time></li>
-                      <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="/idea/<%= idea._id %>"><%= idea.comments.length %> Comments</a></li>
+                      <li class="d-flex align-items-center"><i class="bi bi-hand-thumbs-up"></i> <a href="/idea/<%= idea._id %>/read"><%= idea.reactions.length %> Reactions</a></li>
+                      <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="/idea/<%= idea._id %>/read"><%= idea.comments.length %> Comments</a></li>
+                      <li class="d-flex align-items-center"><i class="bi bi-eye"></i> <a href="/idea/<%= idea._id %>/read"><%= idea.views.length %> views</a></li>
                     </ul>
                     <ul>
                       <li class="d-flex align-items-center"><i class="bi bi-phone-landscape-fill"></i> <a href="#">Submission: <span><%= idea.submissionId.name %> </span></a> </li>
@@ -66,7 +76,7 @@
                   <div class="entry-content">
                     <%= idea.description %>
                   <div class="read-more">
-                    <a href="/idea/<%= idea._id %>">Read More</a>
+                    <a href="/idea/<%= idea._id %>/read">Read More</a>
                   </div>
                 </div>
   
@@ -81,7 +91,7 @@
                     <% if (current == 1) { %>
                         <li ><a disabled>First</a></li>
                     <% } else { %>
-                        <li><a href="/idea/1">First</a></li>
+                        <li><a href="/idea?page=1&filter=<%= filter %>">First</a></li>
                     <% } %>
                     <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
                     <% if (i !== 1) { %>
@@ -91,7 +101,7 @@
                         <% if (i == current) { %>
                             <li class="active"><a><%= i %></a></li>
                         <% } else { %>
-                            <li><a href="/idea/<%= i %>"><%= i %></a></li>
+                            <li><a href="/idea?page=<%= i %>&filter=<%= filter %>"><%= i %></a></li>
                         <% } %>
                         <% if (i == Number(current) + 4 && i < pages) { %>
                             <li><a disabled>...</a></li>
@@ -100,7 +110,7 @@
                     <% if (current == pages) { %>
                         <li><a disabled>Last</a></li>
                     <% } else { %>
-                        <li><a href="/idea/<%= pages %>">Last</a></li>
+                        <li><a href="/idea?page=<%= pages %>&filter=<%= filter %>">Last</a></li>
                     <% } %>
                 </ul>
                 <% } %>

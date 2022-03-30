@@ -1472,6 +1472,44 @@ idea
   color: #fff;
 }
 
+.idea .filters ul {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  border-bottom: 2px solid #d9d9d9;
+  margin: 30px 15px;
+}
+.idea .filters ul li {
+  display: inline-block;
+  text-align: center;
+  margin-right: 12px;
+  padding: 0 5px 8px 5px;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  position: relative;
+  margin-bottom: -2px;
+
+  transition: 0.3s;
+  text-transform: uppercase;
+}
+
+.idea .filters ul li a {
+  color: #777;
+}
+.idea .filters ul li:hover a {
+  color: #eb2d3a;
+}
+.idea .filters ul li.is-checked {
+  border-bottom: 2px solid #eb2d3a;
+}
+.idea .filters ul li.is-checked a {
+  color: #eb2d3a;
+}
+.idea .filters ul li:last-child {
+  margin-right: 0;
+}
+
 /*sidebar*/
 .sidebar {
   padding: 30px;
