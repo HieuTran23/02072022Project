@@ -17,8 +17,7 @@ router.get('/' , async (req ,res) => {
         res.render('pages/admin/idea' ,{
             title: 'View List',
             page: 'Idea',
-            ideas,
-            categories
+            ideas
         })
     } catch (error) {
         console.log(error)
