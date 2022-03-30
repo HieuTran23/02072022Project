@@ -48,14 +48,14 @@
                 </div>
   
                 <h2 class="entry-title">
-                    <a href="idea/<%= idea._id %>"><%= idea.title %></a>
+                    <a href="/idea/<%= idea._id %>"><%= idea.title %></a>
                   </h2>
     
                   <div class="entry-meta">
                     <ul>
                       <li class="d-flex align-items-center"><i class="bi bi-person"></i><a href="<% if(idea.isAnonymously) { %><%= '#' %><%} else {%>profile/<%= idea.userId._id %><%} %>"> <%= idea.userId.fullName %> </a></li>
                       <li class="d-flex align-items-center"><i class="bi bi-clock"></i><a href="#"><%= idea.updatedAt.toLocaleString('default') %></a> </time></li>
-                      <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="idea/<%= idea._id %>"><%= idea.comments.length %> Comments</a></li>
+                      <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="/idea/<%= idea._id %>"><%= idea.comments.length %> Comments</a></li>
                     </ul>
                     <ul>
                       <li class="d-flex align-items-center"><i class="bi bi-phone-landscape-fill"></i> <a href="#">Submission: <span><%= idea.submissionId.name %> </span></a> </li>
@@ -66,7 +66,7 @@
                   <div class="entry-content">
                     <%= idea.description %>
                   <div class="read-more">
-                    <a href="idea/<%= idea._id %>">Read More</a>
+                    <a href="/idea/<%= idea._id %>">Read More</a>
                   </div>
                 </div>
   
