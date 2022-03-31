@@ -111,7 +111,9 @@
                         <td>
                             <% user.roles.forEach(role => {
                               %>
-                              <%= role.roleId.name %>
+                              <% if(role.roleId != null) {%>
+                                <%= role.roleId.name %>
+                              <%}%>
                               <%
                             });%>
                         </td>

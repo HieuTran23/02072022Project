@@ -1,17 +1,23 @@
 const express = require("express");
 const router = express.Router();
 const Role = require('../../models/role')
-const ObjectId = require('mongodb').ObjectID
+const User = require('../../models/user')
+const { verifyToken, isAdmin} = require('../../middleware/verifyAuth');
+const user = require("../../models/user");
 
 //view all role 
 //--Method: Get 
-router.get('/' , async (req ,res) => {
+router.get('/', verifyToken, isAdmin, async (req ,res) => {
     try {
+        const user = await User.findOne({ username: req.user.name}, '-password') 
+
         const roles = await Role.find({})
         res.render('pages/admin/role' ,{
             title: 'Role List',
             page: 'Role',
-            roles})
+            roles,
+            user
+        })
     } catch (error) {
         console.log(error)
         res.status(500) .json({success:false , message:'Error'}) 
@@ -21,11 +27,14 @@ router.get('/' , async (req ,res) => {
 
 //create new role
 //--Method: Get 
-router.get('/create', async (req, res) => {
+router.get('/create', verifyToken, isAdmin, async (req, res) => {
     try {
+        const user = await User.findOne({username: req.user.name}, '-password')
+
         res.render('pages/admin/role-create', {
             title: 'Create',
-            page: 'Role'
+            page: 'Role',
+            user
         })
     }catch (err) {
         console.log(error)
@@ -34,7 +43,7 @@ router.get('/create', async (req, res) => {
 })
 
 //--Method: Post 
-router.post('/create' , async (req ,res) => {
+router.post('/create',  verifyToken, isAdmin, async (req ,res) => {
     const {name, description} = req.body
      //validation
     if(!name)
@@ -67,15 +76,18 @@ router.post('/create' , async (req ,res) => {
 
 //update or edit role 
 //--Method: Get 
-router.get('/edit/:id', async (req, res) => {
+router.get('/edit/:id', verifyToken, isAdmin, async (req, res) => {
     try {
+        const user = User.findOne({username: req.user.name}, '-password')
+
 		const role = await Role.findOne({
             _id : req.params.id
         })
         res.render('pages/admin/role-edit',{
             title: 'Edit',
             page: 'Role',
-            role
+            role,
+            user
         })
     }catch (error) {
         console.log(error)
@@ -84,7 +96,7 @@ router.get('/edit/:id', async (req, res) => {
 })
 
 //--Method: Post 
-router.post('/edit/:id' , async(req,res)=>{
+router.post('/edit/:id', verifyToken, isAdmin, async(req,res)=>{
     const {name , description} = req.body
     //validation
     if(!name)
@@ -116,7 +128,7 @@ router.post('/edit/:id' , async(req,res)=>{
 
 //delete account 
 //--Method: Get
-router.get('/delete/:id', async (req, res) => {
+router.get('/delete/:id', verifyToken, isAdmin, async (req, res) => {
     // const role = await Role.findOne({_id: req.params.id})
     // res.json(role)
 	try {

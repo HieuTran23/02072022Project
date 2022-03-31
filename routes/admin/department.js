@@ -1,17 +1,22 @@
 const express = require("express");
 const router = express.Router();
 const Department = require('../../models/department')
-const ObjectId = require('mongodb').ObjectID
+const User = require('../../models/user')
+const { verifyToken, isAdmin} = require('../../middleware/verifyAuth')
 
 //view all department 
 //--Method: Get 
-router.get('/' , async (req ,res) => {
+router.get('/' , verifyToken, isAdmin, async (req ,res) => {
     try {
+        const user = await User.findOne({username: req.user.name}, '-password')
         const departments = await Department.find({})
+
         res.render('pages/admin/department' ,{
             title: 'List',
             page: 'Department',
-            departments})
+            departments,
+            user
+        })
         //res.json(departments)
     } catch (error) {
         console.log(error)
@@ -23,11 +28,14 @@ router.get('/' , async (req ,res) => {
 //create new department
 //--Method: Get 
 
-router.get('/create', async (req, res) => {
+router.get('/create', verifyToken, isAdmin, async (req, res) => {
     try {
+        const user = await User.findOne({username: req.user.name}, '-password')
+
         res.render('pages/admin/department-create', {
             title: 'Create',
-            page: 'Department'
+            page: 'Department',
+            user
         })
     }catch (err) {
         console.log(error)
@@ -35,7 +43,7 @@ router.get('/create', async (req, res) => {
     }
 })
 //--Method: Post 
-router.post('/create' , async (req ,res) => {
+router.post('/create', verifyToken, isAdmin, async (req ,res) => {
     const {name, description} = req.body
      //validation
     if(!name)
@@ -68,8 +76,10 @@ router.post('/create' , async (req ,res) => {
 
 //update or edit department 
 //--Method: Get 
-router.get('/edit/:id', async (req, res) => {
+router.get('/edit/:id', verifyToken, isAdmin,  async (req, res) => {
     try {
+        const user = await User.findOne({username: req.user.name}, '-password')
+
 		const department = await Department.findOne({
             _id : req.params.id
         })
@@ -77,7 +87,8 @@ router.get('/edit/:id', async (req, res) => {
         res.render('pages/admin/department-edit',{
             title: 'Edit',
             page: 'Department',
-            department
+            department,
+            user
         })
     }catch (error) {
         console.log(error)
@@ -86,7 +97,7 @@ router.get('/edit/:id', async (req, res) => {
 })
 
 //--Method: Post 
-router.post('/edit/:id' , async(req,res)=>{
+router.post('/edit/:id', verifyToken, isAdmin, async(req,res)=>{
     const {name , description} = req.body
     //validation
     if(!name)
@@ -118,7 +129,7 @@ router.post('/edit/:id' , async(req,res)=>{
 
 //delete department 
 //--Method: Get
-router.get('/delete/:id', async (req, res) => {
+router.get('/delete/:id', verifyToken, isAdmin,  async (req, res) => {
 	try {
 		const deletedDepartment = await Department.findByIdAndRemove(req.params.id)
 

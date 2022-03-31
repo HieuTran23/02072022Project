@@ -121,11 +121,11 @@
                     <br>
                     <div class="text-muted">
                       <p class="text-sm">Full Name
-                        <b class="d-block"><%= user.fullName%></b>
+                        <b class="d-block"><%= findUser.fullName%></b>
                       </p>
                       <p class="text-sm">Role
                         <%
-                        user.roles.forEach(role => {
+                        findUser.roles.forEach(role => {
                           for(let i = 0; roles[i] != undefined; i++){
                             if(role.roleId.toString() == roles[i]._id.toString()){
                               %>
@@ -138,7 +138,7 @@
                       </p>
                       <p class="text-sm">Email
                         <%
-                        user.contact.emails.forEach(email => {
+                        findUser.contact.emails.forEach(email => {
                           %>
                           <b class="d-block"><%= email.email %></b>
                           <%
@@ -147,7 +147,7 @@
                       </p>
                       <p class="text-sm">Phone
                         <%
-                        user.contact.phones.forEach(phone => {
+                        findUser.contact.phones.forEach(phone => {
                           %>
                           <b class="d-block"><%= phone.phone %></b>
                           <%

@@ -5,19 +5,21 @@ const User = require('../../models/user')
 const Role = require('../../models/role');
 const Department = require('../../models/department')
 const { createValidation } = require('../../middleware/validation');
-const role = require("../../models/role");
+const { verifyToken, isAdmin } = require('../../middleware/verifyAuth')
+
 
 // view all user 
-router.get('/' , async (req ,res) => {
+router.get('/',  verifyToken, isAdmin, async (req ,res) => {
     try {
-        const users = await User.find().populate('roles.roleId').populate('department.departmentId')
+        const user = await User.findOne({username: req.user.name}, '-password')
 
-        // res.json(users)
+        const users = await User.find().populate('roles.roleId').populate('department.departmentId')
 
         res.render('pages/admin/user',{
             title: "User List",
             page: "User",
-            users
+            users,
+            user
         })
     } catch (error) {
         console.log(error)
@@ -27,9 +29,11 @@ router.get('/' , async (req ,res) => {
 
 //view user profile
 //--Method: Get 
-router.get('/profile/:id' , async (req ,res) => {
+router.get('/profile/:id',  verifyToken, isAdmin, async (req ,res) => {
     try {
-        const user = await User.findOne({
+        const user = await User.findOne({username: req.user.name}, '-password')
+
+        const findUser = await User.findOne({
             _id :req.params.id
         })
 
@@ -37,6 +41,7 @@ router.get('/profile/:id' , async (req ,res) => {
         res.render('pages/admin/user-profile',{
             title: 'Profile',
             page: 'User',
+            findUser,
             user,
             roles
         })
@@ -48,8 +53,10 @@ router.get('/profile/:id' , async (req ,res) => {
 
 // create new user
 //-- Method: Get 
-router.get('/create', async (req, res) => {
+router.get('/create', verifyToken, isAdmin, async (req, res) => {
     try {
+        const user = await User.findOne({username: req.user.name}, '-password')
+
         const roles = await Role.find();
         const departments = await Department.find();
 
@@ -57,7 +64,8 @@ router.get('/create', async (req, res) => {
             title: 'Create',
             page: 'User',
             roles,
-            departments
+            departments,
+            user
         })
     }catch (err) {
         console.log(error)
@@ -65,7 +73,7 @@ router.get('/create', async (req, res) => {
     }
 }) 
 //--Method: Post 
-router.post('/create' , async (req ,res) => {
+router.post('/create',  verifyToken, isAdmin, async (req ,res) => {
     // res.json(req.body)
     const {username , password, confirmPassword, fullName, departmentId, roles, emails, phones, streets, cities, countries} = req.body
      //validation
@@ -165,15 +173,18 @@ router.post('/create' , async (req ,res) => {
 
 //update or edit user 
 //--Method: Get 
-router.get('/edit/:id', async(req, res) => {
+router.get('/edit/:id',  verifyToken, isAdmin, async(req, res) => {
     try{
-        const user = await User.findById({ _id: req.params.id}, '-password').populate('roles.roleId').populate('department.departmentId')
+        const user = await User.findOne({username: req.user.name}, '-password')
+
+        const editUser = await User.findById({ _id: req.params.id}, '-password').populate('roles.roleId').populate('department.departmentId')
         const roles = await Role.find()
         const departments = await Department.find()
 
         res.render('pages/admin/user-edit', {
             title: "Edit",
             page: "User",
+            editUser,
             user,
             roles,
             departments
@@ -185,7 +196,7 @@ router.get('/edit/:id', async(req, res) => {
 })
 
 //--Method: Post 
-router.post('/edit/:id' , async(req,res)=>{
+router.post('/edit/:id',  verifyToken, isAdmin, async(req,res)=>{
     const {fullName, roles, departmentId, emails, phones, streets, cities, countries} = req.body
 
      //validation
@@ -274,7 +285,7 @@ router.post('/edit/:id' , async(req,res)=>{
 
 
 //delete user 
-router.get('/delete/:id', async (req, res) => {
+router.get('/delete/:id',  verifyToken, isAdmin, async (req, res) => {
 	try {
 		const deletedUser = await User.findByIdAndRemove(req.params.id)
 

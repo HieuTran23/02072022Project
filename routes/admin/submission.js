@@ -1,17 +1,21 @@
 const express = require("express");
 const router = express.Router();
 const Submission = require('../../models/submission');
-const ObjectId = require('mongodb').ObjectID
+const User = require('../../models/user')
+const { verifyToken, isAdmin } = require('../../middleware/verifyAuth')
 
 
 //get list article
-router.get("/", async (req, res) => {
+router.get("/", verifyToken, isAdmin, async (req, res) => {
     try{
+        const user = await User.findOne({username: req.user.name}, '-password')
+
         const submissions = await Submission.find({})
         res.render('pages/admin/submission', {
             title: 'Submission List',
             page: 'Submission',
-            submissions
+            submissions,
+            user
         })
     }
     catch(err) {
@@ -22,11 +26,14 @@ router.get("/", async (req, res) => {
 
 //add new  submission
 //get
-router.get('/create', async (req, res) => {
+router.get('/create', verifyToken, isAdmin, async (req, res) => {
     try{
+        const user = await User.findOne({username: req.user.name}, '-password')
+
         res.render('pages/admin/submission-create', {
             title: 'Create Submission',
-            page: 'Submission'
+            page: 'Submission',
+            user
         })
     }
     catch(error) {
@@ -34,10 +41,11 @@ router.get('/create', async (req, res) => {
         res.status(500) .json({success:false , message:'Error'}) 
     }
 })
-router.post('/create', async (req, res) => {
+router.post('/create', verifyToken, isAdmin,  async (req, res) => {
     const {name , description , closureDate , finalClosureDate} = req.body
+
     //validation
-    if(!name || !closureDate || finalClosureDate)
+    if(!name || !closureDate || !finalClosureDate)
         return res.status(400).json({success:false , message:'Missing submission text'})
     try {
         const submissionExisting = await Submission.findOne({name})
@@ -62,25 +70,31 @@ router.post('/create', async (req, res) => {
     }
 })
 //edit submission
-router.get('/edit/:id' , async(req , res) =>{
+router.get('/edit/:id', verifyToken, isAdmin, async(req , res) =>{
     try {
+        const user = await User.findOne({username: req.user.name}, '-password')
+
         const submission = await Submission.findOne({
             _id : req.params.id
         })
+
         res.render('pages/admin/submission-edit',{
             title: 'Edit Submission',
             page: 'Submission' ,
-            submission
+            submission,
+            user
         })
     } catch (error) {
         console.log(error)
         res.status(500) .json({success:false , message:'Error'}) 
     }
 })
-router.post('/edit/:id' , async(req, res)=>{
+router.post('/edit/:id', verifyToken, isAdmin, async(req, res)=>{
      //validation
-     const {submissionTitle , submissionDescription, closureDate, finalClosureDate} = req.body
-     if(!submissionTitle)
+    const {submissionTitle , submissionDescription, closureDate, finalClosureDate} = req.body
+    
+    
+    if(!submissionTitle)
         return res.status(400).json({success:false , message:'Missing submission title'})
     try {
         let editSubmission ={ 
@@ -105,7 +119,7 @@ router.post('/edit/:id' , async(req, res)=>{
 })
 
 //delete submission
-router.get('/delete/:id' , async ( req,res) => {
+router.get('/delete/:id', verifyToken, isAdmin, async ( req,res) => {
     try {
         const submission = {_id: req.params.id}
         const deleteSub = await Submission.findByIdAndRemove(submission._id)

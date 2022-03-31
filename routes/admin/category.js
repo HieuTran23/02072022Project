@@ -1,17 +1,20 @@
 const express = require('express')
 const router = express.Router()
 const Category = require('../../models/category')
-const ObjectId = require('mongodb').ObjectID
+const User = require('../../models/user')
+const {verifyToken, isAdmin} = require('../../middleware/verifyAuth')
 
 
-
-router.get("/", async (req, res) => {
+router.get("/",  verifyToken, isAdmin, async (req, res) => {
     try{
+        const user = await User.findOne({username: req.user.name}, '-password')
+
         const categorys = await Category.find({})
         res.render('pages/admin/category', {
             title: 'Category List',
             page: 'Category',
-            categorys
+            categorys,
+            user
         })
     }
     catch(err) {
@@ -23,13 +26,16 @@ router.get("/", async (req, res) => {
 //create
 
 
-router.get("/create", async (req, res) => {
+router.get("/create",  verifyToken, isAdmin, async (req, res) => {
     try{
+        const user = await User.findOne({username: req.user.name}, '-password')
+
         const categorys = await Category.find({})
         res.render('pages/admin/category-create', {
             title: 'Category ',
             page: 'Category',
-            categorys
+            categorys,
+            user
         })
     }
     catch(err) {
@@ -37,7 +43,7 @@ router.get("/create", async (req, res) => {
         res.status(500) .json({success:false , message:'Error'}) 
     }
 })
-router.post('/create' ,async(req , res ) => {
+router.post('/create',  verifyToken, isAdmin, async(req , res ) => {
     const {name , description } = req.body
 
     //validation
@@ -68,15 +74,18 @@ router.post('/create' ,async(req , res ) => {
 // edit
 
 
-router.get("/edit/:id", async (req, res) => {
+router.get("/edit/:id", verifyToken, isAdmin, async (req, res) => {
     try{
+        const user = await User.findOne({username: req.user.name}, '-password')
+
         const category = await Category.findOne({
             _id : req.params.id
         })
         res.render('pages/admin/category-edit', {
             title: 'Edit Category',
             page: 'Category',
-            category
+            category,
+            user
         })
     }
     catch(err) {
@@ -85,7 +94,7 @@ router.get("/edit/:id", async (req, res) => {
     }
 })
 
-router.post("/edit/:id" , async(req , res)=>{
+router.post("/edit/:id", verifyToken, isAdmin, async(req , res)=>{
     const {name , description}  = req.body
     // validation
     if (!name)
@@ -110,7 +119,7 @@ router.post("/edit/:id" , async(req , res)=>{
 })
 
 //delete
-router.get('/delete/:id', async(req,res)=>{
+router.get('/delete/:id',  verifyToken, isAdmin, async(req,res)=>{
     try {
         const category = {_id: req.params.id}
         const deleteCate = await Category.findByIdAndRemove(category._id)

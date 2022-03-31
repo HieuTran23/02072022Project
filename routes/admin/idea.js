@@ -1,11 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const Idea = require('../../models/idea')
-
+const User = require('../../models/user')
+const {verifyToken, isAdmin} = require('../../middleware/verifyAuth')
 //view all idea 
 //--Method: Get 
-router.get('/' , async (req ,res) => {
+router.get('/', verifyToken, isAdmin, async (req ,res) => {
     try {
+        const user = await User.findOne({username: req.user.name}, '-password')
+
         const ideas = await Idea.find().populate({
             path: 'userId', 
             select: ['department', 'username', 'fullName'],
@@ -17,7 +20,8 @@ router.get('/' , async (req ,res) => {
         res.render('pages/admin/idea' ,{
             title: 'View List',
             page: 'Idea',
-            ideas
+            ideas,
+            user
         })
     } catch (error) {
         console.log(error)
@@ -27,7 +31,7 @@ router.get('/' , async (req ,res) => {
 
 //delete idea 
 //--Method: Get
-router.get('/delete/:id', async (req, res) => {
+router.get('/delete/:id', verifyToken, isAdmin, async (req, res) => {
 	try {
 		const deletedIdea = await Idea.findByIdAndRemove(req.params.id)
 
@@ -46,10 +50,12 @@ router.get('/delete/:id', async (req, res) => {
 
 //detail idea
 //--Method: Get 
-router.get('/detail/:id', async (req, res) => {
+router.get('/detail/:id', verifyToken, isAdmin, async (req, res) => {
     const ideaId = req.params.id
 
     try {
+        const user = await User.findOne({username: req.user.name}, '-password')
+
         const idea = await Idea.findById(ideaId).populate({
             path: 'userId',
             select: '-password',
@@ -65,7 +71,8 @@ router.get('/detail/:id', async (req, res) => {
 
         // res.json(idea)
 		res.render('pages/admin/idea-detail', {
-            idea
+            idea,
+            user
         })
 	} catch (error) {
 		console.log(error)
