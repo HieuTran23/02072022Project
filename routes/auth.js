@@ -52,7 +52,12 @@ router.post('/login', async (req, res) => {
         //Create a token
         const accessToken = jwt.sign({name: user.username, roles: roleList}, process.env.ACCESS_TOKEN_SECRET); 
         res.cookie("token", accessToken);
-        res.redirect('/admin')
+        for(let i = 0; roleList[i] != undefined; i++){
+            if(roleList[i] == "Admin" || roleList[i] == "QA manager"){
+                return res.redirect('/admin')
+            }
+        }
+        res.redirect("/")
         //res.header('Auth-Access-Token', accessToken).send(accessToken);
     } catch(error){
         console.log(error)
