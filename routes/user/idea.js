@@ -37,16 +37,11 @@ router.get('/', verifyToken ,async (req, res) => {
                 $group: {
                     _id: "$categories._id",
                     name: { "$first": "$categories.name" },
-                    idea: { 
-                        "$push": { 
-                            "ideaId": "$_id", 
-                            "ideaTitle": "$title" 
-                        } 
-                    },
                     count: { $sum: 1}
                 }
             }
         ])
+
         const recentIdeas = await Idea.find().sort({createdAt: -1}).limit(5)
         //--End sidebar
         //View Idea list 

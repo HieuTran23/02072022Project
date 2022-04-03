@@ -194,6 +194,8 @@ router.get('/download/:id', verifyToken, isAdmin, async (req ,res) => {
         res.set('Content-Disposition',`attachment; filename=${downloadName}`);
         res.set('Content-Length',data.length);
         res.send(data)
+
+        fs.unlinkSync(path.join(__dirname, `../../public/uploads`, submissionId)+"/"+downloadName);
     } catch (error) {
         console.log(error)
         res.status(500) .json({success:false , message:'Error'}) 
