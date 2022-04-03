@@ -3,7 +3,9 @@ const router = express.Router();
 const Submission = require('../../models/submission');
 const User = require('../../models/user')
 const { verifyToken, isAdmin } = require('../../middleware/verifyAuth')
-
+const Idea = require('../../models/idea')
+const path = require('path')
+const AdmZip = require('adm-zip');
 
 //get list article
 router.get("/", verifyToken, isAdmin, async (req, res) => {
@@ -12,7 +14,7 @@ router.get("/", verifyToken, isAdmin, async (req, res) => {
 
         const submissions = await Submission.find({})
         res.render('pages/admin/submission', {
-            title: 'Submission List',
+            title: 'List',
             page: 'Submission',
             submissions,
             user
@@ -31,7 +33,7 @@ router.get('/create', verifyToken, isAdmin, async (req, res) => {
         const user = await User.findOne({username: req.user.name}, '-password')
 
         res.render('pages/admin/submission-create', {
-            title: 'Create Submission',
+            title: 'Create',
             page: 'Submission',
             user
         })
@@ -79,7 +81,7 @@ router.get('/edit/:id', verifyToken, isAdmin, async(req , res) =>{
         })
 
         res.render('pages/admin/submission-edit',{
-            title: 'Edit Submission',
+            title: 'Edit',
             page: 'Submission' ,
             submission,
             user
@@ -131,4 +133,71 @@ router.get('/delete/:id', verifyToken, isAdmin, async ( req,res) => {
 		res.status(500).json({ success: false, message: 'Error', error })
     }
 })
+
+//Submission Detail
+//--Method Get:
+router.get('/detail/:id', verifyToken, isAdmin, async (req ,res) => {
+    const submissionId = req.params.id
+
+    if(!submissionId) res.status(400).res.json({success: fail, message: 'Error'})
+
+    try {
+        const user = await User.findOne({username: req.user.name}, '-password')
+
+        const ideas = await Idea.find({submissionId: submissionId}).populate({
+            path: 'userId', 
+            select: ['department', 'username', 'fullName'],
+            populate: {
+                path: 'department.departmentId'
+            }
+        }).populate('categoryId').populate('submissionId')
+        
+        res.render('pages/admin/submission-detail' ,{
+            title: 'View Idea List',
+            page: 'Submission',
+            ideas,
+            user,
+            submissionId
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(500) .json({success:false , message:'Error'}) 
+    }
+})
+
+//Submission Down
+//--Method: Get
+router.get('/download/:id', verifyToken, isAdmin, async (req ,res) => { 
+    const submissionId = req.params.id
+
+    if(!submissionId) return res.status(400).res.json({success: fail, message: 'Error'})
+    var fs = require('fs'); 
+
+    try {
+        var uploadDir = fs.readdirSync(path.join(__dirname, `../../public/uploads`, submissionId));
+        
+        const zip = new AdmZip();
+
+        for(var i = 0; i < uploadDir.length;i++){
+            zip.addLocalFile(path.join(__dirname, `../../public/uploads`, submissionId, uploadDir[i]));
+        }
+    
+        // Define zip file name
+        const downloadName = `${Date.now()}.zip`;
+
+        const data = zip.toBuffer();
+
+        // save file zip in root directory
+        zip.writeZip(path.join(__dirname, `../../public/uploads`, submissionId)+"/"+downloadName);
+
+        res.set('Content-Type','application/octet-stream');
+        res.set('Content-Disposition',`attachment; filename=${downloadName}`);
+        res.set('Content-Length',data.length);
+        res.send(data)
+    } catch (error) {
+        console.log(error)
+        res.status(500) .json({success:false , message:'Error'}) 
+    }
+})
+
 module.exports = router;

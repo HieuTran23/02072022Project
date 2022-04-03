@@ -77,7 +77,7 @@
             
                             <div class="card-footer">
                                 <a class="btn btn-secondary" href="/admin/submission"> Back to List</a>
-                                <button type="submit" class="btn btn-primary">Edit this Role</button>
+                                <button type="submit" class="btn btn-primary">Edit this Submission</button>
                             </div>
                             </form>
                         </div>
@@ -116,15 +116,5 @@
 <script src="../../../admin/dist/js/adminlte.min.js"></script>
 <script src="../../../admin/dist/js/main.js"></script>
 <script src="../../../vendor/bootstrap-date-time-picker/js/bootstrap-datetimepicker.min.js"></script>
-<script>
-    let closureDate = "<%= submission.closureDate.toLocaleDateString('default') %>"
-    let finalClosureDate = "<%= submission.finalClosureDate.toLocaleDateString('default') %>"
-    console.log(closureDate)
-    $('#closureDate').datepicker();
-    $('#finalClosureDate').datepicker();
-    $('#closureDate').datepicker('setDate', closureDate);
-    $('#finalClosureDate').datepicker('setDate', finalClosureDate);
-    
-</script>
 </body>
 </html>

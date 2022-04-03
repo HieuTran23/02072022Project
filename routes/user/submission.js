@@ -348,8 +348,13 @@ router.post('/:submissionId/idea-edit/:ideaId', verifyToken, async(req, res) => 
 //--Delete idea
 //--Method:Get 
 router.get('/:submissionId/idea-delete/:ideaId', verifyToken, async(req, res) => {
+    const { ideaId, submissionId }= req.params
+    
     try {
-        const { ideaId, submissionId }= req.params
+        const submission = await Submission.findById(submissionId)
+        if(Number(submission.closureDate) < Date.now()) return res.status(400).json({success: false, message: 'Submission Close'})
+
+       
         await Idea.deleteOne({ _id: ideaId})
         res.redirect(`/submission/${submissionId}`)
     } catch (error) {

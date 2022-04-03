@@ -8,7 +8,7 @@ router.post('/upload', multipartMiddleware, function(req, res) {
     var fs = require('fs');
 
     fs.readFile(req.files.upload.path, function (err, data) {
-        var newPath = __dirname + '/../public/uploads/' + req.files.upload.name;
+        var newPath = __dirname + `/../public/uploads/` + req.files.upload.name;
         fs.writeFile(newPath, data, function (err) {
             if (err) console.log({err: err});
             else {

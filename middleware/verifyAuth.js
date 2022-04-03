@@ -6,12 +6,14 @@ const verifyToken = (req, res, next) => {
     if (!accessToken)  {
         req.user = null
         next()
+        return
     }
 
     try {
         const verified = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET)
         req.user = verified
         next()
+        return
     } catch (error) {
         res.status(400).send({ message: "Invalid Token!" })
     }
