@@ -18,7 +18,7 @@
   <!-- Navbar -->
   <%- include('../../partials/admin/header'); -%>
   <!-- /.navbar -->
-
+ 
   <!-- Main Sidebar Container -->
   <!-- Sidebar -->
   <%- include('../../partials/admin/sidebar'); -%>
@@ -52,11 +52,11 @@
                             </div>
                         </div>
                         <div class="card-body p-0">
-                            <form action="/admin/category/edit/<%= category._id %> " method="post">
+                            <form action="/admin/category/edit/<%= category._id %> " method="post" class="needs-validation" novalidate>
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="name">Category Name</label>
-                                        <input type="text" class="form-control" id="name" name="name" value="<%= category.name %> " placeholder="<%= category.name %>">
+                                        <input type="text" class="form-control" id="name" name="name" value="<%= category.name %> " placeholder="<%= category.name %>" required>
                                       </div>
                                       <div class="form-group">
                                         <label for="name">Category Description</label>
@@ -102,5 +102,6 @@
 <script src="../../../admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../../../admin/dist/js/adminlte.min.js"></script>
+<script src="../../../admin/dist/js/main.js"></script>
 </body>
 </html>

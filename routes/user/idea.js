@@ -226,8 +226,8 @@ router.get('/', verifyToken ,async (req, res) => {
             filter
         })
     } catch(err) {
-        console.log(err)
-        res.status(400).json({success: false, message: 'Error'})
+        console.log(error)
+		return res.status(400).render('pages/404')
     }
 })
 
@@ -322,8 +322,8 @@ router.get('/:id/read', verifyToken, async (req, res) => {
             recentIdeas
         })
     } catch (err) {
-        console.log(err)
-        res.status(400).json({success: false, message: "Error"})
+        console.log(error)
+		return res.status(400).render('pages/404')
     }
 } )
 
@@ -371,7 +371,7 @@ router.post('/:ideaId/comment',verifyToken, async (req, res) =>{
         res.redirect(`/idea/${ideaId}`)
     } catch (error) {
         console.log(error)
-        res.status(500).json({success:false , message:'Error'})
+		return res.status(400).render('pages/404')
     }
 })
 
@@ -435,8 +435,8 @@ router.post('/:ideaId/reaction', verifyToken, async(req, res) => {
             res.json({idea: findIdea})
         }
     } catch (err) {
-        console.log(err)
-        res.status(500).json({success:false , message:'Error'})
+        console.log(error)
+		return res.status(400).render('pages/404')
     }
 })
 

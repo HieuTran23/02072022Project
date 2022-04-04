@@ -52,11 +52,11 @@
                             </div>
                         </div>
                         <div class="card-body p-0">
-                            <form action="/admin/role/edit/<%= role._id %>" method="post">
+                            <form action="/admin/role/edit/<%= role._id %>" method="post" class="needs-validation" novalidate   >
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="name">Role name</label>
-                                        <input type="text" class="form-control" id="name" name="name" value="<%= role.name %>" placeholder="<%= role.name %>">
+                                        <input type="text" class="form-control" id="name" name="name" value="<%= role.name %>" placeholder="<%= role.name %>" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="name">Role description</label>
@@ -102,5 +102,6 @@
 <script src="../../../admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../../../admin/dist/js/adminlte.min.js"></script>
+<script src="../../../admin/dist/js/main.js"></script>
 </body>
 </html>

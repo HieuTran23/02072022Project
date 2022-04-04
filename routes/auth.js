@@ -5,19 +5,24 @@ const argon2 = require("argon2")
 const jwt = require("jsonwebtoken")
 require('dotenv').config()
 const { loginValidation} = require("../middleware/validation")
+const {verifyToken} = require("../middleware/verifyAuth")
 const Role = require('../models/role')
 
 
 
 //-- Login
 //-Method: Get
-router.get('/login', async (req, res) => {
+router.get('/login', verifyToken, async (req, res) => {
     try{
+        if(req.user){
+            res.redirect('/')
+        }
         res.render('pages/auth/login', {
             title: 'Login'
         })
     } catch (err) {
-        res.json(err)
+        console.log(error)
+		return res.status(400).render('pages/404')
     }
 })
 
@@ -25,18 +30,21 @@ router.get('/login', async (req, res) => {
 router.post('/login', async (req, res) => { 
     //Validation
     const { error } = loginValidation(req.body)
-    if(error) return res.status(400).send(error.details[0].message)
+    if(error)
+    return res.status(400).render('pages/404')
 
     try{
         //Find user
         const user = await User.findOne({ username: req.body.username});
     
         //Check exist the user
-        if (!user) return res.status(400).json({ success: false, message: 'Incorrect username or password' })
+        if (!user)
+		return res.status(400).render('pages/404')
     
         //Check password
         const validPassword = await argon2.verify(user.password, req.body.password)
-        if (!validPassword) return res.status(400).json({ success: false, message: 'Incorrect username or password' })
+        if (!validPassword)
+		return res.status(400).render('pages/404')
         
         //Find role
         const roles = await Role.find()
@@ -61,7 +69,7 @@ router.post('/login', async (req, res) => {
         //res.header('Auth-Access-Token', accessToken).send(accessToken);
     } catch(error){
         console.log(error)
-        res.status(400).json({success:false , message:'Error'}) 
+		return res.status(400).render('pages/404')
     }
 });
 
@@ -72,8 +80,8 @@ router.get('/logout', (req, res) => {
         res.clearCookie('token')
         res.redirect('/login')
     } catch(err){
-        console.log(err)
-        res.status(400).json({success: false, message: 'Error'})
+        console.log(error)
+		return res.status(400).render('pages/404')
     }
 })
 

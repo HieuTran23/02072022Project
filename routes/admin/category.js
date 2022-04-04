@@ -14,12 +14,12 @@ router.get("/",  verifyToken, isAdmin, async (req, res) => {
             title: 'Category List',
             page: 'Category',
             categorys,
-            user
+            user 
         })
     }
     catch(err) {
         console.log(error)
-        res.status(500) .json({success:false , message:'Error'}) 
+		return res.status(400).render('pages/404')
     }
 })
 
@@ -40,7 +40,7 @@ router.get("/create",  verifyToken, isAdmin, async (req, res) => {
     }
     catch(err) {
         console.log(error)
-        res.status(500) .json({success:false , message:'Error'}) 
+		return res.status(400).render('pages/404')
     }
 })
 router.post('/create',  verifyToken, isAdmin, async(req , res ) => {
@@ -48,12 +48,12 @@ router.post('/create',  verifyToken, isAdmin, async(req , res ) => {
 
     //validation
     if(!name)
-    return res.status(400).json({success:false , message:'Missing category name'})
+    return res.status(400).render('pages/404')
     // existing category name   check
     try {
         const existingName = await Category.findOne({name})
         if(existingName)
-        return res.status(400).json({success:false , message:'Existing category name'})
+        return  res.status(400).render('pages/404')
     } catch (error) {
         console.log(error)
         res.status(500).json({success:false , message:'error'}) 
@@ -90,7 +90,7 @@ router.get("/edit/:id", verifyToken, isAdmin, async (req, res) => {
     }
     catch(err) {
         console.log(error)
-        res.status(500) .json({success:false , message:'Error'}) 
+		return res.status(400).render('pages/404')
     }
 })
 
@@ -98,7 +98,7 @@ router.post("/edit/:id", verifyToken, isAdmin, async(req , res)=>{
     const {name , description}  = req.body
     // validation
     if (!name)
-        return res.status(400).json({success:false , message:'Missing category name'})
+        return  res.status(400).render('pages/404')
     try {
         let editCategory = {
             name : name || '' ,
@@ -110,11 +110,11 @@ router.post("/edit/:id", verifyToken, isAdmin, async(req , res)=>{
             {new : true}
         )
         if(!editedCategory)
-            return res.status(400).json({success:false , message:'cant edit category'}) 
+            return  res.status(400).render('pages/404')
     res.redirect('/admin/category')
     } catch (error) {
         console.log(error)
-            res.status(500) .json({success:false , message:'Error'}) 
+		return res.status(400).render('pages/404')
     }
 })
 
@@ -124,11 +124,11 @@ router.get('/delete/:id',  verifyToken, isAdmin, async(req,res)=>{
         const category = {_id: req.params.id}
         const deleteCate = await Category.findByIdAndRemove(category._id)
         if(!deleteCate)
-            return res.status(401).json({success: false , message : 'cant not delete categoey'})
+            return res.status(400).render('pages/404')
     res.redirect('/admin/category')
     } catch (error) {
         console.log(error)
-		res.status(500).json({ success: false, message: 'Error', error })
+		return res.status(400).render('pages/404')
     }
 })
      

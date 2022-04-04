@@ -21,7 +21,7 @@ router.get('/' , verifyToken, async (req ,res) => {
                     foreignField: "_id",
                     as: "categories"
             }},
-            { $unwind: "$categories" },
+            { $unwind: "$categories" }, 
             {
                 $group: {
                     _id: "$categories._id",
@@ -64,7 +64,7 @@ router.get('/' , verifyToken, async (req ,res) => {
 
     } catch (error) {
         console.log(error)
-        res.status(500) .json({success:false , message:'Error'}) 
+		return res.status(400).render('pages/404')
     }
 })
 
@@ -121,7 +121,7 @@ router.get('/:page' , verifyToken, async (req ,res) => {
 
     } catch (error) {
         console.log(error)
-        res.status(500) .json({success:false , message:'Error'}) 
+		return res.status(400).render('pages/404')
     }
 })
 
@@ -175,7 +175,7 @@ router.get('/:id/view', verifyToken, async (req, res) => {
         })
     } catch (error) {
         console.log(error)
-        res.status(500) .json({success:false , message:'Error'}) 
+		return res.status(400).render('pages/404')
     }
 })
 
@@ -199,7 +199,7 @@ router.get('/:id/idea-create', verifyToken, async(req, res) => {
         })
     } catch (error) {
         console.log(error)
-        res.status(500) .json({success:false , message:'Error'}) 
+		return res.status(400).render('pages/404')
     }
 })
 //--Method:Post
@@ -207,11 +207,11 @@ router.post('/:id/idea-create', verifyToken, Upload.array('files'), async(req, r
     const {title, description, categoryId, content, ideaMode} = req.body
     const submissionId = req.params.id
 
-    if(!title) return res.status(400).json({success: false, message: 'Missing text'})
+    if(!title) return res.status(400).render('pages/404')
 
     try{
         const submission = await Submission.findById(submissionId)
-        if(Number(submission.closureDate) < Date.now()) return res.status(400).json({success: false, message: 'Submission Close'})
+        if(Number(submission.closureDate) < Date.now()) return res.status(400).render('pages/404')
 
         const user = await User.findOne({
             username : req.user.name
@@ -292,7 +292,7 @@ router.get('/:submissionId/idea-edit/:ideaId', verifyToken, async(req, res) => {
         })
     } catch (error) {
         console.log(error)
-        res.status(500) .json({success:false , message:'Error'}) 
+		return res.status(400).render('pages/404')
     }
 })
 //--Method:Post
@@ -302,7 +302,7 @@ router.post('/:submissionId/idea-edit/:ideaId', verifyToken, async(req, res) => 
 
     try{
         const submission = await Submission.findById(submissionId)
-        if(Number(submission.closureDate) < Date.now()) return res.status(400).json({success: false, message: 'Submission Close'})
+        if(Number(submission.closureDate) < Date.now()) return res.status(400).render('pages/404')
 
 
         const user = await User.findOne({
@@ -352,14 +352,14 @@ router.get('/:submissionId/idea-delete/:ideaId', verifyToken, async(req, res) =>
     
     try {
         const submission = await Submission.findById(submissionId)
-        if(Number(submission.closureDate) < Date.now()) return res.status(400).json({success: false, message: 'Submission Close'})
+        if(Number(submission.closureDate) < Date.now()) return res.status(400).render('pages/404')
 
        
         await Idea.deleteOne({ _id: ideaId})
         res.redirect(`/submission/${submissionId}`)
     } catch (error) {
         console.log(error)
-        res.status(500) .json({success:false , message:'Error'}) 
+		return res.status(400).render('pages/404')
     }
 })
 
@@ -386,7 +386,7 @@ router.get('/:submissionId/idea/:ideaId', verifyToken, async(req, res) => {
         })
     } catch (error) {
         console.log(error)
-        res.status(500) .json({success:false , message:'Error'}) 
+		return res.status(400).render('pages/404')
     }
 })
 

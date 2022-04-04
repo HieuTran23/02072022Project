@@ -26,7 +26,7 @@ router.get('/:id' , verifyToken, async (req ,res) => {
         })
     } catch (error) {
         console.log(error)
-        res.status(500) .json({success:false , message:'Error'}) 
+		return res.status(400).render('pages/404')
     }
 })
 

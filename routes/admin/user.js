@@ -2,10 +2,12 @@ const express = require("express");
 const router = express.Router();
 const argon2 = require("argon2")
 const User = require('../../models/user')
+const Idea = require('../../models/idea')
 const Role = require('../../models/role');
 const Department = require('../../models/department')
 const { createValidation } = require('../../middleware/validation');
 const { verifyToken, isAdmin } = require('../../middleware/verifyAuth')
+const mongoose = require('mongoose')
 
 
 // view all user 
@@ -23,31 +25,83 @@ router.get('/',  verifyToken, isAdmin, async (req ,res) => {
         })
     } catch (error) {
         console.log(error)
-        res.status(500) .json({success:false , message:'Error'}) 
+		return res.status(400).render('pages/404')
     }
 })
 
 //view user profile
 //--Method: Get 
 router.get('/profile/:id',  verifyToken, isAdmin, async (req ,res) => {
+    const userId = mongoose.Types.ObjectId(req.params.id)
     try {
         const user = await User.findOne({username: req.user.name}, '-password')
 
-        const findUser = await User.findOne({
-            _id :req.params.id
-        })
+        const userAndIdeas = await Idea.aggregate([
+            { $match: { userId: userId}},
+            { 
+                $lookup: {
+                    from: "users",
+                    localField: "userId",
+                    foreignField: "_id",
+                    as: "userId"
+            }},
+            {$unwind: "$userId"},
+            { $unwind: "$userId.roles" },
+            {
+                 $lookup: {
+                    from: "roles",
+                    localField: "userId.roles.roleId",
+                    foreignField: "_id",
+                    as: "userId.roles"
+                }
+            },
+            { $unwind: "$userId.roles" },
+            {
+                $lookup: {
+                    from: "departments",
+                    localField: "userId.department.departmentId",
+                    foreignField: "_id",
+                    as: "userId.department"
+                }
+            },
+            { $unwind: "$userId.department"},
+            {
+                $group: {
+                    _id: "$userId._id",
+                    username: { $first: "$userId.username" },
+                    fullName: { $first: "$userId.fullName" },
+                    roles : { $push: {
+                        roleId: "$userId.roles._id",
+                        roleName: "$userId.roles.name"
+                    }},
+                    department: { $first: {
+                        departmentId: "$userId.department._id",
+                        departmentName: "$userId.department.name"
+                    }},
+                    contact: { $first: "$userId.contact"},
+                    ideas: { 
+                        $push: { 
+                            ideaId: "$_id", 
+                            ideaTitle: "$title",
+                            ideaDescription: "$description",
+                            ideaUpdatedAt: "$updatedAt"
+                        } 
+                    },
+                    count: { $sum: 1}
+                }
+            }
+        ])
 
         const roles = await Role.find()
         res.render('pages/admin/user-profile',{
             title: 'Profile',
             page: 'User',
-            findUser,
-            user,
-            roles
+            userAndIdeas,
+            user
         })
     } catch (error) {
         console.log(error)
-        res.status(500) .json({success:false , message:'Error'}) 
+		return res.status(400).render('pages/404')
     }
 })
 
@@ -69,7 +123,7 @@ router.get('/create', verifyToken, isAdmin, async (req, res) => {
         })
     }catch (err) {
         console.log(error)
-        res.status(500).json({success:false , message:'Error'})
+		return res.status(400).render('pages/404')
     }
 }) 
 //--Method: Post 
@@ -78,16 +132,16 @@ router.post('/create',  verifyToken, isAdmin, async (req ,res) => {
     const {username , password, confirmPassword, fullName, departmentId, roles, emails, phones, streets, cities, countries} = req.body
      //validation
     const { error } = createValidation({username, password, email: emails[0]})
-        if (error) return res.status(400).send(error.details[0].message)
+        if (error)
+		return res.status(400).render('pages/404')
     try {
         //Check password with confirm password
         if(password != confirmPassword) 
-            return res.status(400).json({success:false , message:'password different confirm password'})
-
+            return res.status(400).render('pages/404')
         //Check existing username password
         const user = await User.findOne({username})
         if(user)
-            return res.status(400) .json({success:false , message:'existing username'})
+		return res.status(400).render('pages/404')
 
         //Hash password    
         const hashPassword = await argon2.hash(password)
@@ -165,7 +219,7 @@ router.post('/create',  verifyToken, isAdmin, async (req ,res) => {
         res.redirect('/admin/user')
     } catch (error) { 
         console.log(error)
-        res.status(500).json({success:false , message:'Error'}) 
+		return res.status(400).render('pages/404')
     } 
 })
 
@@ -191,7 +245,7 @@ router.get('/edit/:id',  verifyToken, isAdmin, async(req, res) => {
         })
     } catch(error){
         console.log(error)
-        res.status(500).json({success: false, message: 'Error'})
+		return res.status(400).render('pages/404')
     }
 })
 
@@ -278,7 +332,7 @@ router.post('/edit/:id',  verifyToken, isAdmin, async(req,res)=>{
         res.redirect('/admin/user')
     } catch (error) { 
         console.log(error)
-        res.status(500).json({success:false , message:'Error'}) 
+		return res.status(400).render('pages/404')
     } 
 })
 
@@ -298,7 +352,7 @@ router.get('/delete/:id',  verifyToken, isAdmin, async (req, res) => {
 		res.redirect('/admin/user')
 	} catch (error) {
 		console.log(error)
-		res.status(500).json({ success: false, message: 'Error' })
+		return res.status(400).render('pages/404')
 	}
 })
 module.exports = router;

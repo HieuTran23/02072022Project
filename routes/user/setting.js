@@ -23,7 +23,7 @@ router.get('/', verifyToken, async (req, res) => {
         })
     }catch (error) {
         console.log(error)
-        res.status(500).json({success:false , message:'Error', error})
+		return res.status(400).render('pages/404')
     }
 })
 
@@ -31,7 +31,7 @@ router.get('/', verifyToken, async (req, res) => {
 router.post('/' , verifyToken, async(req,res)=>{
     const {fullName, departmentId,emails, phones, streets, cities, countries, ideaMode, commentMode} = req.body
 
-    if(!emails[0]) return res.status(400).json({success: false, message: 'Missing text'})
+    if(!emails[0]) return res.status(400).render('pages/404')
 
     try {
         
@@ -87,7 +87,7 @@ router.post('/' , verifyToken, async(req,res)=>{
         
     } catch (error) { 
         console.log(error)
-        res.status(500).json({success:false , message:'Error'}) 
+		return res.status(400).render('pages/404')
     } 
 })
 
@@ -103,7 +103,7 @@ router.get('/setting-password', verifyToken, async (req, res) => {
         })
     }catch (error) {
         console.log(error)
-        res.status(500).json({success:false , message:'Error', error})
+		return res.status(400).render('pages/404')
     }
 })
 
@@ -112,10 +112,9 @@ router.post('/setting-password/:id', verifyToken , async(req,res)=>{
     try {
         const { password, rePassword } = req.body
     
-        if(!password || !rePassword) return res.status(400).json({success:false, message:'Missing text'})
+        if(!password || !rePassword) return res.status(400).render('pages/404')
 
-        if(password != rePassword) return res.status(400).json({success:false , message:'password different confirm password'})
-        
+        if(password != rePassword) return res.status(400).render('pages/404')
         const hashPassword = await argon2.hash(password)
 
         await User.findByIdAndUpdate(req.params.id, {
@@ -126,7 +125,7 @@ router.post('/setting-password/:id', verifyToken , async(req,res)=>{
 
     } catch (error) { 
         console.log(error)
-        res.status(500).json({success:false , message:'Error'})     
+		return res.status(400).render('pages/404')   
     } 
 })
 

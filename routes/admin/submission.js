@@ -22,7 +22,7 @@ router.get("/", verifyToken, isAdmin, async (req, res) => {
     }
     catch(err) {
         console.log(error)
-        res.status(500) .json({success:false , message:'Error'}) 
+		return res.status(400).render('pages/404')
     }
 })
 
@@ -40,7 +40,7 @@ router.get('/create', verifyToken, isAdmin, async (req, res) => {
     }
     catch(error) {
         console.log(error)
-        res.status(500) .json({success:false , message:'Error'}) 
+		return res.status(400).render('pages/404')
     }
 })
 router.post('/create', verifyToken, isAdmin,  async (req, res) => {
@@ -48,14 +48,14 @@ router.post('/create', verifyToken, isAdmin,  async (req, res) => {
 
     //validation
     if(!name || !closureDate || !finalClosureDate)
-        return res.status(400).json({success:false , message:'Missing submission text'})
+    return res.status(400).render('pages/404')
     try {
         const submissionExisting = await Submission.findOne({name})
         if(submissionExisting)
-            return res.status(400).json({success:false , message:'Existing submission title'})
+		return res.status(400).render('pages/404')
     } catch (error) {
         console.log(error)
-        res.status(500).json({success:false , message:'Error'}) 
+		return res.status(400).render('pages/404')
     }
     try {
         const newSubmission = new Submission({
@@ -68,7 +68,7 @@ router.post('/create', verifyToken, isAdmin,  async (req, res) => {
         res.redirect('/admin/submission')
     } catch (error) {
         console.log(error)
-        res.status(500).json({success:false , message:'Error'}) 
+		return res.status(400).render('pages/404')
     }
 })
 //edit submission
@@ -88,7 +88,7 @@ router.get('/edit/:id', verifyToken, isAdmin, async(req , res) =>{
         })
     } catch (error) {
         console.log(error)
-        res.status(500) .json({success:false , message:'Error'}) 
+		return res.status(400).render('pages/404')
     }
 })
 router.post('/edit/:id', verifyToken, isAdmin, async(req, res)=>{
@@ -97,7 +97,7 @@ router.post('/edit/:id', verifyToken, isAdmin, async(req, res)=>{
     
     
     if(!submissionTitle)
-        return res.status(400).json({success:false , message:'Missing submission title'})
+    return res.status(400).render('pages/404')
     try {
         let editSubmission ={ 
             submissionTitle : submissionTitle || '' ,
@@ -111,11 +111,11 @@ router.post('/edit/:id', verifyToken, isAdmin, async(req, res)=>{
             {new : true}
         )
         if(!editedSubmission)
-            return res.status(401).json({success:false , message : 'cant not edit submission'})
+		return res.status(400).render('pages/404')
         res.redirect('/admin/submission')
     } catch (error) {
         console.log(error)
-            res.status(500) .json({success:false , message:'Error'}) 
+		return res.status(400).render('pages/404')
     }
 
 })
@@ -126,11 +126,11 @@ router.get('/delete/:id', verifyToken, isAdmin, async ( req,res) => {
         const submission = {_id: req.params.id}
         const deleteSub = await Submission.findByIdAndRemove(submission._id)
         if(!deleteSub)
-        return res.status(401).json({success:false , message : 'cant not delete submission'})
+		return res.status(400).render('pages/404')
         res.redirect('/admin/submission')
     } catch (error) {
         console.log(error)
-		res.status(500).json({ success: false, message: 'Error', error })
+		return res.status(400).render('pages/404')
     }
 })
 
@@ -139,7 +139,8 @@ router.get('/delete/:id', verifyToken, isAdmin, async ( req,res) => {
 router.get('/detail/:id', verifyToken, isAdmin, async (req ,res) => {
     const submissionId = req.params.id
 
-    if(!submissionId) res.status(400).res.json({success: fail, message: 'Error'})
+    if(!submissionId)
+    return res.status(400).render('pages/404')
 
     try {
         const user = await User.findOne({username: req.user.name}, '-password')
@@ -161,7 +162,7 @@ router.get('/detail/:id', verifyToken, isAdmin, async (req ,res) => {
         })
     } catch (error) {
         console.log(error)
-        res.status(500) .json({success:false , message:'Error'}) 
+		return res.status(400).render('pages/404')
     }
 })
 
@@ -170,7 +171,8 @@ router.get('/detail/:id', verifyToken, isAdmin, async (req ,res) => {
 router.get('/download/:id', verifyToken, isAdmin, async (req ,res) => { 
     const submissionId = req.params.id
 
-    if(!submissionId) return res.status(400).res.json({success: fail, message: 'Error'})
+    if(!submissionId)
+    return res.status(400).render('pages/404')
     var fs = require('fs'); 
 
     try {
@@ -198,7 +200,7 @@ router.get('/download/:id', verifyToken, isAdmin, async (req ,res) => {
         fs.unlinkSync(path.join(__dirname, `../../public/uploads`, submissionId)+"/"+downloadName);
     } catch (error) {
         console.log(error)
-        res.status(500) .json({success:false , message:'Error'}) 
+		return res.status(400).render('pages/404')
     }
 })
 

@@ -20,7 +20,7 @@ router.get('/' , verifyToken, isAdmin, async (req ,res) => {
         //res.json(departments)
     } catch (error) {
         console.log(error)
-        res.status(500) .json({success:false , message:'Error'}) 
+		return res.status(400).render('pages/404')
     }
 })
 
@@ -39,7 +39,7 @@ router.get('/create', verifyToken, isAdmin, async (req, res) => {
         })
     }catch (err) {
         console.log(error)
-        res.status(500).json({success:false , message:'Error'})
+		return res.status(400).render('pages/404')
     }
 })
 //--Method: Post 
@@ -47,7 +47,7 @@ router.post('/create', verifyToken, isAdmin, async (req ,res) => {
     const {name, description} = req.body
      //validation
     if(!name)
-        return res.status(400).json({success:false , message:'Missing department name'})
+        return res.status(400).render('pages/404')
     try {
         //Check existing department
         const department = await Department.findOne({name})
@@ -68,7 +68,7 @@ router.post('/create', verifyToken, isAdmin, async (req ,res) => {
         //res.json({success:true , message:'create success' , department : newDepartment})
     } catch (error) {
         console.log(error)
-        res.status(500).json({success:false , message:'Error'}) 
+        return res.status(400).render('pages/404')
     }
 })
 
@@ -92,7 +92,7 @@ router.get('/edit/:id', verifyToken, isAdmin,  async (req, res) => {
         })
     }catch (error) {
         console.log(error)
-        res.status(500).json({success:false , message:'Error', error})
+        return res.status(400).render('pages/404')
     }
 })
 
@@ -101,7 +101,7 @@ router.post('/edit/:id', verifyToken, isAdmin, async(req,res)=>{
     const {name , description} = req.body
     //validation
     if(!name)
-        return res.status(400).json({success:false , message:'Missing department name'})
+        return res.status(400).render('pages/404')
         //edit or update department 
     try {
         let editDepartment = {
@@ -121,7 +121,7 @@ router.post('/edit/:id', verifyToken, isAdmin, async(req,res)=>{
     
     } catch (error) {
         console.log(error)
-            res.status(500) .json({success:false , message:'Error'}) 
+        return res.status(400).render('pages/404')
     }
 })
 
@@ -142,8 +142,8 @@ router.get('/delete/:id', verifyToken, isAdmin,  async (req, res) => {
         //res.json({success:true, message: 'deleted success'})
 		
 	} catch (error) {
-		console.log(error)
-		res.status(500).json({ success: false, message: 'Error', error })
+        console.log(error)
+		return res.status(400).render('pages/404')
 	}
 })
 module.exports = router;
