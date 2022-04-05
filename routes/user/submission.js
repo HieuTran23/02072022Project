@@ -223,9 +223,9 @@ router.post('/:id/idea-create', verifyToken, Upload.array('files'), async(req, r
 
         if(req.files != undefined){
             req.files.forEach(file => {
-                const filePath = `/uploads/${file.filename}`
+                const filePath = `uploads/${submissionId}/${file.filename}`
                 files.push({
-                    fileName: file.originalname,
+                    fileName: file.filename,
                     filePath
                 })
             });
@@ -242,7 +242,7 @@ router.post('/:id/idea-create', verifyToken, Upload.array('files'), async(req, r
             isAnonymously: ideaMode
         })
 
-        await newIdea.save()
+        
 
         // //send mail 
         const emailQACoordinatorList = [...QACoordinator.contact.emails]
@@ -259,8 +259,8 @@ router.post('/:id/idea-create', verifyToken, Upload.array('files'), async(req, r
 
         
         
-       
-        res.redirect(`/submission/${submissionId}`)
+        await newIdea.save()
+        res.redirect(`/submission/${submissionId}/view`)
     } catch (err) {
         console.log(err)
         res.status(500).json({success:false , message:'Error'})
@@ -367,6 +367,32 @@ router.get('/:submissionId/idea-delete/:ideaId', verifyToken, async(req, res) =>
 //--Method:Get 
 router.get('/:submissionId/idea/:ideaId', verifyToken, async(req, res) => {
     try {
+        const categoryList = await Idea.aggregate([
+            { 
+                $lookup: {
+                    from: "categories",
+                    localField: "categoryId",
+                    foreignField: "_id",
+                    as: "categories"
+            }},
+            { $unwind: "$categories" },
+            {
+                $group: {
+                    _id: "$categories._id",
+                    name: { "$first": "$categories.name" },
+                    idea: { 
+                        "$push": { 
+                            "ideaId": "$_id", 
+                            "ideaTitle": "$title" 
+                        } 
+                    },
+                    count: { $sum: 1}
+                }
+            }
+        ])
+
+        const recentIdeas = await Idea.find().sort({createdAt: -1})
+
         const { ideaId, submissionId }= req.params
 
         const idea = await Idea.findById({ _id: ideaId})
@@ -382,7 +408,9 @@ router.get('/:submissionId/idea/:ideaId', verifyToken, async(req, res) => {
             submissionId,
             user,
             userDepartment,
-            ideaCategory
+            ideaCategory,
+            categoryList,
+            recentIdeas
         })
     } catch (error) {
         console.log(error)

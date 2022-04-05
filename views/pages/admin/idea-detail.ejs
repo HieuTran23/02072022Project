@@ -148,7 +148,7 @@
                     <ul class="list-unstyled">
                       <% idea.files.forEach(file => { %>
                         <li>
-                          <a href="<%= file.filePath %>" class="btn-link text-secondary" download><i class="far fa-fw fa-file"></i><%= file.fileName%></a>
+                          <a href="/uploads/<%idea.submissionId %>/<%= file.filePath %>" class="btn-link text-secondary" download><i class="far fa-fw fa-file"></i><%= file.fileName%></a>
                         </li>
                       <% }); %>
                     </ul>

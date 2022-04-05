@@ -46,7 +46,7 @@ router.get('/', verifyToken ,async (req, res) => {
         //--End sidebar
         //View Idea list 
         const filter = req.query.filter || "newest"
-        let ideas = await Idea.find().populate('userId', ['fullName', '_id']).populate('submissionId').skip((perPage * page) - perPage).limit(perPage)
+        let ideas = await Idea.find().sort({createdAt: -1}).populate('userId', ['fullName', '_id']).populate('submissionId').skip((perPage * page) - perPage).limit(perPage)
         if(filter == "reaction"){
             ideas = await Idea.aggregate(
                 [
