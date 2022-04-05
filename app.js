@@ -7,7 +7,6 @@ const mongoose = require('mongoose')
 var bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser")
 const path = require('path')
-const config = require('./config/database');
 //--Router
 //--|--Auth
 const authRouter = require('./routes/auth')
@@ -41,7 +40,7 @@ const app = express();
  *  App Configuration
  */
 // Database config
-mongoose.connect(config.database, (err, db) => {
+mongoose.connect( process.env.mongoURI, (err, db) => {
     if (err) console.log(err);
     console.log('Connect database success')
 })
