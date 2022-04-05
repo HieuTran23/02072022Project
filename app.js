@@ -40,7 +40,7 @@ const app = express();
  *  App Configuration
  */
 // Database config
-mongoose.connect( process.env.MONGOLAB_URI, (err, db) => {
+mongoose.connect( process.env.MONGO_URI, (err, db) => {
     if (err) console.log(err);
     console.log('Connect database success')
 })
