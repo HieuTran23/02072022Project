@@ -63,6 +63,14 @@
               <div class="card-header border-0">
                 <div class="d-flex justify-content-between">
                   <h3 class="card-title">Idea Each Department</h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
                 </div>
               </div>
               <div class="card-body">
@@ -80,34 +88,9 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="card">
-              <div class="card-header border-0">
-                <div class="d-flex justify-content-between">
-                  <h3 class="card-title">Percentage Each Department</h3>
-                </div>
-              </div>
-              <div class="card-body">
-
-                <!-- /.d-flex -->
-
-                <div class="position-relative mb-4">
-                  <canvas id="percent" height="200"></canvas>
-                </div>
-
-                <div class="d-flex flex-row justify-content-end">
-                  <span class="mr-2">
-                    <i class="fas fa-square text-primary"></i> Percentage
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-6">
             <div class="card card-danger">
               <div class="card-header">
-                <h3 class="card-title">User Posted Idea Each Department</h3>
+                <h3 class="card-title">Percentage Idea Each Department</h3>
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-minus"></i>
@@ -126,18 +109,53 @@
           <div class="col-lg-6">
             <div class="card">
               <div class="card-header border-0">
-                <h3 class="card-title">Anonymously Idea </h3>
-                <div class="card-tools">
-                  <a href="#" class="btn btn-tool btn-sm">
-                    <i class="fas fa-download"></i>
-                  </a>
-                  <a href="#" class="btn btn-tool btn-sm">
-                    <i class="fas fa-bars"></i>
-                  </a>
+                <div class="d-flex justify-content-between">
+                  <h3 class="card-title">User Posted Idea Each Department</h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
                 </div>
               </div>
-              <div class="card-body table-responsive p-0">
-                <table class="table table-striped table-valign-middle">
+              <div class="card-body">
+
+                <!-- /.d-flex -->
+
+                <div class="position-relative mb-4">
+                  <canvas id="percent" height="200"></canvas>
+                </div>
+
+                <div class="d-flex flex-row justify-content-end">
+                  <span class="mr-2">
+                    <i class="fas fa-square text-primary"></i> Percentage
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>         
+          <!-- Cai nay can xu ly ne-->
+          <!-- Cai nay can xu ly ne-->
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Anonymously Idea </h3>
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
                     <th>Idea Title</th>
@@ -146,18 +164,20 @@
                     <th>Idea Comments</th>
                   </tr>
                   </thead>
+                  <tbody>
                   <% anonymouslyIdea.forEach(anonymous =>{
                    %> 
-                  <tbody>
+                  
                     <tr>
                       <td><%= anonymous.title %> </td>
                       <td><%= anonymous.views.length %> </td>
                       <td><%= anonymous.reactions.length %> </td>
                       <td><%= anonymous.comments.length %> </td>
                     </tr>
-                  </tbody>
+                  
                   <% 
                  }) %> 
+                </tbody>
                 </table>
               </div>
             </div>
@@ -165,19 +185,19 @@
 
           <div class="col-lg-6">
             <div class="card">
-              <div class="card-header border-0">
+              <div class="card-header">
                 <h3 class="card-title">Idea Have No Comments </h3>
                 <div class="card-tools">
-                  <a href="#" class="btn btn-tool btn-sm">
-                    <i class="fas fa-download"></i>
-                  </a>
-                  <a href="#" class="btn btn-tool btn-sm">
-                    <i class="fas fa-bars"></i>
-                  </a>
-                </div>
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
               </div>
-              <div class="card-body table-responsive p-0">
-                <table class="table table-striped table-valign-middle">
+              <div class="card-body">
+                <table id="example2" class="table table-bordered table-striped">
                   <thead>
                   <tr>
                     <th>Idea Title</th>
@@ -186,24 +206,24 @@
                     <th>Idea Comments</th>
                   </tr>
                   </thead>
+                  <tbody>
                   <% noComment.forEach(commnet =>{
                    %> 
-                  <tbody>
+                  
                     <tr>
                       <td><%= commnet.title %> </td>
                       <td><%= commnet.views.length %> </td>
                       <td><%= commnet.reactions.length %> </td>
                       <td><%= commnet.comments.length %> </td>
                     </tr>
-                  </tbody>
+                  
                   <% 
                  }) %> 
+                </tbody>
                 </table>
               </div>
             </div>
           </div>
-          <!-- Cai nay can xu ly ne-->
-          <!-- Cai nay can xu ly ne-->
         </div>
         <!-- /.row -->
       </div> <!-- /.container-fluid -->
@@ -230,6 +250,19 @@
 <script src="./../../admin/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap -->
 <script src="./../../admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables  & Plugins -->
+<script src="../../../admin/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../../../admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="../../../admin/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../../../admin/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="../../../admin/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="../../../admin/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="../../../admin/plugins/jszip/jszip.min.js"></script>
+<script src="../../../admin/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="../../../admin/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="../../../admin/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="../../../admin/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="../../../admin/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <!-- AdminLTE -->
 <script src="./../../admin/dist/js/adminlte.js"></script>
 
@@ -237,8 +270,26 @@
 <script src="./../../admin/plugins/chart.js/Chart.min.js"></script>
 <script>
   $(function () {
+    //Data table
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+    $('#example1').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
     /* ChartJS
-    
      * -------
      * Here we will create a few charts using ChartJS
      */
@@ -314,15 +365,13 @@
     })
 
 
-    var percentageIdeaEachDepartment = JSON.parse('<%- JSON.stringify(percentageIdeaEachDepartment) %> ')
-    var ideaPercentLabel = []
-    var ideaPercentData1 = []
-    var ideaPercentData2 = []
-    percentageIdeaEachDepartment.forEach(percent => {
-      ideaPercentLabel.push(percent.name)
-      ideaPercentData1.push(percent.count)
-      ideaPercentData2.push(percent.percentage)
-     })
+    var userPostedIdeaEachDepartment =  JSON.parse('<%- JSON.stringify(userPostedIdeaEachDepartment) %> ')
+    var userPostedLabel = []
+    var userPostedData  = []
+    userPostedIdeaEachDepartment.forEach(posted => {
+      userPostedLabel.push(posted.name)
+      userPostedData.push(posted.count)
+    })
     var ticksStyle = {
       fontColor: '#495057',
       fontStyle: 'bold'
@@ -336,12 +385,12 @@
     var salesChart = new Chart($percent, {
       type: 'bar',
       data: {
-        labels: ideaPercentLabel,
+        labels: userPostedLabel,
         datasets: [
           {
             backgroundColor: '#007bff',
             borderColor: '#007bff',
-            data: ideaPercentData2
+            data: userPostedData
           },
         ]
       },
@@ -388,19 +437,22 @@
     })
     
     
-    var userPostedIdeaEachDepartment =  JSON.parse('<%- JSON.stringify(userPostedIdeaEachDepartment) %> ')
-    var userPostedLabel = []
-    var userPostedData  = []
-    userPostedIdeaEachDepartment.forEach(posted => {
-      userPostedLabel.push(posted.name)
-      userPostedData.push(posted.count)
-    })
+    
+    var percentageIdeaEachDepartment = JSON.parse('<%- JSON.stringify(percentageIdeaEachDepartment) %> ')
+    var ideaPercentLabel = []
+    var ideaPercentData1 = []
+    var ideaPercentData2 = []
+    percentageIdeaEachDepartment.forEach(percent => {
+      ideaPercentLabel.push(percent.name)
+      ideaPercentData1.push(percent.count)
+      ideaPercentData2.push(percent.percentage)
+     })
     var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
     var donutData        = {
-      labels: userPostedLabel,
+      labels: ideaPercentLabel,
       datasets: [
         {
-          data:userPostedData ,
+          data:ideaPercentData2 ,
           backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
         }
       ]
