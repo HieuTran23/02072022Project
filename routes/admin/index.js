@@ -170,7 +170,6 @@ router.get('/', verifyToken, isAdmin , async (req, res) => {
             ideaEachDepartment,
             percentageIdeaEachDepartment,
             userPostedIdeaEachDepartment,
-            ideaHaveNoComment,
             anonymouslyIdea,
             noComment
         })
