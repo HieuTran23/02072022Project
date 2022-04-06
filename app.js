@@ -22,7 +22,7 @@ const submissionAdminRouter = require('./routes/admin/submission')
 const departmentAdminRouter = require('./routes/admin/department')
 const categoryAdminRouter = require('./routes/admin/category')
 const ideaAdminRouter = require('./routes/admin/idea')
-
+const indexRounter = require('./routes/admin/index')
 //--|--User
 const profileRouter = require('./routes/user/profile')
 const submissionRouter = require('./routes/user/submission')
@@ -69,7 +69,7 @@ app.use(express.static('public'))
 //--Admin
 //--|--Dashboard
 app.use('/admin', adminRouter)
-
+app.use('/admin/index',indexRounter)
 //--|--Role
 app.use('/admin/role', roleAdminRouter)
 
