@@ -368,7 +368,7 @@ router.post('/:ideaId/comment',verifyToken, async (req, res) =>{
             await sendMail(mail)
         }
 
-        res.redirect(`/idea/${ideaId}`)
+        res.redirect(`/idea/${ideaId}/read`)
     } catch (error) {
         console.log(error)
 		return res.status(400).render('pages/404')
