@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Submission = require('../../models/submission');
 const User = require('../../models/user')
-const { verifyToken, isAdmin } = require('../../middleware/verifyAuth')
+const { verifyToken, isAdmin, isQAManager } = require('../../middleware/verifyAuth')
 const Idea = require('../../models/idea')
 const path = require('path')
 const AdmZip = require('adm-zip');
@@ -143,7 +143,7 @@ router.get('/detail/:id', verifyToken, isAdmin, async (req ,res) => {
     return res.status(400).render('pages/404')
 
     try {
-        const user = await User.findOne({username: req.user.name}, '-password')
+        const user = await User.findOne({username: req.user.name}, '-password').populate('roles.roleId')
 
         const ideas = await Idea.find({submissionId: submissionId}).populate({
             path: 'userId', 
@@ -152,7 +152,7 @@ router.get('/detail/:id', verifyToken, isAdmin, async (req ,res) => {
                 path: 'department.departmentId'
             }
         }).populate('categoryId').populate('submissionId')
-        
+
         res.render('pages/admin/submission-detail' ,{
             title: 'View Idea List',
             page: 'Submission',
@@ -168,7 +168,7 @@ router.get('/detail/:id', verifyToken, isAdmin, async (req ,res) => {
 
 //Submission Down
 //--Method: Get
-router.get('/download/:id', verifyToken, isAdmin, async (req ,res) => { 
+router.get('/download/:id', verifyToken, isQAManager, async (req ,res) => { 
     const submissionId = req.params.id
 
     if(!submissionId)
