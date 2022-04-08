@@ -312,7 +312,6 @@ router.get('/:id/read', verifyToken, async (req, res) => {
             await View.findByIdAndUpdate(viewIdea.views[0].viewId._id, {isVisited: true})
         }
         
-        // res.json(ideaFilter)
         res.render('pages/user/idea-detail', {
             title: 'View',
             page: 'Idea',
@@ -332,13 +331,11 @@ router.get('/:id/read', verifyToken, async (req, res) => {
 //--Method:post 
 router.post('/:ideaId/comment',verifyToken, async (req, res) =>{
     const {ideaId} = req.params
-    const {content} = req.body
+    const {content, commentMode} = req.body
 
     if(!content) res.status(400).json({success: false, message: 'Missing test'})
 
     try {
-        
-
         const user = await User.findOne({
             username: req.user.name
         })
@@ -348,7 +345,8 @@ router.post('/:ideaId/comment',verifyToken, async (req, res) =>{
         
         const comment = new Comment({
             content,
-            userId :user._id
+            userId :user._id,
+            isAnonymously: commentMode
         })
 
         await comment.save() 
@@ -374,6 +372,24 @@ router.post('/:ideaId/comment',verifyToken, async (req, res) =>{
 		return res.status(400).render('pages/404')
     }
 })
+
+//Delete Comment
+//--Method Get 
+router.get('/:id/comment/:commentId/delete', verifyToken, async (req, res) => {
+    const {id, commentId} = req.params
+    if(!id || !commentId) return res.status(400).render('pages/404')
+    try{ 
+        await Idea.findOneAndUpdate(
+            { _id: id}, 
+            { $pull: { comments: { commentId: commentId} } },
+        );
+        await Comment.findByIdAndRemove(commentId)
+        res.redirect(`/idea/${id}/read`)
+    } catch (err) {
+        console.log(error)
+		return res.status(400).render('pages/404')
+    }
+} )
 
 //--Idea reaction
 //--Method: post 
