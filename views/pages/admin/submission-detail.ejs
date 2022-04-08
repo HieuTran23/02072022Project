@@ -92,7 +92,16 @@
               <!-- /.card-body -->
               <div class="card-footer">
                   <a class="btn btn-secondary" href="/admin/submission"> Back to List</a>
-                  <a class="btn btn-primary" href="/admin/submission/download/<%= submissionId %>"> Download All support document</a>
+                  <% 
+                  for(let i = 0; user.roles[i]!= undefined; i++){
+                    if(user.roles[i].roleId.name == "QA manager") {
+                      %>
+                      <a class="btn btn-primary" href="/admin/submission/download/<%= submissionId %>"> Download All support document</a>
+                    <%
+                    break;
+                    }
+                  }
+                  %>
               </div>
             </div>
             <!-- /.card -->

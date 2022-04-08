@@ -22,7 +22,7 @@ const verifyToken = (req, res, next) => {
 const isAdmin = (req, res, next) => {
     try{
         for(let i = 0; req.user.roles[i] != undefined; i++){
-            if(req.user.roles[i] === "Admin"){
+            if(req.user.roles[i] == "Admin" || req.user.roles[i] == "QA manager") {
                 next()
                 return;
             }
@@ -32,15 +32,27 @@ const isAdmin = (req, res, next) => {
     } catch (err){
         res.status(400).send({ message: "Invalid Token!", err })
     }
-    
-    
-    
-    
+}
+
+const isQAManager = (req, res, next) => {
+    try{
+        for(let i = 0; req.user.roles[i] != undefined; i++){
+            if(req.user.roles[i] == "QA manager") {
+                next()
+                return;
+            }
+        }
+        res.status(403).send({ message: "Require QA Manager Role!" });
+        return;
+    } catch (err){
+        res.status(400).send({ message: "Invalid Token!", err })
+    }
 }
 
 const verifyAuth = {
     verifyToken,
-    isAdmin
+    isAdmin,
+    isQAManager
 }
 
 module.exports = verifyAuth
