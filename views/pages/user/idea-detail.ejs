@@ -107,7 +107,7 @@
                   <div class="d-flex">
                     <div class="comment-img"><img src="../images/coment/coment1.jpg" alt=""></div>
                     <div>
-                      <h5><a href="#"><%= comment.commentId.userId.fullName %></a> <a href="#" class="reply"><i class="bi bi-reply-fill"></i> Reply</a></h5>
+                      <h5><a href="#"><%= comment.commentId.userId.fullName %></a> <% if(user.username == comment.commentId.userId.username){%> <a href="/idea/<%= idea._id %>/comment/<%= comment.commentId._id%>/delete" class="reply"><i class="bi bi-trash"></i> Delete</a> <%}%> </h5>
                       <time datetime="2020-01-01"><%= comment.commentId.updatedAt.toLocaleString('default') %></time>
                       <p>
                         <%= comment.commentId.content %>
@@ -127,6 +127,14 @@
                     <div class="col form-group">
                       <textarea id="content" name="content" class="form-control" placeholder="Your Comment*"></textarea>
                     </div>
+                  </div>
+                  <div class="row">
+                    <div class="col form-group">
+                      <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault" name="commentMode" <% if(user.anonymously.comment == true){%> checked <%} %>>
+                      <label class="form-check-label" for="flexCheckDefault">
+                        <p> Anonymously comment mode</p> 
+                      </label>
+                    </div>  
                   </div>
                   <button type="submit" class="btn btn-primary">Post Comment</button>
                 </form>

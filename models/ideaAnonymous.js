@@ -1,3 +1,5 @@
+const comment = require("./comment")
+
 let ideaList = []
 
 module.exports = class User {
@@ -23,6 +25,19 @@ module.exports = class User {
 
     static singleFilter(idea){
         let newIdea
+        let newComments = []
+        for(let i = 0; idea.comments[i] != undefined; i++){
+            if(idea.comments[i].commentId.isAnonymously == false) {
+                newComments.push(idea.comments[i])
+            } else {
+                idea.comments[i].commentId.userId = {
+                    fullName: "Anonymous",
+                    _id: ' ',
+                }
+    
+                newComments.push(idea.comments[i])
+            }
+        }
 
         if(idea.isAnonymously == true){
             newIdea = {
@@ -55,7 +70,7 @@ module.exports = class User {
                 files: idea.files,
                 isActive: idea.isActive,
                 isAnonymously: idea.isAnonymously,
-                comments: idea.comments,
+                comments: newComments,
                 views: idea.views,
                 reactions: idea.reactions,
                 createdAt: idea.createdAt,

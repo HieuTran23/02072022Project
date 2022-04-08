@@ -10,6 +10,10 @@ const CommentSchema = new Schema ({
     userId : {
         type : mongoose.Types.ObjectId ,
         ref:'user'
+    },
+    isAnonymously: {
+        type: Boolean,
+        default: false
     }
 },
 { timestamps: true }
