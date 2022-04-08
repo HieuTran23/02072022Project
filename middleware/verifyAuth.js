@@ -36,7 +36,6 @@ const isAdmin = (req, res, next) => {
 
 const isQAManager = (req, res, next) => {
     try{
-        return res.json(req.user)
         for(let i = 0; req.user.roles[i] != undefined; i++){
             if(req.user.roles[i] == "QA manager") {
                 next()
