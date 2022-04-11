@@ -92,7 +92,6 @@ router.get('/profile/:id',  verifyToken, isAdmin, async (req ,res) => {
             }
         ])
 
-        const roles = await Role.find()
         res.render('pages/admin/user-profile',{
             title: 'Profile',
             page: 'User',
@@ -132,12 +131,16 @@ router.post('/create',  verifyToken, isAdmin, async (req ,res) => {
     const {username , password, confirmPassword, fullName, departmentId, roles, emails, phones, streets, cities, countries} = req.body
      //validation
     const { error } = createValidation({username, password, email: emails[0]})
-        if (error)
+        if (error){
+        console.log(error)
 		return res.status(400).render('pages/404')
+        }
     try {
         //Check password with confirm password
-        if(password != confirmPassword) 
+        if(password != confirmPassword) {
+            console.log('Error password')
             return res.status(400).render('pages/404')
+        }
         //Check existing username password
         const user = await User.findOne({username})
         if(user)

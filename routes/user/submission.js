@@ -9,7 +9,6 @@ const Department = require('../../models/department')
 const Upload = require('../../middleware/multerUpload')
 const { sendMail } = require('../../utils/mailer')
 
-//View profile list 
 //--Method:Get
 router.get('/' , verifyToken, async (req ,res) => {
     try {
@@ -34,18 +33,18 @@ router.get('/' , verifyToken, async (req ,res) => {
                     },
                     count: { $sum: 1}
                 }
-            }
+            },
         ])
 
         
 
-        const recentIdeas = await Idea.find().sort({createdAt: -1})
+        const recentIdeas = await Idea.find().sort({createdAt: -1}).limit(5)
 
         const { name, roles } = req.user
 
         const user = await User.findOne({ username: name })
         // Submission
-        let perPage = 12;
+        let perPage = 6;
         let page = req.params.page || 1; 
         const submissions = await Submission.find().limit(5).skip((perPage * page) - perPage).limit(perPage);
         //count 
@@ -96,7 +95,7 @@ router.get('/:page' , verifyToken, async (req ,res) => {
 
         
 
-        const recentIdeas = await Idea.find().sort({createdAt: -1})
+        const recentIdeas = await Idea.find().sort({createdAt: -1}).limit(5)
 
         const { name, roles } = req.user
 
@@ -269,7 +268,7 @@ router.post('/:id/idea-create', verifyToken, Upload.array('files'), async(req, r
 
 //--Edit idea
 //--Method:Get 
-router.get('/:submissionId/idea-edit/:ideaId', verifyToken, async(req, res) => {
+router.get('/:submissionId/idea-edit/:ideaId', verifyToken,  async(req, res) => {
     try {
         const user = await User.findOne({
             username : req.user.name
@@ -296,7 +295,7 @@ router.get('/:submissionId/idea-edit/:ideaId', verifyToken, async(req, res) => {
     }
 })
 //--Method:Post
-router.post('/:submissionId/idea-edit/:ideaId', verifyToken, async(req, res) => {
+router.post('/:submissionId/idea-edit/:ideaId', verifyToken, Upload.array('files'), async(req, res) => {
     const {title, description, categoryId, content, ideaMode} = req.body
     const {submissionId, ideaId} = req.params
 
@@ -312,6 +311,18 @@ router.post('/:submissionId/idea-edit/:ideaId', verifyToken, async(req, res) => 
         const QACoordinator = await User.findOne({ 'department.departmentId' : user.department.departmentId, 'department.isQACoordinator': true }, '-password')
 
 
+        var files = []
+
+        if(req.files != undefined){
+            req.files.forEach(file => {
+                const filePath = `uploads/${submissionId}/${file.filename}`
+                files.push({
+                    fileName: file.filename,
+                    filePath
+                })
+            });
+        }
+
         const editIdea = {
             title,
             categoryId,
@@ -319,6 +330,7 @@ router.post('/:submissionId/idea-edit/:ideaId', verifyToken, async(req, res) => 
             content,
             userId: user._id,
             submissionId,
+            files,
             isAnonymously: ideaMode != null ? true: false
         }
         
@@ -337,7 +349,7 @@ router.post('/:submissionId/idea-edit/:ideaId', verifyToken, async(req, res) => 
         }
         
 
-        res.redirect(`/submission/${submissionId}`)
+        res.redirect(`/submission/${submissionId}/view`)
     } catch (err) {
         console.log(err)
         res.status(500).json({success:false , message:'Error'})
@@ -356,7 +368,7 @@ router.get('/:submissionId/idea-delete/:ideaId', verifyToken, async(req, res) =>
 
        
         await Idea.deleteOne({ _id: ideaId})
-        res.redirect(`/submission/${submissionId}`)
+        res.redirect(`/submission/${submissionId}/view`)
     } catch (error) {
         console.log(error)
 		return res.status(400).render('pages/404')

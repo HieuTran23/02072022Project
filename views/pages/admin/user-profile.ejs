@@ -57,7 +57,10 @@
                         <div class="info-box bg-light">
                           <div class="info-box-content">
                             <span class="info-box-text text-center text-muted">Total idea</span>
-                            <span class="info-box-number text-center text-muted mb-0"><%= userAndIdeas[0].count %></span>
+                            <% if(userAndIdeas.length){%>
+                              <span class="info-box-number text-center text-muted mb-0"><%= userAndIdeas[0].count %></span>
+                            <%}%>
+                          
                           </div>
                         </div>
                       </div>
@@ -65,22 +68,26 @@
                     <div class="row">
                       <div class="col-12">
                         <h4>All idea</h4>
-                        <% userAndIdeas[0].ideas.forEach(idea => { %>
-                          <div class="post">
-                            <div class="user-block">
-                              <span>
-                                <a href="/admin/idea/detail/<%= idea.ideaId %>"><%= idea.ideaTitle %></a>
-                              </span>
-                              <br>
-                              <span>Submit date - <%= idea.ideaUpdatedAt.toLocaleString('default') %></span>
+                        <% if(userAndIdeas.length){%>
+                          <% userAndIdeas[0].ideas.forEach(idea => { %>
+                            <div class="post">
+                              <div class="user-block">
+                                <span>
+                                  <a href="/admin/idea/detail/<%= idea.ideaId %>"><%= idea.ideaTitle %></a>
+                                </span>
+                                <br>
+                                <span>Submit date - <%= idea.ideaUpdatedAt.toLocaleString('default') %></span>
+                              </div>
+                              <!-- /.user-block -->
+                              <p>
+                                <% if(!idea.ideaDescription){%> <%= "No description" %> <%} else{%><%= idea.ideaDescription %> <%}%>
+                                
+                              </p>
                             </div>
-                            <!-- /.user-block -->
-                            <p>
-                              <% if(!idea.ideaDescription){%> <%= "No description" %> <%} else{%><%= idea.ideaDescription %> <%}%>
-                              
-                            </p>
-                          </div>
-                        <%}); %>
+                          <%}); %>
+                        <%}%>
+                        
+                          
                           
                       </div>
                     </div>
